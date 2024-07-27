@@ -1,0 +1,99 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class AppColors {
+  AppColors._private();
+
+  static final AppColors _instance = AppColors._private();
+
+  factory AppColors() {
+    return _instance;
+  }
+  Color primaryColor = const Color(0xff174C94);
+  Color secondaryColor = const Color(0xff174C94).withOpacity(0.3);
+  Color primaryDarkBGColor = const Color(0xff1E3D6B);
+  Color blackColor = Colors.black;
+  Color whiteColor = Colors.white;
+  Color greyColor = Colors.grey;
+  Color greenColor = Colors.green;
+  Color lightGreyColor = Colors.black.withOpacity(0.04);
+  Color lightBlack = const Color(0xffECECEC);
+  Color transparent = Colors.transparent;
+  Color redColor = Colors.red;
+  Color blueColor = Colors.blue;
+  Color lightBlueColor = const Color(0xff2c5e9e33);
+  Color bgColor = const Color(0xffF5F5F5);
+}
+
+class AppTextTheme {
+  AppTextTheme._private();
+
+  static final AppTextTheme _instance = AppTextTheme._private();
+
+  factory AppTextTheme() {
+    return _instance;
+  }
+  TextStyle fs14NormalPacifico =
+      GoogleFonts.pacifico(fontSize: 14, fontWeight: FontWeight.w400);
+
+  // NORMAL
+  TextStyle fs10Normal =
+      const TextStyle(fontSize: 10, fontWeight: FontWeight.w400);
+  TextStyle fs12Normal =
+      const TextStyle(fontSize: 12, fontWeight: FontWeight.w400);
+  TextStyle fs14Normal =
+      const TextStyle(fontSize: 14, fontWeight: FontWeight.w400);
+  TextStyle fs16Normal =
+      const TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
+  TextStyle fs18Normal =
+      const TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
+  TextStyle fs20Normal =
+      const TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
+  TextStyle fs24Normal =
+      const TextStyle(fontSize: 24, fontWeight: FontWeight.w400);
+  TextStyle fs26Normal =
+      const TextStyle(fontSize: 26, fontWeight: FontWeight.w400);
+  TextStyle fs28Normal =
+      const TextStyle(fontSize: 28, fontWeight: FontWeight.w400);
+  TextStyle fs34Normal =
+      const TextStyle(fontSize: 34, fontWeight: FontWeight.w400);
+
+  // MEDIUM
+  TextStyle fs12Medium =
+      const TextStyle(fontSize: 12, fontWeight: FontWeight.w500);
+  TextStyle fs14Medium =
+      const TextStyle(fontSize: 14, fontWeight: FontWeight.w500);
+  TextStyle fs16Medium =
+      const TextStyle(fontSize: 16, fontWeight: FontWeight.w500);
+  TextStyle fs18Medium =
+      const TextStyle(fontSize: 18, fontWeight: FontWeight.w500);
+  TextStyle fs20Medium =
+      const TextStyle(fontSize: 20, fontWeight: FontWeight.w500);
+  TextStyle fs24Medium =
+      const TextStyle(fontSize: 24, fontWeight: FontWeight.w500);
+  TextStyle fs28Medium =
+      const TextStyle(fontSize: 28, fontWeight: FontWeight.w500);
+  TextStyle fs29Medium =
+      const TextStyle(fontSize: 29, fontWeight: FontWeight.w500);
+
+  //bold
+  TextStyle fs12Bold =
+      const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
+  // BOLD
+  TextStyle fs14Bold =
+      const TextStyle(fontSize: 14, fontWeight: FontWeight.w700);
+  TextStyle fs16Bold =
+      const TextStyle(fontSize: 16, fontWeight: FontWeight.w700);
+  TextStyle fs18Bold =
+      const TextStyle(fontSize: 18, fontWeight: FontWeight.w700);
+  TextStyle fs20Bold =
+      const TextStyle(fontSize: 20, fontWeight: FontWeight.w700);
+  TextStyle fs22Bold =
+      const TextStyle(fontSize: 22, fontWeight: FontWeight.w700);
+  TextStyle fs24Bold =
+      const TextStyle(fontSize: 24, fontWeight: FontWeight.w700);
+  TextStyle fs26Bold =
+      const TextStyle(fontSize: 26, fontWeight: FontWeight.w700);
+  TextStyle fs28Bold =
+      const TextStyle(fontSize: 28, fontWeight: FontWeight.w700);
+}
