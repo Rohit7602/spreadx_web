@@ -9,15 +9,15 @@ class AppColors {
   factory AppColors() {
     return _instance;
   }
-  Color primaryColor = const Color(0xff174C94);
-  Color secondaryColor = const Color(0xff174C94).withOpacity(0.3);
+  Color primaryColor = const Color(0xff2C5E9E);
+  Color secondaryColor = const Color(0xff2C5E9E).withOpacity(0.3);
   Color primaryDarkBGColor = const Color(0xff1E3D6B);
   Color blackColor = Colors.black;
   Color whiteColor = Colors.white;
   Color greyColor = Colors.grey;
   Color greenColor = Colors.green;
   Color lightGreyColor = Colors.black.withOpacity(0.04);
-  Color fieldGreyColor = Color(0xffF3F3F3);
+  Color fieldGreyColor = const Color(0xffF3F3F3);
   Color lightBlack = const Color(0xffECECEC);
   Color transparent = Colors.transparent;
   Color redColor = Colors.red;

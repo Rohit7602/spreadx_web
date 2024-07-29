@@ -13,6 +13,7 @@ void main() {
   styleSheet = ConstantSheet.instance;
 
   WindowManager.instance.setMinimumSize(const Size(800, 810));
+  // WindowManager.instance.setMinimumSize(const Size(1380, 720));
 
   runApp(const MyApp());
 }

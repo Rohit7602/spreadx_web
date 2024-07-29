@@ -1,7 +1,6 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spreadx_web/Components/Appbar/custom_appbar.dart';
 import 'package:spreadx_web/Components/Button/icon_btn.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/View/Transactions/Widget/invoice_detail_card.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/main.dart';
 import 'package:spreadx_web/web_config.dart';
 
@@ -9,7 +8,6 @@ class ProductWiseReportView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final view = ResponsiveHandler().getResponsiveness(context);
     return
 
         // Scaffold(

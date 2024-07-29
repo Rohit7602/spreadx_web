@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Appbar/custom_appbar.dart';
 import 'package:spreadx_web/Components/Dropdown/primary_drop_down.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
-import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 class AddDrawerView extends StatefulWidget {

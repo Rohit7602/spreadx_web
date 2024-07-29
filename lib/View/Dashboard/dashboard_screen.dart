@@ -4,7 +4,6 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
-import 'package:spreadx_web/Components/Button/text_btn.dart';
 import 'package:spreadx_web/Components/Dialog/apply_discount.dart';
 import 'package:spreadx_web/Components/Dialog/assign_customer_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/custom_item_dialog.dart';
@@ -33,6 +32,8 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
 
   @override
   Widget build(BuildContext context) {
+    print(styleSheet.appConfig.getScreenWidth(context));
+    print(styleSheet.appConfig.getScreenHeight(context));
     final view = ResponsiveHandler().getResponsiveness(context);
     return
 
