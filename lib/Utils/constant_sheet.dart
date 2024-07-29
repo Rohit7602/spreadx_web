@@ -25,9 +25,9 @@ class ConstantSheet {
 //   final _appServices = AppServices();
 //   AppServices get services => _appServices;
 
-//   //  APP Images GET
-//   final _appimages = AppImage();
-//   AppImage get images => _appimages;
+  //  APP Images GET
+
+  AppImage get images => AppImage();
 
   //  APP Config GET
 

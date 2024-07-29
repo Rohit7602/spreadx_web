@@ -58,7 +58,7 @@ class PrimaryTextFormField extends StatelessWidget {
 
           decoration: InputDecoration(
             filled: true,
-            fillColor: styleSheet.COLOR.lightGreyColor,
+            fillColor: styleSheet.COLOR.fieldGreyColor,
             constraints:
                 BoxConstraints(minHeight: 30, maxHeight: view.textFieldheight),
             labelText: hinttext,
@@ -70,16 +70,16 @@ class PrimaryTextFormField extends StatelessWidget {
             suffixIconColor: styleSheet.COLOR.greyColor,
             suffixIcon: suffixicon?.paddingOnly(right: 20),
             border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(color: styleSheet.COLOR.whiteColor)),
             enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(color: styleSheet.COLOR.whiteColor)),
             focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(color: styleSheet.COLOR.whiteColor)),
             errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(4),
                 borderSide: BorderSide(color: styleSheet.COLOR.redColor)),
           ),
         ),

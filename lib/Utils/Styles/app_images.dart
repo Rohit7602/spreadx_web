@@ -8,7 +8,11 @@ class AppImage {
   factory AppImage() {
     return _instance;
   }
-  String Applogo = "assets/image/Applogo.svg";
+  String appLogo = "assets/Logo/logo.png";
+
+  // ***************  Images ***********
+
+  String onboardingImg = "assets/Image/onboarding.png";
 }
 
 // SVG Images

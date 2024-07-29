@@ -25,7 +25,7 @@ class ReportDashboardCard extends StatelessWidget {
         decoration: BoxDecoration(
             color: styleSheet.COLOR.whiteColor,
             boxShadow: styleSheet.DECORATION.primaryShadow,
-            borderRadius: styleSheet.DECORATION.RADIUS_10),
+            borderRadius: styleSheet.DECORATION.RADIUS_5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

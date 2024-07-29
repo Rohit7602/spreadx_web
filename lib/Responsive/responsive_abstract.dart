@@ -103,7 +103,7 @@ class TabView implements ResponsiveValues {
   double iconSize = 22;
 
   @override
-  var textFontBold_Medium = styleSheet.TEXT_THEME.fs14Bold;
+  var textFontBold_Medium = styleSheet.TEXT_THEME.fs12Bold;
 
   @override
   var textFontLargeMedium = styleSheet.TEXT_THEME.fs14Medium;
@@ -185,7 +185,7 @@ class WebView implements ResponsiveValues {
   double iconSize = 24;
 
   @override
-  var textFontBold_Medium = styleSheet.TEXT_THEME.fs18Bold;
+  var textFontBold_Medium = styleSheet.TEXT_THEME.fs16Bold;
 
   @override
   double salesCardMinWidth = 130;
@@ -264,7 +264,7 @@ class DesktopView implements ResponsiveValues {
   double iconSize = 25;
 
   @override
-  var textFontBold_Medium = styleSheet.TEXT_THEME.fs20Bold;
+  var textFontBold_Medium = styleSheet.TEXT_THEME.fs18Bold;
 
   @override
   double salesCardMinWidth = 130;

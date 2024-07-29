@@ -46,8 +46,8 @@ class _LoginViewState extends State<LoginView> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.network(
-                        WebConfig.testUrl,
+                      Image.asset(
+                        styleSheet.images.appLogo,
                         width: 280,
                       ),
                       styleSheet.appConfig.addHeight(15),

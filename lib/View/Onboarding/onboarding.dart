@@ -53,7 +53,11 @@ class _OnboardingViewState extends State<OnboardingView> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.network(
+                      Image.asset(
+                        styleSheet.images.appLogo,
+                      ),
+                      styleSheet.appConfig.addHeight(10),
+                      Image.asset(
                         e.image,
                         width: MediaQuery.of(context).size.width * 0.2,
                       ),
@@ -61,7 +65,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                       Text(
                         e.title,
                         textAlign: TextAlign.center,
-                        style: styleSheet.TEXT_THEME.fs16Bold.copyWith(
+                        style: styleSheet.TEXT_THEME.fs16Medium.copyWith(
                             letterSpacing: 1,
                             color: styleSheet.COLOR.greyColor),
                       ).paddingSymmetric(horizontal: 40),

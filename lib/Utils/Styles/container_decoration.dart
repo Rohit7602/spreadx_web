@@ -16,7 +16,7 @@ class ContainerDecoration {
   //  ****************  shadow Section ***************************
   List<BoxShadow> primaryShadow = [
     BoxShadow(
-        color: styleSheet.COLOR.greyColor.withOpacity(0.3), blurRadius: 20)
+        color: styleSheet.COLOR.greyColor.withOpacity(0.3), blurRadius: 10)
   ];
   List<BoxShadow> secondaryShadow = [
     BoxShadow(

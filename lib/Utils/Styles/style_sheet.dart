@@ -17,6 +17,7 @@ class AppColors {
   Color greyColor = Colors.grey;
   Color greenColor = Colors.green;
   Color lightGreyColor = Colors.black.withOpacity(0.04);
+  Color fieldGreyColor = Color(0xffF3F3F3);
   Color lightBlack = const Color(0xffECECEC);
   Color transparent = Colors.transparent;
   Color redColor = Colors.red;

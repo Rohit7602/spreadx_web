@@ -4,14 +4,11 @@ class LocalData {
 // *************** Onboarding Data List ********************
 
   static List<OnboardingListClass> listOfOnbaord = [
-    OnboardingListClass(
-        "https://static.vecteezy.com/system/resources/previews/020/716/201/non_2x/illustration-of-business-man-doing-data-analysis-using-magnifying-glass-data-analytics-makes-predictions-of-future-business-free-png.png",
+    OnboardingListClass(styleSheet.images.onboardingImg,
         "Easily track and manage Customers, suppliers, inventory, finance and Reports."),
-    OnboardingListClass(
-        "https://static.vecteezy.com/system/resources/previews/020/716/201/non_2x/illustration-of-business-man-doing-data-analysis-using-magnifying-glass-data-analytics-makes-predictions-of-future-business-free-png.png",
+    OnboardingListClass(styleSheet.images.onboardingImg,
         "Access SPREADX App Anytime, Anywhere on Desktop, Mobile and Tablets via Android."),
-    OnboardingListClass(
-        "https://static.vecteezy.com/system/resources/previews/020/716/201/non_2x/illustration-of-business-man-doing-data-analysis-using-magnifying-glass-data-analytics-makes-predictions-of-future-business-free-png.png",
+    OnboardingListClass(styleSheet.images.onboardingImg,
         "SPREADX App is Free of use, You can thank us later!"),
   ];
 

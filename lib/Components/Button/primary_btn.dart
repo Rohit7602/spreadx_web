@@ -25,7 +25,7 @@ class PrimaryBtnView extends StatelessWidget {
     return ElevatedButton(
       style: ButtonStyle(
         shape: WidgetStateProperty.all(RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadius ?? 10))),
+            borderRadius: BorderRadius.circular(borderRadius ?? 4))),
         minimumSize: WidgetStateProperty.all(Size(
             MediaQuery.of(context).size.width * 0.2, view.textFieldheight)),
         backgroundColor: WidgetStateProperty.all<Color>(
@@ -60,7 +60,7 @@ class PrimaryBtnWithIcon extends StatelessWidget {
     return ElevatedButton(
       style: ButtonStyle(
         shape: WidgetStateProperty.all(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(4))),
         minimumSize: WidgetStateProperty.all(Size(
             MediaQuery.of(context).size.width * 0.2, view.primaryBtnMaxHeight)),
         backgroundColor: WidgetStateProperty.all<Color>(
@@ -103,7 +103,7 @@ class SecondaryButtonView extends StatelessWidget {
         minimumSize: WidgetStateProperty.all(view.secondarBtnMinWidth),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(4),
           ),
         ),
         backgroundColor: WidgetStateProperty.all<Color>(
@@ -141,7 +141,7 @@ class OutlineButtonView extends StatelessWidget {
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             side: BorderSide(color: styleSheet.COLOR.lightGreyColor),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(4),
           ),
         ),
         backgroundColor: WidgetStateProperty.all<Color>(

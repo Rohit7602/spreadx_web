@@ -161,7 +161,7 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
             ),
           ),
           styleSheet.appConfig.addWidth(30),
-          !isProductCheck
+          isProductCheck
               ? const ProductCheckView()
               : SingleChildScrollView(
                   child: Container(
@@ -306,6 +306,10 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
         return showDialog(
             context: context,
             builder: (context) => const UpdateItemQuantityDialog());
+      case "products":
+        return setState(() {
+          isProductCheck = !isProductCheck;
+        });
 
       default:
         return null;

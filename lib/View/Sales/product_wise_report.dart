@@ -65,7 +65,7 @@ class ProductWiseReportView extends StatelessWidget {
                 padding: styleSheet.DECORATION.PADDING_10,
                 decoration: BoxDecoration(
                   color: styleSheet.COLOR.lightGreyColor,
-                  borderRadius: styleSheet.DECORATION.RADIUS_10,
+                  borderRadius: styleSheet.DECORATION.RADIUS_5,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
