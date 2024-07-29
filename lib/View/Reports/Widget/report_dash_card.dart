@@ -20,7 +20,8 @@ class ReportDashboardCard extends StatelessWidget {
     return InkWell(
       onTap: () => onPressed(),
       child: Container(
-        padding: styleSheet.DECORATION.PADDING_20.copyWith(top: 0, bottom: 0),
+        constraints: const BoxConstraints(minHeight: 200),
+        padding: styleSheet.DECORATION.PADDING_20.copyWith(top: 5, bottom: 5),
         decoration: BoxDecoration(
             color: styleSheet.COLOR.whiteColor,
             boxShadow: styleSheet.DECORATION.primaryShadow,

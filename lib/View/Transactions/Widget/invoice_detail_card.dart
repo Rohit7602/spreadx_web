@@ -30,7 +30,7 @@ class InvoiceDetailCard extends StatelessWidget {
           ),
           Text(
             "Rohit Verma",
-            style: view.textFontBold_Medium,
+            style: view.textFontBold,
           ),
           styleSheet.appConfig.addHeight(20),
           Text(
@@ -39,7 +39,7 @@ class InvoiceDetailCard extends StatelessWidget {
           ),
           Text(
             "# 01",
-            style: view.textFontBold_Medium,
+            style: view.textFontBold,
           ),
           styleSheet.appConfig.addHeight(20),
           Text(
@@ -48,7 +48,7 @@ class InvoiceDetailCard extends StatelessWidget {
           ),
           Text(
             "12 / 06 /24",
-            style: view.textFontBold_Medium,
+            style: view.textFontBold,
           ),
         ],
       ),

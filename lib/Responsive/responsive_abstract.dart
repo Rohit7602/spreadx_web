@@ -215,7 +215,7 @@ class WebView implements ResponsiveValues {
   double dialogWidth = 0.4;
 
   @override
-  double dashboardProductCardFlex = 1;
+  double dashboardProductCardFlex = 2;
 }
 
 // ************ DeskTop View ***************
@@ -282,7 +282,7 @@ class DesktopView implements ResponsiveValues {
   double primaryBtnMaxHeight = 50;
 
   @override
-  double reportCardAspectRatio = 16 / 2;
+  double reportCardAspectRatio = 16 / 3;
 
   @override
   bool drawerTabView = false;
