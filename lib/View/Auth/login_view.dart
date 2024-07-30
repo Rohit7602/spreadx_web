@@ -24,7 +24,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: styleSheet.COLOR.bgColor,
+      backgroundColor: styleSheet.COLOR.bgLightBlueColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -34,15 +34,14 @@ class _LoginViewState extends State<LoginView> {
               Flexible(
                 flex: 1,
                 child: Container(
-                  height: styleSheet.appConfig.getScreenHeight(context) * 0.6,
+                  // height: styleSheet.appConfig.getScreenHeight(context) * 0.6,
                   padding: styleSheet.DECORATION.PADDING_20,
                   alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                      // borderRadius: styleSheet.contDecoration.RADIUS_20,
-                      // color: styleSheet.colors.whiteColor,
-                      // boxShadow: styleSheet.contDecoration.primaryShadow,
-
-                      ),
+                  decoration: BoxDecoration(
+                    // borderRadius: styleSheet.contDecoration.RADIUS_20,
+                    color: styleSheet.COLOR.whiteColor,
+                    // boxShadow: styleSheet.contDecoration.primaryShadow,
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -57,23 +56,15 @@ class _LoginViewState extends State<LoginView> {
                           setAuthState(AuthState.isForgot);
                         },
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(authState == AuthState.isLOGIN
-                              ? "Don't have an account?"
-                              : "Already have an account?"),
-                          TextButtonView(
-                            btnName: authState == AuthState.isLOGIN
-                                ? "Sign Up"
-                                : "Login",
-                            onPressed: () {
-                              setAuthState(authState == AuthState.isLOGIN
-                                  ? AuthState.isSignUp
-                                  : AuthState.isLOGIN);
-                            },
-                          ),
-                        ],
+                      TextButtonView(
+                        btnName: authState == AuthState.isLOGIN
+                            ? "Sign Up"
+                            : "Login",
+                        onPressed: () {
+                          setAuthState(authState == AuthState.isLOGIN
+                              ? AuthState.isSignUp
+                              : AuthState.isLOGIN);
+                        },
                       ),
                     ],
                   ),
@@ -81,15 +72,14 @@ class _LoginViewState extends State<LoginView> {
               ),
               styleSheet.appConfig.addWidth(20),
               Flexible(
-                flex: 1,
+                flex: 2,
                 child: Container(
                   // height: styleSheet.appConfig.getScreenHeight(context) *
                   //     view.loginContainerHeight,
                   padding: styleSheet.DECORATION.PADDING_20,
                   decoration: BoxDecoration(
-                      color: styleSheet.COLOR.whiteColor,
-                      borderRadius: styleSheet.DECORATION.RADIUS_20,
-                      boxShadow: styleSheet.DECORATION.primaryShadow),
+                    color: styleSheet.COLOR.whiteColor,
+                  ),
                   child: LayoutBuilder(
                     builder: (context, constr) {
                       switch (authState) {

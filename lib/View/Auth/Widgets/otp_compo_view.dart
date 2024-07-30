@@ -29,6 +29,7 @@ class OTPComponentView extends StatelessWidget {
                 getBack(AuthState.isForgot);
               },
             ),
+            styleSheet.appConfig.addWidth(20),
             Text(
               "Verify OTP",
               style: view.loginHeadingTextSize,

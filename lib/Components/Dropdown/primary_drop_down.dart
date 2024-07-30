@@ -24,7 +24,7 @@ class PrimaryDropDown extends StatelessWidget {
       height: view.primaryBtnMaxHeight,
       decoration: BoxDecoration(
           color: styleSheet.COLOR.lightGreyColor,
-          borderRadius: BorderRadius.circular(12)),
+          borderRadius: BorderRadius.circular(4)),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
             isExpanded: isExpanded,

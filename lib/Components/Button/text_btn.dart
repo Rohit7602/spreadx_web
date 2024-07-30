@@ -2,11 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
+import 'package:spreadx_web/main.dart';
 
 class TextButtonView extends StatelessWidget {
   String btnName;
   Function onPressed;
-  TextButtonView({required this.btnName, required this.onPressed, super.key});
+  Color? txtColor;
+  TextButtonView(
+      {required this.btnName,
+      required this.onPressed,
+      this.txtColor,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +21,8 @@ class TextButtonView extends StatelessWidget {
         onPressed: () => onPressed(),
         child: Text(
           btnName,
-          style: view.textFontMedium,
+          style: view.textFontMedium
+              .copyWith(color: txtColor ?? styleSheet.COLOR.blueColor),
         ));
   }
 }

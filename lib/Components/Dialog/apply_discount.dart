@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/Button/text_btn.dart';
 import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/main.dart';
@@ -19,19 +20,19 @@ class ApplyDiscountDialog extends StatelessWidget {
             padding: styleSheet.DECORATION.PADDING_10,
             width: styleSheet.appConfig.getScreenWidth(context),
             decoration: BoxDecoration(
-                borderRadius: styleSheet.DECORATION.RADIUS_10,
-                color: styleSheet.COLOR.lightGreyColor),
+                borderRadius: styleSheet.DECORATION.RADIUS_5,
+                color: styleSheet.COLOR.fieldGreyColor),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "Total",
-                  style: styleSheet.TEXT_THEME.fs16Bold,
+                  style: styleSheet.TEXT_THEME.fs10Bold,
                 ),
-                styleSheet.appConfig.addHeight(6),
+                styleSheet.appConfig.addHeight(4),
                 Text(
                   "AED 0.0",
-                  style: styleSheet.TEXT_THEME.fs14Medium,
+                  style: styleSheet.TEXT_THEME.fs16Bold,
                 ),
               ],
             ),
@@ -63,15 +64,16 @@ class ApplyDiscountDialog extends StatelessWidget {
             padding: styleSheet.DECORATION.PADDING_10,
             width: styleSheet.appConfig.getScreenWidth(context),
             decoration: BoxDecoration(
-                borderRadius: styleSheet.DECORATION.RADIUS_10,
-                color: styleSheet.COLOR.primaryColor.withOpacity(0.1)),
+                borderRadius: styleSheet.DECORATION.RADIUS_5,
+                color: styleSheet.COLOR.discountCardGrenColor),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "New Total",
-                  style: styleSheet.TEXT_THEME.fs12Medium,
+                  style: styleSheet.TEXT_THEME.fs10Bold,
                 ),
+                styleSheet.appConfig.addHeight(4),
                 Text(
                   "AED 0.0",
                   style: styleSheet.TEXT_THEME.fs16Bold,
@@ -79,6 +81,24 @@ class ApplyDiscountDialog extends StatelessWidget {
               ],
             ),
           ),
+          styleSheet.appConfig.addHeight(20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButtonView(
+                  txtColor: styleSheet.COLOR.greyColor,
+                  btnName: "Cancel",
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+              styleSheet.appConfig.addWidth(20),
+              SecondaryButtonView(
+                  btnName: "Apply",
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+            ],
+          )
         ],
       ).paddingAll(20),
     );

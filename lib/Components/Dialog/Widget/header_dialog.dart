@@ -15,7 +15,10 @@ class CustomHeaderDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
     return Dialog(
-      child: SizedBox(
+      child: Container(
+        constraints: BoxConstraints(
+            minHeight: 350,
+            maxHeight: styleSheet.appConfig.getScreenHeight(context) * 0.8),
         width: styleSheet.appConfig.getScreenWidth(context) * view.dialogWidth,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -24,7 +27,7 @@ class CustomHeaderDialog extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               alignment: Alignment.centerLeft,
               height: 60,
-              color: styleSheet.COLOR.primaryColor,
+              color: styleSheet.COLOR.blueColor,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

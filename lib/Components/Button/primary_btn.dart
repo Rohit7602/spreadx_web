@@ -25,9 +25,9 @@ class PrimaryBtnView extends StatelessWidget {
     return ElevatedButton(
       style: ButtonStyle(
         shape: WidgetStateProperty.all(RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadius ?? 4))),
-        minimumSize: WidgetStateProperty.all(Size(
-            MediaQuery.of(context).size.width * 0.2, view.textFieldheight)),
+            borderRadius: BorderRadius.circular(borderRadius ?? 2))),
+        minimumSize: WidgetStateProperty.all(
+            Size(MediaQuery.of(context).size.width * 0.2, 40)),
         backgroundColor: WidgetStateProperty.all<Color>(
             btnColor ?? styleSheet.COLOR.primaryColor),
       ),
@@ -112,7 +112,7 @@ class SecondaryButtonView extends StatelessWidget {
       onPressed: () => onPressed(),
       child: Text(
         btnName,
-        style: view.textFontNormal
+        style: styleSheet.TEXT_THEME.fs14Normal
             .copyWith(color: txtColor ?? styleSheet.COLOR.whiteColor),
       ),
     );
@@ -152,6 +152,38 @@ class OutlineButtonView extends StatelessWidget {
         btnName,
         style: view.textFontNormal
             .copyWith(color: txtColor ?? styleSheet.COLOR.whiteColor),
+      ),
+    );
+  }
+}
+
+class KeyboardButtonView extends StatelessWidget {
+  String btnName;
+  Function onPressed;
+
+  KeyboardButtonView(
+      {required this.btnName, required this.onPressed, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final view = ResponsiveHandler().getResponsiveness(context);
+    return ElevatedButton(
+      style: ButtonStyle(
+        elevation: WidgetStateProperty.all(0),
+        minimumSize: WidgetStateProperty.all(view.secondarBtnMinWidth),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(0),
+          ),
+        ),
+        backgroundColor:
+            WidgetStateProperty.all<Color>(styleSheet.COLOR.keyboardBtnColor),
+      ),
+      onPressed: () => onPressed(),
+      child: Text(
+        btnName,
+        style: styleSheet.TEXT_THEME.fs14Bold
+            .copyWith(color: styleSheet.COLOR.blackColor),
       ),
     );
   }

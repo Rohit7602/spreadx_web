@@ -33,6 +33,7 @@ class _CreatePDComponentViewState extends State<CreatePDComponentView> {
                 widget.getBack(AuthState.isForgot);
               },
             ),
+            styleSheet.appConfig.addWidth(20),
             Text(
               "Create Password",
               style: view.loginHeadingTextSize,
@@ -67,7 +68,7 @@ class _CreatePDComponentViewState extends State<CreatePDComponentView> {
         PrimaryBtnView(
           btnName: "Create Password",
           onPressed: () {
-            context.go(MyRoute.salesReport);
+            context.go(MyRoute.mainDashboard);
           },
         ),
       ],

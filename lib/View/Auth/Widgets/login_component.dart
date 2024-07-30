@@ -1,3 +1,6 @@
+import 'package:country_pickers/country.dart';
+import 'package:country_pickers/country_picker_dropdown.dart';
+import 'package:country_pickers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
@@ -22,6 +25,7 @@ class _LoginComponentViewState extends State<LoginComponentView> {
 
   bool isPhoneSelected = true;
   bool isVisibility = false;
+  bool isRemember = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +35,6 @@ class _LoginComponentViewState extends State<LoginComponentView> {
       child: ListView(
         shrinkWrap: true,
         children: [
-          Text(
-            "Login",
-            style: view.loginHeadingTextSize,
-          ),
-          styleSheet.appConfig.addHeight(40),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -96,19 +95,27 @@ class _LoginComponentViewState extends State<LoginComponentView> {
           ),
           styleSheet.appConfig.addHeight(40),
           isPhoneSelected
-              ? PrimaryTextFormField(
+              ? SecondaryTextFormField(
+                  prefixIcon: SizedBox(
+                    width: 140,
+                    child: CountryPickerDropdown(
+                      isExpanded: true,
+                      initialValue: 'in',
+                      itemBuilder: _buildDropdownItem,
+                      onValuePicked: (Country country) {},
+                    ),
+                  ),
                   keyboardtype: TextInputType.phone,
                   controller: phoneController,
-                  suffixicon: const Icon(Icons.phone),
-                  hinttext: "Phone Number",
+                  hinttext: "(50 | 52 | 54 | 55 | 56 | 58 | xxxxx)",
                 )
-              : PrimaryTextFormField(
+              : SecondaryTextFormField(
                   controller: emailController,
                   suffixicon: const Icon(Icons.mail),
                   hinttext: "Email",
                 ),
           styleSheet.appConfig.addHeight(20),
-          PrimaryTextFormField(
+          SecondaryTextFormField(
             controller: passwordController,
             suffixicon: GestureDetector(
                 onTap: () {
@@ -118,6 +125,26 @@ class _LoginComponentViewState extends State<LoginComponentView> {
                 child: const Icon(Icons.visibility_outlined)),
             hinttext: "Password",
             obscureText: isVisibility,
+          ),
+          styleSheet.appConfig.addHeight(20),
+          Row(
+            children: [
+              Transform.scale(
+                scale: 0.8,
+                child: Checkbox(
+                    value: isRemember,
+                    onChanged: (val) {
+                      setState(() {
+                        isRemember = !isRemember;
+                      });
+                    }),
+              ),
+              styleSheet.appConfig.addWidth(10),
+              Text(
+                "Remember me",
+                style: styleSheet.TEXT_THEME.fs12Medium,
+              ),
+            ],
           ),
           styleSheet.appConfig.addHeight(20),
           PrimaryBtnView(
@@ -132,4 +159,16 @@ class _LoginComponentViewState extends State<LoginComponentView> {
       ),
     );
   }
+
+  Widget _buildDropdownItem(Country country) => Container(
+        child: Row(
+          children: <Widget>[
+            CountryPickerUtils.getDefaultFlagImage(country),
+            const SizedBox(
+              width: 8.0,
+            ),
+            Text("+${country.phoneCode}"),
+          ],
+        ),
+      );
 }

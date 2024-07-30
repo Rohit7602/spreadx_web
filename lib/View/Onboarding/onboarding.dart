@@ -28,95 +28,84 @@ class _OnboardingViewState extends State<OnboardingView> {
 
     return Scaffold(
       backgroundColor: styleSheet.COLOR.primaryColor,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: styleSheet.COLOR.transparent,
+        actions: [
+          TextButton(
+              onPressed: () {
+                context.go(MyRoute.login);
+              },
+              child: Text(
+                "Skip",
+                style: styleSheet.TEXT_THEME.fs12Normal
+                    .copyWith(color: styleSheet.COLOR.whiteColor),
+              ))
+        ],
+      ),
       body: Center(
-        child: Container(
-          constraints: BoxConstraints(maxHeight: view.carousolMaxHeight),
-          width: view.carousolMaxWidth,
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          margin: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-              borderRadius: styleSheet.DECORATION.RADIUS_20,
-              boxShadow: styleSheet.DECORATION.primaryShadow,
-              color: styleSheet.COLOR.whiteColor),
-          child: Column(
-            children: [
-              CarouselSlider(
-                options: CarouselOptions(
-                    onPageChanged: (val, i) {
-                      setState(() {
-                        currentIndex = val;
-                      });
-                    },
-                    aspectRatio: 1,
-                    viewportFraction: 1),
-                items: onboardList.map((e) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        styleSheet.images.appLogo,
-                      ),
-                      styleSheet.appConfig.addHeight(10),
-                      Image.asset(
-                        e.image,
-                        width: MediaQuery.of(context).size.width * 0.2,
-                      ),
-                      styleSheet.appConfig.addHeight(40),
-                      Text(
-                        e.title,
-                        textAlign: TextAlign.center,
-                        style: styleSheet.TEXT_THEME.fs16Medium.copyWith(
-                            letterSpacing: 1,
-                            color: styleSheet.COLOR.greyColor),
-                      ).paddingSymmetric(horizontal: 40),
-                    ],
-                  );
-                }).toList(),
-              ),
-              (currentIndex + 1) == onboardList.length
-                  ? PrimaryBtnView(
-                      btnName: "Get Started",
-                      onPressed: () {
-                        context.go(MyRoute.login);
-                      })
-                  : Column(
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ...List.generate(
-                              onboardList.length,
-                              (i) => Container(
-                                margin: const EdgeInsets.only(right: 8),
-                                height: 10,
-                                width: currentIndex == i ? 35 : 12,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: styleSheet.COLOR.primaryColor,
-                                        width: 2),
-                                    color: currentIndex == i
-                                        ? styleSheet.COLOR.primaryColor
-                                        : styleSheet.COLOR.whiteColor,
-                                    borderRadius: BorderRadius.circular(20)),
-                              ),
-                            ),
-                          ],
-                        ),
-                        styleSheet.appConfig.addHeight(20),
-                        TextButton(
-                            onPressed: () {
-                              context.go(MyRoute.login);
-                            },
-                            child: Text(
-                              "Skip",
-                              style: styleSheet.TEXT_THEME.fs14Bold.copyWith(
-                                  color: styleSheet.COLOR.primaryColor),
-                            ))
-                      ],
-                    ),
-            ],
+        child: CarouselSlider(
+          options: CarouselOptions(
+            onPageChanged: (val, i) {
+              setState(() {
+                currentIndex = val;
+              });
+            },
+            // aspectRatio: 1.346,
+            aspectRatio: 3,
+            viewportFraction: 1,
           ),
+          items: onboardList.map((e) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                const SizedBox(),
+                Image.asset(
+                  e.image,
+                  width: MediaQuery.of(context).size.width * 0.2,
+                ),
+                styleSheet.appConfig.addHeight(40),
+                Text(
+                  e.title,
+                  textAlign: TextAlign.center,
+                  style: styleSheet.TEXT_THEME.fs16Normal.copyWith(
+                      letterSpacing: 1, color: styleSheet.COLOR.whiteColor),
+                ).paddingSymmetric(horizontal: 40),
+              ],
+            );
+          }).toList(),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        alignment: Alignment.center,
+        height: styleSheet.appConfig.getScreenHeight(context) * 0.2,
+        width: styleSheet.appConfig.getScreenWidth(context),
+        decoration: BoxDecoration(
+            color: styleSheet.COLOR.whiteColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
+            )),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ...List.generate(
+              onboardList.length,
+              (i) => Container(
+                margin: const EdgeInsets.only(right: 8),
+                height: 10,
+                width: 10,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: styleSheet.COLOR.primaryColor, width: 2),
+                    color: currentIndex == i
+                        ? styleSheet.COLOR.primaryColor
+                        : styleSheet.COLOR.whiteColor,
+                    borderRadius: BorderRadius.circular(20)),
+              ),
+            ),
+          ],
         ),
       ),
     );

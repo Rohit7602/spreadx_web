@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:spreadx_web/Data/enum.dart';
 import 'package:spreadx_web/View/Dashboard/dashboard_screen.dart';
-import 'package:spreadx_web/View/Drawer/menu_drawer.dart';
 import 'package:spreadx_web/View/Reports/reports_view.dart';
 import 'package:spreadx_web/View/Sales/product_wise_report.dart';
 import 'package:spreadx_web/View/Sales/sales_report.dart';
@@ -26,42 +25,18 @@ class _MainDashboardState extends State<MainDashboard> {
         builder: (context, constraints) {
           switch (drawerState) {
             case DrawerState.Sales:
-              return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MenuDrawerView(onTap: setDrawerState),
-                    Expanded(child: SalesReportView())
-                  ]);
+              return SalesReportView();
             case DrawerState.Product:
-              return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    MenuDrawerView(onTap: setDrawerState),
-                    const Expanded(child: ProductWiseReportView())
-                  ]);
+              return const ProductWiseReportView();
             case DrawerState.Inventory:
-              return Row(children: [
-                MenuDrawerView(onTap: setDrawerState),
-                DashboardScreenView()
-              ]);
+              return const DashboardScreenView();
             case DrawerState.Transactions:
-              return Row(children: [
-                MenuDrawerView(onTap: setDrawerState),
-                const Expanded(child: TransactionListView())
-              ]);
+              return const TransactionListView();
             case DrawerState.Report:
-              return Row(children: [
-                MenuDrawerView(onTap: setDrawerState),
-                const Expanded(child: ReportsView())
-              ]);
+              return const ReportsView();
 
             default:
-              return Row(
-                children: [
-                  MenuDrawerView(onTap: setDrawerState),
-                  DashboardScreenView()
-                ],
-              );
+              return const DashboardScreenView();
           }
         },
       ),
@@ -73,3 +48,6 @@ class _MainDashboardState extends State<MainDashboard> {
     setState(() {});
   }
 }
+
+
+              //  MenuDrawerView(onTap: setDrawerState),

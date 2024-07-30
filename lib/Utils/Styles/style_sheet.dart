@@ -10,20 +10,25 @@ class AppColors {
     return _instance;
   }
   Color primaryColor = const Color(0xff2C5E9E);
+  Color primarybuttonColor = const Color(0xff00658D);
   Color secondaryColor = const Color(0xff2C5E9E).withOpacity(0.3);
   Color primaryDarkBGColor = const Color(0xff1E3D6B);
+  Color keyboardBtnColor = const Color(0xffE6ECEC);
+
   Color blackColor = Colors.black;
   Color whiteColor = Colors.white;
   Color greyColor = Colors.grey;
   Color greenColor = Colors.green;
+  Color discountCardGrenColor = const Color(0xffC8E6CA);
+  Color productCardGreyColor = const Color(0xffCCCCCC);
   Color lightGreyColor = Colors.black.withOpacity(0.04);
-  Color fieldGreyColor = const Color(0xffF3F3F3);
-  Color lightBlack = const Color(0xffECECEC);
+  Color fieldGreyColor = const Color(0xffEEEEEE);
   Color transparent = Colors.transparent;
   Color redColor = Colors.red;
   Color blueColor = Colors.blue;
-  Color lightBlueColor = const Color(0xff2c5e9e33);
+  Color lightBlueColor = const Color.fromARGB(255, 226, 247, 255);
   Color bgColor = const Color(0xffF5F5F5);
+  Color bgLightBlueColor = const Color(0xffF6FEFF);
 }
 
 class AppTextTheme {
@@ -60,6 +65,8 @@ class AppTextTheme {
       const TextStyle(fontSize: 34, fontWeight: FontWeight.w400);
 
   // MEDIUM
+  TextStyle fs10Medium =
+      const TextStyle(fontSize: 10, fontWeight: FontWeight.w400);
   TextStyle fs12Medium =
       const TextStyle(fontSize: 12, fontWeight: FontWeight.w500);
   TextStyle fs14Medium =
@@ -78,6 +85,8 @@ class AppTextTheme {
       const TextStyle(fontSize: 29, fontWeight: FontWeight.w500);
 
   //bold
+  TextStyle fs10Bold =
+      const TextStyle(fontSize: 10, fontWeight: FontWeight.w700);
   TextStyle fs12Bold =
       const TextStyle(fontSize: 12, fontWeight: FontWeight.w700);
   // BOLD

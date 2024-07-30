@@ -9,10 +9,15 @@ class AppImage {
     return _instance;
   }
   String appLogo = "assets/Logo/logo.png";
+  String appLogoWhite = "assets/Logo/logo_white.png";
+  String appLogoLarge = "assets/Logo/large_logo.png";
 
   // ***************  Images ***********
 
   String onboardingImg = "assets/Image/onboarding.png";
+  String onboarding1Img = "assets/Image/onboarding_1.png";
+  String onboarding2Img = "assets/Image/onboarding_2.png";
+  String onboarding3Img = "assets/Image/onboarding_3.png";
 }
 
 // SVG Images
@@ -38,6 +43,8 @@ class AppIcons {
   String dataCenterIcon = "assets/Icons/data_center_icon.png";
   String mainSetupIcon = "assets/Icons/main_setup_icon.png";
   String supportIcon = "assets/Icons/support_icon.png";
+  String screenIcon = "assets/Icons/screen_icon.png";
+  String moneyIcon = "assets/Icons/money_icon.png";
 
   String salesIcon = "assets/Icons/sales_icon.png";
   String printIcon = "assets/Icons/print_icon.png";

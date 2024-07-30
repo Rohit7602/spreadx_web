@@ -34,7 +34,9 @@ class _MyAppState extends State<MyApp> {
       routerDelegate: router.routerDelegate,
       routeInformationParser: router.routeInformationParser,
       theme: ThemeData(
-        fontFamily: GoogleFonts.outfit().fontFamily,
+        appBarTheme:
+            AppBarTheme(backgroundColor: styleSheet.COLOR.primaryColor),
+        fontFamily: GoogleFonts.inter().fontFamily,
         useMaterial3: false,
       ),
       debugShowCheckedModeBanner: false,

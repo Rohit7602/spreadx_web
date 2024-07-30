@@ -149,13 +149,13 @@ class WebView implements ResponsiveValues {
   double carousolMaxHeight = 600;
 
   @override
-  Size secondarBtnMinWidth = const Size(150, 45);
+  Size secondarBtnMinWidth = const Size(150, 40);
 
   @override
-  double textFieldheight = 45;
+  double textFieldheight = 40;
 
   @override
-  double tableSmallWidth = 100;
+  double tableSmallWidth = 60;
 
   @override
   double tableLargeWidth = 350;
@@ -173,7 +173,7 @@ class WebView implements ResponsiveValues {
   var textFontBold = styleSheet.TEXT_THEME.fs14Bold;
 
   @override
-  double keyboardBtnSize = 12 / 5;
+  double keyboardBtnSize = 12 / 7;
 
   @override
   double loginContainerHeight = 0.7;
@@ -212,7 +212,7 @@ class WebView implements ResponsiveValues {
   double dashboardSummaryCardWidth = 320;
 
   @override
-  double dialogWidth = 0.4;
+  double dialogWidth = 0.5;
 
   @override
   double dashboardProductCardFlex = 2;
@@ -228,13 +228,13 @@ class DesktopView implements ResponsiveValues {
   double carousolMaxHeight = 650;
 
   @override
-  Size secondarBtnMinWidth = const Size(200, 50);
+  Size secondarBtnMinWidth = const Size(200, 40);
 
   @override
-  double textFieldheight = 50;
+  double textFieldheight = 40;
 
   @override
-  double tableSmallWidth = 150;
+  double tableSmallWidth = 60;
 
   @override
   double tableLargeWidth = 400;

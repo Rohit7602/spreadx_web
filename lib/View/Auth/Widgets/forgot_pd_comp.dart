@@ -37,6 +37,7 @@ class _LoginComponentViewState extends State<ForgotPDCompoView> {
                   widget.onSendOTP(AuthState.isLOGIN);
                 },
               ),
+              styleSheet.appConfig.addWidth(20),
               Text(
                 "Forgot",
                 style: view.loginHeadingTextSize,

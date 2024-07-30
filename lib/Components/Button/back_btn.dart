@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
+import 'package:spreadx_web/main.dart';
 
 class BackButtonView extends StatelessWidget {
   Function? onpressed;
@@ -19,11 +20,14 @@ class BackButtonView extends StatelessWidget {
             onpressed != null ? onpressed!() : Get.back();
           },
           child: Container(
-            margin: const EdgeInsets.only(right: 25),
-            padding: const EdgeInsets.all(4),
+            padding: styleSheet.DECORATION.PADDING_5,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: styleSheet.COLOR.primaryDarkBGColor),
             child: Icon(
               Icons.arrow_back,
               size: view.iconSize,
+              color: styleSheet.COLOR.whiteColor,
             ),
           ),
         ),

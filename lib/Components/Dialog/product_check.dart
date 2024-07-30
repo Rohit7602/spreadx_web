@@ -22,7 +22,6 @@ class ProductCheckDialog extends StatelessWidget {
                   )),
               styleSheet.appConfig.addWidth(15),
               PrimaryBtnView(
-                borderRadius: 10,
                 btnName: "Search",
                 onPressed: () {},
               )
@@ -31,7 +30,7 @@ class ProductCheckDialog extends StatelessWidget {
           styleSheet.appConfig.addHeight(30),
           Text(
             "Scan product or enter barcode manually",
-            style: styleSheet.TEXT_THEME.fs14Medium
+            style: styleSheet.TEXT_THEME.fs12Normal
                 .copyWith(color: styleSheet.COLOR.greyColor),
           ),
           styleSheet.appConfig.addHeight(30),

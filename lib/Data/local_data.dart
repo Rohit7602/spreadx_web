@@ -4,11 +4,11 @@ class LocalData {
 // *************** Onboarding Data List ********************
 
   static List<OnboardingListClass> listOfOnbaord = [
-    OnboardingListClass(styleSheet.images.onboardingImg,
+    OnboardingListClass(styleSheet.images.onboarding1Img,
         "Easily track and manage Customers, suppliers, inventory, finance and Reports."),
-    OnboardingListClass(styleSheet.images.onboardingImg,
+    OnboardingListClass(styleSheet.images.onboarding2Img,
         "Access SPREADX App Anytime, Anywhere on Desktop, Mobile and Tablets via Android."),
-    OnboardingListClass(styleSheet.images.onboardingImg,
+    OnboardingListClass(styleSheet.images.onboarding3Img,
         "SPREADX App is Free of use, You can thank us later!"),
   ];
 
