@@ -64,7 +64,7 @@ class _TransactionsInvoiceViewState extends State<TransactionsInvoiceView> {
                   ),
                   styleSheet.appConfig.addWidth(15),
                   Container(
-                    height: view.primaryBtnMaxHeight,
+                    height: 40,
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     decoration: BoxDecoration(
                         color: styleSheet.COLOR.blackColor,

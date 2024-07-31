@@ -21,7 +21,7 @@ class PrimaryDropDown extends StatelessWidget {
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
     return Container(
-      height: view.primaryBtnMaxHeight,
+      height: 40,
       decoration: BoxDecoration(
           color: styleSheet.COLOR.lightGreyColor,
           borderRadius: BorderRadius.circular(4)),

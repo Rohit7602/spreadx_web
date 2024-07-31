@@ -10,6 +10,7 @@ class PrimaryBtnView extends StatelessWidget {
   Color? btnColor;
   Color? txtColor;
   double? borderRadius;
+  bool isExpanded;
 
   PrimaryBtnView(
       {required this.btnName,
@@ -17,12 +18,13 @@ class PrimaryBtnView extends StatelessWidget {
       this.btnColor,
       this.txtColor,
       this.borderRadius,
+      this.isExpanded = false,
       super.key});
 
   @override
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
-    return ElevatedButton(
+    var btn = ElevatedButton(
       style: ButtonStyle(
         shape: WidgetStateProperty.all(RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius ?? 2))),
@@ -38,6 +40,12 @@ class PrimaryBtnView extends StatelessWidget {
             .copyWith(color: txtColor ?? styleSheet.COLOR.whiteColor),
       ),
     );
+
+    return isExpanded
+        ? Row(
+            children: [Expanded(child: btn)],
+          )
+        : btn;
   }
 }
 
@@ -61,8 +69,8 @@ class PrimaryBtnWithIcon extends StatelessWidget {
       style: ButtonStyle(
         shape: WidgetStateProperty.all(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(4))),
-        minimumSize: WidgetStateProperty.all(Size(
-            MediaQuery.of(context).size.width * 0.2, view.primaryBtnMaxHeight)),
+        minimumSize: WidgetStateProperty.all(
+            Size(MediaQuery.of(context).size.width * 0.2, 40)),
         backgroundColor: WidgetStateProperty.all<Color>(
             btnColor ?? styleSheet.COLOR.primaryColor),
       ),
@@ -112,7 +120,7 @@ class SecondaryButtonView extends StatelessWidget {
       onPressed: () => onPressed(),
       child: Text(
         btnName,
-        style: styleSheet.TEXT_THEME.fs14Normal
+        style: styleSheet.TEXT_THEME.fs12Normal
             .copyWith(color: txtColor ?? styleSheet.COLOR.whiteColor),
       ),
     );
@@ -160,9 +168,15 @@ class OutlineButtonView extends StatelessWidget {
 class KeyboardButtonView extends StatelessWidget {
   String btnName;
   Function onPressed;
+  Widget widget;
+  int index;
 
   KeyboardButtonView(
-      {required this.btnName, required this.onPressed, super.key});
+      {required this.btnName,
+      required this.onPressed,
+      required this.widget,
+      required this.index,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -171,6 +185,8 @@ class KeyboardButtonView extends StatelessWidget {
       style: ButtonStyle(
         elevation: WidgetStateProperty.all(0),
         minimumSize: WidgetStateProperty.all(view.secondarBtnMinWidth),
+        maximumSize: WidgetStateProperty.all(
+            Size(styleSheet.appConfig.getScreenWidth(context) * 0.6, 50)),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(0),
@@ -180,11 +196,13 @@ class KeyboardButtonView extends StatelessWidget {
             WidgetStateProperty.all<Color>(styleSheet.COLOR.keyboardBtnColor),
       ),
       onPressed: () => onPressed(),
-      child: Text(
-        btnName,
-        style: styleSheet.TEXT_THEME.fs14Bold
-            .copyWith(color: styleSheet.COLOR.blackColor),
-      ),
+      child: index == 11
+          ? widget
+          : Text(
+              btnName,
+              style: styleSheet.TEXT_THEME.fs14Bold
+                  .copyWith(color: styleSheet.COLOR.blackColor),
+            ),
     );
   }
 }

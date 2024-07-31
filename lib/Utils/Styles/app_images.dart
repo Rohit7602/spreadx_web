@@ -18,6 +18,7 @@ class AppImage {
   String onboarding1Img = "assets/Image/onboarding_1.png";
   String onboarding2Img = "assets/Image/onboarding_2.png";
   String onboarding3Img = "assets/Image/onboarding_3.png";
+  String empty_cart = "assets/Image/empty_cart.png";
 }
 
 // SVG Images
@@ -45,6 +46,7 @@ class AppIcons {
   String supportIcon = "assets/Icons/support_icon.png";
   String screenIcon = "assets/Icons/screen_icon.png";
   String moneyIcon = "assets/Icons/money_icon.png";
+  String moneyIconWithoutAmount = "assets/Icons/money_without_amount.png";
 
   String salesIcon = "assets/Icons/sales_icon.png";
   String printIcon = "assets/Icons/print_icon.png";

@@ -34,7 +34,6 @@ abstract class ResponsiveValues {
 
   late double keyboardBtnSize;
   late double iconSize;
-  late double primaryBtnMaxHeight;
 
 // ************ Sales Reports Card Responsive ***************
 
@@ -121,8 +120,6 @@ class TabView implements ResponsiveValues {
   double drawerCardAspectRatio = 16 / 6;
 
   @override
-  double primaryBtnMaxHeight = 40;
-
   @override
   double reportCardAspectRatio = 10 / 3;
 
@@ -182,7 +179,7 @@ class WebView implements ResponsiveValues {
   var loginHeadingTextSize = styleSheet.TEXT_THEME.fs24Bold;
 
   @override
-  double iconSize = 24;
+  double iconSize = 20;
 
   @override
   var textFontBold_Medium = styleSheet.TEXT_THEME.fs16Bold;
@@ -200,8 +197,6 @@ class WebView implements ResponsiveValues {
   double drawerCardAspectRatio = 10 / 3.5;
 
   @override
-  double primaryBtnMaxHeight = 50;
-
   @override
   double reportCardAspectRatio = 16 / 5;
 
@@ -261,7 +256,7 @@ class DesktopView implements ResponsiveValues {
   var loginHeadingTextSize = styleSheet.TEXT_THEME.fs26Bold;
 
   @override
-  double iconSize = 25;
+  double iconSize = 20;
 
   @override
   var textFontBold_Medium = styleSheet.TEXT_THEME.fs18Bold;
@@ -279,8 +274,6 @@ class DesktopView implements ResponsiveValues {
   double drawerCardAspectRatio = 10 / 2;
 
   @override
-  double primaryBtnMaxHeight = 50;
-
   @override
   double reportCardAspectRatio = 16 / 3;
 

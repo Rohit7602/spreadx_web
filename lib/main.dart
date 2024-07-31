@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:spreadx_web/Components/Controller/initial_binding.dart';
 import 'package:spreadx_web/Responsive/responsive_abstract.dart';
 import 'package:spreadx_web/Utils/Routes/route_config.dart';
 import 'package:spreadx_web/Utils/constant_sheet.dart';
@@ -12,7 +13,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   styleSheet = ConstantSheet.instance;
 
-  WindowManager.instance.setMinimumSize(const Size(800, 810));
+  WindowManager.instance.setMinimumSize(const Size(1024, 810));
   // WindowManager.instance.setMinimumSize(const Size(1380, 720));
 
   runApp(const MyApp());
@@ -30,6 +31,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp.router(
+      initialBinding: InitialBinding(),
       routeInformationProvider: router.routeInformationProvider,
       routerDelegate: router.routerDelegate,
       routeInformationParser: router.routeInformationParser,

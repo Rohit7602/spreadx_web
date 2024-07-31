@@ -43,7 +43,15 @@ class CustomItemDialog extends StatelessWidget {
                 childAspectRatio: 10 / 3),
             itemBuilder: (context, i) {
               var btn = LocalData.keyboardBtnList[i];
-              return KeyboardButtonView(btnName: btn.btnName, onPressed: () {});
+              return KeyboardButtonView(
+                widget: Icon(
+                  Icons.backspace_outlined,
+                  color: styleSheet.COLOR.redColor,
+                ),
+                index: i,
+                btnName: btn.btnName,
+                onPressed: () {},
+              );
             },
           ),
           styleSheet.appConfig.addHeight(10),

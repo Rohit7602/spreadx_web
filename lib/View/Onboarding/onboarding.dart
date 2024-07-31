@@ -2,6 +2,7 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
@@ -24,8 +25,6 @@ class _OnboardingViewState extends State<OnboardingView> {
 
   @override
   Widget build(BuildContext context) {
-    final view = ResponsiveHandler().getResponsiveness(context);
-
     return Scaffold(
       backgroundColor: styleSheet.COLOR.primaryColor,
       appBar: AppBar(

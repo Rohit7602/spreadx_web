@@ -32,6 +32,7 @@ class ContainerDecoration {
 
   //  ****************  Padding Section ***************************
 
+  EdgeInsets PADDING_2 = const EdgeInsets.all(2);
   EdgeInsets PADDING_5 = const EdgeInsets.all(5);
   EdgeInsets PADDING_10 = const EdgeInsets.all(10);
   EdgeInsets PADDING_20 = const EdgeInsets.all(20);

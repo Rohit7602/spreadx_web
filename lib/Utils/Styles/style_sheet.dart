@@ -19,12 +19,13 @@ class AppColors {
   Color whiteColor = Colors.white;
   Color greyColor = Colors.grey;
   Color greenColor = Colors.green;
+  Color darkGreenColor = Color(0xff37913A);
   Color discountCardGrenColor = const Color(0xffC8E6CA);
   Color productCardGreyColor = const Color(0xffCCCCCC);
   Color lightGreyColor = Colors.black.withOpacity(0.04);
   Color fieldGreyColor = const Color(0xffEEEEEE);
   Color transparent = Colors.transparent;
-  Color redColor = Colors.red;
+  Color redColor = const Color(0xffb71c1c);
   Color blueColor = Colors.blue;
   Color lightBlueColor = const Color.fromARGB(255, 226, 247, 255);
   Color bgColor = const Color(0xffF5F5F5);

@@ -2,24 +2,30 @@
 
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spreadx_web/Components/Appbar/custom_appbar.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/Controller/product_controller.dart';
 import 'package:spreadx_web/Components/Dialog/apply_discount.dart';
 import 'package:spreadx_web/Components/Dialog/assign_customer_dialog.dart';
+import 'package:spreadx_web/Components/Dialog/barcode_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/custom_item_dialog.dart';
+import 'package:spreadx_web/Components/Dialog/money_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/product_check.dart';
 import 'package:spreadx_web/Components/Dialog/update_item_quantity.dart';
 import 'package:spreadx_web/Components/Dialog/update_product_price.dart';
 import 'package:spreadx_web/Components/custom_row.dart';
+import 'package:spreadx_web/Components/keyboard_component.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/Utils/Routes/routes.dart';
 import 'package:spreadx_web/View/Dashboard/Widget/product_check.dart';
+import 'package:spreadx_web/View/Dashboard/queue_list.dart';
+import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
+
+import '../../Components/Dialog/item_details_dialog.dart';
 
 class DashboardScreenView extends StatefulWidget {
   const DashboardScreenView({super.key});
@@ -29,10 +35,17 @@ class DashboardScreenView extends StatefulWidget {
 }
 
 class _DashboardScreenViewState extends State<DashboardScreenView> {
+  final amountController = TextEditingController();
+  final barcodeController = TextEditingController();
+  final quantityController = TextEditingController();
+
+  var product = Get.find<ProductController>();
+
   var btnList = LocalData.buttonList;
 
   bool isProductCheck = false;
-
+  bool isQueueList = false;
+  dynamic isPaymentCash;
   int selectedValue = 0;
 
   @override
@@ -58,8 +71,6 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Widget to show Drawer Section
-          // MenuDrawerView(),
           Expanded(
             child: Container(
               padding: const EdgeInsets.all(10),
@@ -72,16 +83,41 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
                       styleSheet.appConfig.addHeight(10),
                       Row(
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: PrimaryTextFormField(
+                              controller: barcodeController,
+                              onTap: () async {
+                                await showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return BarcodeDialog(
+                                        hintText: "Enter Barcode",
+                                      );
+                                    }).then((val) {
+                                  barcodeController.text = val;
+                                  setState(() {});
+                                });
+                              },
                               hinttext: "Barcode",
                             ),
                           ),
                           styleSheet.appConfig.addWidth(10),
-                          const Expanded(
+                          Expanded(
                             child: PrimaryTextFormField(
-                              hinttext: "Qty",
-                            ),
+                                controller: quantityController,
+                                hinttext: "Qty",
+                                onTap: () async {
+                                  await showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return BarcodeDialog(
+                                          hintText: "Enter QTY",
+                                        );
+                                      }).then((val) {
+                                    quantityController.text = val;
+                                    setState(() {});
+                                  });
+                                }),
                           ),
                           styleSheet.appConfig.addWidth(10),
                           SecondaryButtonView(
@@ -91,72 +127,116 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
                         ],
                       ),
                       styleSheet.appConfig.addHeight(10),
-                      SizedBox(
-                        height:
-                            styleSheet.appConfig.getScreenHeight(context) * 0.3,
-                        child: DataTable2(
-                          dataRowHeight: 40,
-                          headingRowHeight: 30,
-                          columnSpacing: 5,
-                          horizontalMargin: 12,
-                          columns: [
-                            DataColumn2(
-                              fixedWidth: view.tableSmallWidth,
-                              label: const Text('No.'),
-                              size: ColumnSize.L,
-                            ),
-                            const DataColumn2(
-                              label: Text('Description'),
-                            ),
-                            DataColumn2(
-                              fixedWidth: view.tableSmallWidth,
-                              label: const Text('Price'),
-                            ),
-                            DataColumn2(
-                              fixedWidth: view.tableSmallWidth,
-                              label: const Text('Qty'),
-                            ),
-                            DataColumn2(
-                              fixedWidth: view.tableSmallWidth,
-                              label: const Text('Amount'),
-                              numeric: true,
-                            ),
-                            DataColumn2(
-                              fixedWidth: view.tableSmallWidth,
-                              label: const Text(''),
-                              numeric: true,
-                            ),
-                          ],
-                          rows: List<DataRow>.generate(
-                            3,
-                            (index) => DataRow(
-                              cells: [
-                                DataCell(Text("${(index + 1)}.".toString())),
-                                const DataCell(Text("Sales About My Product")),
-                                const DataCell(Text("\u{20B9} 150")),
-                                const DataCell(Text('10')),
-                                const DataCell(Text("\u{20B9} 150")),
-                                DataCell(
-                                  InkWell(
-                                    onTap: () {},
-                                    child: Container(
-                                      padding: const EdgeInsets.all(3),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: styleSheet.COLOR.redColor,
-                                      ),
-                                      child: Icon(
-                                        Icons.close,
-                                        color: styleSheet.COLOR.whiteColor,
-                                        size: 15,
+                      styleSheet.appConfig.addHeight(10),
+                      GetBuilder(
+                        init: ProductController(),
+                        builder: (data) {
+                          return data.productList.isEmpty
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    styleSheet.appConfig.addHeight(30),
+                                    Image.asset(styleSheet.images.empty_cart),
+                                    Text(
+                                      "Cart is empty. Add items to show",
+                                      style: styleSheet.TEXT_THEME.fs14Medium
+                                          .copyWith(
+                                              color:
+                                                  styleSheet.COLOR.greyColor),
+                                    ),
+                                  ],
+                                )
+                              : SizedBox(
+                                  height: styleSheet.appConfig
+                                          .getScreenHeight(context) *
+                                      0.4,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return ItemDetailsDialog(
+                                              itemCount: 1,
+                                            );
+                                          });
+                                    },
+                                    child: DataTable2(
+                                      dataRowHeight: 40,
+                                      headingRowHeight: 30,
+                                      columnSpacing: 5,
+                                      horizontalMargin: 12,
+                                      columns: [
+                                        DataColumn2(
+                                          fixedWidth: view.tableSmallWidth,
+                                          label: const Text('No.'),
+                                          size: ColumnSize.L,
+                                        ),
+                                        const DataColumn2(
+                                          label: Text('Description'),
+                                        ),
+                                        DataColumn2(
+                                          fixedWidth: view.tableSmallWidth,
+                                          label: const Text('Price'),
+                                        ),
+                                        DataColumn2(
+                                          fixedWidth: view.tableSmallWidth,
+                                          label: const Text('Qty'),
+                                        ),
+                                        DataColumn2(
+                                          fixedWidth: view.tableSmallWidth,
+                                          label: const Text('Amount'),
+                                          numeric: true,
+                                        ),
+                                        DataColumn2(
+                                          fixedWidth: view.tableSmallWidth,
+                                          label: const Text(''),
+                                          numeric: true,
+                                        ),
+                                      ],
+                                      rows: List<DataRow>.generate(
+                                        data.productList.length,
+                                        (index) => DataRow(
+                                          cells: [
+                                            DataCell(Text(
+                                                "${(index + 1)}.".toString())),
+                                            DataCell(Text(data
+                                                .productList[index]
+                                                .description)),
+                                            DataCell(Text(
+                                                "${data.productList[index].price}.0")),
+                                            DataCell(Text(
+                                                "${data.productList[index].qty}.0")),
+                                            DataCell(Text(
+                                                "${double.parse(data.productList[index].qty.toString()) * double.parse(data.productList[index].qty.toString())}.0")),
+                                            DataCell(
+                                              InkWell(
+                                                onTap: () {
+                                                  product.removeProduct();
+                                                },
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(3),
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: styleSheet
+                                                        .COLOR.redColor,
+                                                  ),
+                                                  child: Icon(
+                                                    Icons.close,
+                                                    color: styleSheet
+                                                        .COLOR.whiteColor,
+                                                    size: 15,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                                );
+                        },
                       ),
                     ],
                   ),
@@ -178,7 +258,6 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
               ),
             ),
           ),
-
           SingleChildScrollView(
             child: Container(
               margin: const EdgeInsets.only(top: 10),
@@ -201,33 +280,75 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
                   CustomRow(
                       txtColor: styleSheet.COLOR.primaryColor,
                       title: "Grand Total",
-                      trailing: "\u{20B9} 120"),
+                      trailing: "AED 120"),
                   styleSheet.appConfig.addHeight(6),
                   CustomRow(
-                      txtColor: styleSheet.COLOR.greenColor,
+                      txtColor: styleSheet.COLOR.redColor,
                       title: "Balance",
-                      trailing: "\u{20B9} 120"),
+                      trailing: "AED 120"),
                   styleSheet.appConfig.addHeight(10),
-                  TextFormField(
-                    textAlignVertical: TextAlignVertical.center,
-                    decoration: InputDecoration(
-                        hintStyle: styleSheet.TEXT_THEME.fs18Bold
-                            .copyWith(color: styleSheet.COLOR.greyColor),
-                        border: InputBorder.none,
-                        hintText: "AED 0.00",
-                        suffixIcon: Image.asset(
-                          styleSheet.icons.moneyIcon,
-                          width: 40,
-                        )),
+
+                  PlainTextField(
+                    hinttext: "AED 0.00",
+                    controller: amountController,
+                    suffixicon: GestureDetector(
+                      onTap: () async {
+                        await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return MoneyDialog();
+                            }).then((val) {
+                          amountController.text = val;
+                          setState(() {});
+                        });
+                      },
+                      child: Image.asset(
+                        styleSheet.icons.moneyIcon,
+                        width: 40,
+                      ),
+                    ),
                   ),
+
                   styleSheet.appConfig.addHeight(8),
+
+                  // Widget to show payment Methods Toggle
                   Row(
                     children: [
                       OutlinedButton(
-                          onPressed: () {}, child: const Text("Cash")),
+                          style: ButtonStyle(
+                              backgroundColor: WidgetStateProperty.all(
+                                  isPaymentCash != null && isPaymentCash
+                                      ? styleSheet.COLOR.primaryColor
+                                      : null)),
+                          onPressed: () {
+                            isPaymentCash = true;
+                            setState(() {});
+                          },
+                          child: Text(
+                            "Cash",
+                            style: styleSheet.TEXT_THEME.fs12Normal.copyWith(
+                                color: isPaymentCash != null && isPaymentCash
+                                    ? styleSheet.COLOR.whiteColor
+                                    : styleSheet.COLOR.primaryColor),
+                          )),
                       styleSheet.appConfig.addWidth(10),
                       OutlinedButton(
-                          onPressed: () {}, child: const Text("Card")),
+                          style: ButtonStyle(
+                              backgroundColor: WidgetStateProperty.all(
+                                  isPaymentCash != null && !isPaymentCash
+                                      ? styleSheet.COLOR.primaryColor
+                                      : null)),
+                          onPressed: () {
+                            isPaymentCash = false;
+                            setState(() {});
+                          },
+                          child: Text(
+                            "Card",
+                            style: styleSheet.TEXT_THEME.fs12Normal.copyWith(
+                                color: isPaymentCash != null && !isPaymentCash
+                                    ? styleSheet.COLOR.whiteColor
+                                    : styleSheet.COLOR.primaryColor),
+                          )),
                     ],
                   ),
                   styleSheet.appConfig.addHeight(8),
@@ -237,7 +358,7 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
                         child: OutlineButtonView(
                             btnColor: styleSheet.COLOR.whiteColor,
                             txtColor: styleSheet.COLOR.blackColor,
-                            btnName: "Split & Pay",
+                            btnName: "Split Pay",
                             onPressed: () {}),
                       ),
                     ],
@@ -248,31 +369,44 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
                       Expanded(
                         child: SecondaryButtonView(
                             btnName: "Checkout".toUpperCase(),
-                            onPressed: () {}),
+                            onPressed: () {
+                              openVirtualKeyboard();
+                            }),
                       ),
                     ],
                   ),
                   styleSheet.appConfig.addHeight(10),
-                  GridView.builder(
-                    itemCount: LocalData.keyboardBtnList.length,
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        childAspectRatio: view.keyboardBtnSize),
-                    itemBuilder: (context, i) {
-                      var btn = LocalData.keyboardBtnList[i];
-                      return KeyboardButtonView(
-                          btnName: btn.btnName, onPressed: () {});
+
+                  // Widget to show Keypad Buttons
+
+                  KeyboardComponentView(
+                    controller: (val) {
+                      amountController.text = val;
                     },
                   ),
                 ],
               ),
             ),
           ),
+          // Widget to show Product List
+          isProductCheck
+              ? ProductCheckView(
+                  backBtn: (val) {
+                    isProductCheck = false;
+                    setState(() {});
+                  },
+                )
+              : const SizedBox(),
 
-          isProductCheck ? const ProductCheckView() : const SizedBox()
+          // Widget to show Queue List
+          isQueueList
+              ? QueueListView(
+                  backBtn: (val) {
+                    isQueueList = false;
+                    setState(() {});
+                  },
+                )
+              : const SizedBox()
         ],
       ),
     );
@@ -304,7 +438,13 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
             builder: (context) => const UpdateProductPriceDialog());
       case "products":
         return setState(() {
+          isQueueList = false;
           isProductCheck = !isProductCheck;
+        });
+      case "queue list":
+        return setState(() {
+          isProductCheck = false;
+          isQueueList = !isQueueList;
         });
 
       default:

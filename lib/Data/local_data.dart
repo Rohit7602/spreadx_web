@@ -1,3 +1,4 @@
+import 'package:spreadx_web/Components/Models/product_model.dart';
 import 'package:spreadx_web/main.dart';
 
 class LocalData {
@@ -86,6 +87,26 @@ class LocalData {
     MenuDrawerList(styleSheet.icons.mainSetupIcon, "Main Setup"),
     MenuDrawerList(styleSheet.icons.supportIcon, "Support & Legal"),
   ];
+
+  // *************** Money Amount ********************
+  static List<MoneyList> moneyAmountList = [
+    MoneyList("5"),
+    MoneyList("10"),
+    MoneyList("20"),
+    MoneyList("50"),
+    MoneyList("100"),
+    MoneyList("200"),
+    MoneyList("500"),
+    MoneyList("1000"),
+  ];
+
+// *************** Product List ********************
+
+  static List<ProductModel> productList = [
+    ProductModel("default - PCS", "1", "1", "10"),
+    ProductModel("default - PCS", "1", "1", "0"),
+    ProductModel("default - PCS", "1", "1", ""),
+  ];
 }
 
 // ******** Class Start From Here ******************
@@ -126,4 +147,11 @@ class MenuDrawerList {
   String btnName, icon;
 
   MenuDrawerList(this.icon, this.btnName);
+}
+
+// class For Money List
+class MoneyList {
+  String amount;
+
+  MoneyList(this.amount);
 }

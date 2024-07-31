@@ -4,6 +4,7 @@ import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 class PrimaryTextFormField extends StatelessWidget {
+  final TextAlign? textAlign;
   final String? title;
   final String? hinttext;
   final Widget? suffixicon;
@@ -19,6 +20,7 @@ class PrimaryTextFormField extends StatelessWidget {
   final Function? onTap;
   const PrimaryTextFormField({
     super.key,
+    this.textAlign,
     this.title,
     this.hinttext,
     this.hinttextColor,
@@ -41,6 +43,7 @@ class PrimaryTextFormField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
+          textAlign: textAlign ?? TextAlign.left,
           onTap: () {
             onTap != null ? onTap!() : null;
           },
@@ -100,6 +103,7 @@ class SecondaryTextFormField extends StatelessWidget {
   final bool obscureText;
   final bool isDense;
   final bool label;
+  final bool fieldColor;
   final Function? onTap;
   const SecondaryTextFormField({
     super.key,
@@ -114,6 +118,7 @@ class SecondaryTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.label = false,
     this.isDense = true,
+    this.fieldColor = false,
     this.onTap,
   });
 
@@ -138,7 +143,9 @@ class SecondaryTextFormField extends StatelessWidget {
 
         decoration: InputDecoration(
           filled: true,
-          fillColor: styleSheet.COLOR.fieldGreyColor,
+          fillColor: fieldColor
+              ? styleSheet.COLOR.whiteColor
+              : styleSheet.COLOR.fieldGreyColor,
           constraints:
               BoxConstraints(minHeight: 30, maxHeight: view.textFieldheight),
           labelText: label ? hinttext : null,
@@ -163,6 +170,39 @@ class SecondaryTextFormField extends StatelessWidget {
           //     borderSide: BorderSide(color: styleSheet.COLOR.redColor)),
         ),
       ),
+    );
+  }
+}
+
+class PlainTextField extends StatelessWidget {
+  final String? hinttext;
+  final Widget? suffixicon;
+  final Widget? prefixIcon;
+
+  final TextEditingController? controller;
+
+  final Function? onTap;
+  const PlainTextField({
+    super.key,
+    this.hinttext,
+    this.controller,
+    this.suffixicon,
+    this.prefixIcon,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      style: styleSheet.TEXT_THEME.fs14Medium,
+      controller: controller,
+      textAlignVertical: TextAlignVertical.center,
+      decoration: InputDecoration(
+          hintStyle: styleSheet.TEXT_THEME.fs16Bold
+              .copyWith(color: styleSheet.COLOR.greyColor),
+          border: InputBorder.none,
+          hintText: hinttext,
+          suffixIcon: suffixicon),
     );
   }
 }

@@ -23,36 +23,37 @@ class CustomHeaderDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              alignment: Alignment.centerLeft,
-              height: 60,
-              color: styleSheet.COLOR.blueColor,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    title,
-                    style: styleSheet.TEXT_THEME.fs16Medium
-                        .copyWith(color: styleSheet.COLOR.whiteColor),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: styleSheet.COLOR.lightGreyColor),
-                    child: IconButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        icon: Icon(
-                          Icons.close,
-                          color: styleSheet.COLOR.whiteColor,
-                        )),
-                  )
-                ],
+            if (title.isNotEmpty)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                alignment: Alignment.centerLeft,
+                height: 60,
+                color: styleSheet.COLOR.blueColor,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      title,
+                      style: styleSheet.TEXT_THEME.fs16Medium
+                          .copyWith(color: styleSheet.COLOR.whiteColor),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: styleSheet.COLOR.lightGreyColor),
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: Icon(
+                            Icons.close,
+                            color: styleSheet.COLOR.whiteColor,
+                          )),
+                    )
+                  ],
+                ),
               ),
-            ),
-            styleSheet.appConfig.addHeight(20),
+            if (title.isNotEmpty) styleSheet.appConfig.addHeight(20),
 
             // Widget to add Childs
             child.paddingAll(10)
