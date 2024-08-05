@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Controller/product_controller.dart';
 import 'package:spreadx_web/Components/Models/product_model.dart';
+import 'package:spreadx_web/Components/custom_grid.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
+import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -27,7 +29,7 @@ class _ProductCheckViewState extends State<ProductCheckView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 350,
+      width: 320,
       padding: styleSheet.DECORATION.PADDING_5,
       color: styleSheet.COLOR.whiteColor,
       child: Column(
@@ -252,28 +254,59 @@ class _ProductCheckViewState extends State<ProductCheckView> {
             ],
           ),
           styleSheet.appConfig.addHeight(20),
-          LayoutBuilder(builder: (context, constraints) {
-            if (isCategory) {
-              return gridTile
-                  ? const CustomListForCategory()
-                  : const CustomGridForCategory();
-            } else {
-              return !gridTile
-                  ? GestureDetector(
-                      onTap: () {
-                        var product = Get.find<ProductController>();
-                        product.addProducts(
-                            ProductModel("default- PCS", "1", "1", ""));
-                        itemCount++;
-                        setState(() {});
+          Expanded(
+              child: !gridTile
+                  ? GridView.builder(
+                      itemCount: LocalData.productList.length,
+                      shrinkWrap: true,
+                      gridDelegate: CustomSliverGridDelegate(
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          crossAxisCount: 3,
+                          itemHeight: 110),
+                      itemBuilder: (context, i) {
+                        return LayoutBuilder(builder: (context, constraints) {
+                          final pr = LocalData.productList[i];
+                          return GestureDetector(
+                              onTap: () {
+                                var product = Get.find<ProductController>();
+                                product.addProducts(pr);
+                                itemCount++;
+                                setState(() {});
+                              },
+                              child: isCategory
+                                  ? const CustomGridForCategory()
+                                  : CustomGridForProducts(
+                                      data: pr,
+                                      isInCart: product.productList
+                                          .any((v) => v.id == pr.id),
+                                    ));
+                        });
+                      })
+                  : ListView.separated(
+                      itemCount: LocalData.productList.length,
+                      itemBuilder: (context, i) {
+                        return LayoutBuilder(builder: (context, constraints) {
+                          final pr = LocalData.productList[i];
+                          return GestureDetector(
+                              onTap: () {
+                                var product = Get.find<ProductController>();
+                                product.addProducts(pr);
+                                itemCount++;
+                                setState(() {});
+                              },
+                              child: isCategory
+                                  ? const CustomListForCategory()
+                                  : CustomListForProducts(
+                                      data: pr,
+                                      isInCart: product.productList
+                                          .any((v) => v.id == pr.id),
+                                    ));
+                        });
                       },
-                      child: CustomGridForProducts(
-                        itemCount: itemCount,
-                      ),
-                    )
-                  : const CustomListForProducts();
-            }
-          }),
+                      separatorBuilder: (BuildContext context, int index) =>
+                          styleSheet.appConfig.addHeight(10),
+                    ))
         ],
       ),
     );
@@ -281,71 +314,88 @@ class _ProductCheckViewState extends State<ProductCheckView> {
 }
 
 class CustomGridForProducts extends StatelessWidget {
-  int itemCount;
-  CustomGridForProducts({required this.itemCount, super.key});
+  ProductModel data;
+  bool isInCart;
+  CustomGridForProducts({required this.data, this.isInCart = false, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      runSpacing: 10,
-      spacing: 10,
+    return Stack(
       children: [
-        ...List.generate(1, (index) {
-          return Stack(
-            alignment: Alignment.topRight,
+        Container(
+          alignment: Alignment.bottomCenter,
+          decoration: BoxDecoration(
+              border: Border.all(color: styleSheet.COLOR.greyColor),
+              color: styleSheet.COLOR.productCardGreyColor,
+              boxShadow: [
+                BoxShadow(
+                    offset: const Offset(0, -3),
+                    // blurStyle: BlurStyle.outer,
+                    color: styleSheet.COLOR.blackColor.withOpacity(0.2),
+                    blurRadius: 8),
+              ]),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              const SizedBox(),
+              Text("640 X 360", style: styleSheet.TEXT_THEME.fs12Medium),
               Container(
-                alignment: Alignment.bottomCenter,
-                height: 90,
-                width: 90,
-                decoration: BoxDecoration(
-                    border: Border.all(color: styleSheet.COLOR.greyColor),
-                    color: styleSheet.COLOR.productCardGreyColor,
-                    boxShadow: [
-                      BoxShadow(
-                          offset: const Offset(0, -3),
-                          // blurStyle: BlurStyle.outer,
-                          color: styleSheet.COLOR.blackColor.withOpacity(0.2),
-                          blurRadius: 8),
-                    ]),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const SizedBox(),
-                    Text("640 X 360", style: styleSheet.TEXT_THEME.fs12Medium),
-                    Container(
-                      padding: const EdgeInsets.only(left: 5),
-                      alignment: Alignment.centerLeft,
-                      height: 20,
-                      color: styleSheet.COLOR.blackColor,
-                      child: Text(
-                        "default- PCS",
-                        style: styleSheet.TEXT_THEME.fs10Normal
-                            .copyWith(color: styleSheet.COLOR.whiteColor),
-                      ),
-                    ),
-                  ],
+                padding: const EdgeInsets.only(left: 5),
+                alignment: Alignment.centerLeft,
+                height: 20,
+                color: styleSheet.COLOR.blackColor,
+                child: Text(
+                  "default- PCS",
+                  style: styleSheet.TEXT_THEME.fs10Normal
+                      .copyWith(color: styleSheet.COLOR.whiteColor),
                 ),
               ),
-              itemCount == 0
-                  ? const SizedBox()
-                  : Container(
-                      margin: styleSheet.DECORATION.PADDING_2,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 1),
-                      decoration: BoxDecoration(
-                        color: styleSheet.COLOR.darkGreenColor,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Text(
-                        itemCount.toString(),
-                        style: styleSheet.TEXT_THEME.fs12Medium
-                            .copyWith(color: styleSheet.COLOR.whiteColor),
-                      ),
-                    ),
             ],
-          );
-        }),
+          ),
+        ),
+        int.parse(data.stock) <= 5
+            ? Positioned(
+                top: 2,
+                left: 2,
+                child: Container(
+                  margin: styleSheet.DECORATION.PADDING_2,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                  decoration: BoxDecoration(
+                    color:
+                        int.parse(data.stock) > 0 && int.parse(data.stock) <= 5
+                            ? styleSheet.COLOR.darkGreenColor
+                            : styleSheet.COLOR.redColor,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text(
+                    "In Stock ${int.parse(data.stock)}",
+                    style: styleSheet.TEXT_THEME.fs12Medium
+                        .copyWith(color: styleSheet.COLOR.whiteColor),
+                  ),
+                ),
+              )
+            : const SizedBox(),
+        !isInCart
+            ? const SizedBox()
+            : Positioned(
+                top: 0,
+                right: 0,
+                child: Container(
+                  margin: styleSheet.DECORATION.PADDING_2,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                  decoration: BoxDecoration(
+                    color: styleSheet.COLOR.darkGreenColor,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text(
+                    data.qty.toString(),
+                    style: styleSheet.TEXT_THEME.fs12Medium
+                        .copyWith(color: styleSheet.COLOR.whiteColor),
+                  ),
+                ),
+              ),
       ],
     );
   }
@@ -356,30 +406,23 @@ class CustomListForCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: 3,
-      shrinkWrap: true,
-      separatorBuilder: (context, i) => styleSheet.appConfig.addHeight(10),
-      itemBuilder: (context, i) {
-        return Container(
-          alignment: Alignment.centerLeft,
-          height: 50,
-          padding: styleSheet.DECORATION.PADDING_10,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: styleSheet.COLOR.whiteColor,
-              boxShadow: [
-                BoxShadow(
-                    offset: const Offset(0, 2),
-                    color: styleSheet.COLOR.blackColor.withOpacity(0.1),
-                    blurRadius: 6)
-              ]),
-          child: Text(
-            "Grocery Items (1)",
-            style: styleSheet.TEXT_THEME.fs12Bold,
-          ),
-        );
-      },
+    return Container(
+      alignment: Alignment.centerLeft,
+      height: 50,
+      padding: styleSheet.DECORATION.PADDING_10,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          color: styleSheet.COLOR.whiteColor,
+          boxShadow: [
+            BoxShadow(
+                offset: const Offset(0, 2),
+                color: styleSheet.COLOR.blackColor.withOpacity(0.1),
+                blurRadius: 6)
+          ]),
+      child: Text(
+        "Grocery Items (1)",
+        style: styleSheet.TEXT_THEME.fs12Bold,
+      ),
     );
   }
 }
@@ -389,76 +432,111 @@ class CustomGridForCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      runSpacing: 10,
-      spacing: 10,
-      children: [
-        ...List.generate(1, (index) {
-          return Row(
-            children: [
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  alignment: Alignment.centerLeft,
-                  height: 70,
-                  decoration: BoxDecoration(
-                      color: styleSheet.COLOR.whiteColor,
-                      boxShadow: [
-                        BoxShadow(
-                            offset: const Offset(0, 4),
-                            color: styleSheet.COLOR.blackColor.withOpacity(0.2),
-                            blurRadius: 8),
-                      ]),
-                  child: Text("Grocery Items (1)",
-                      style: styleSheet.TEXT_THEME.fs12Bold),
-                ),
-              ),
-            ],
-          );
-        }),
-      ],
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        alignment: Alignment.centerLeft,
+        height: 70,
+        decoration:
+            BoxDecoration(color: styleSheet.COLOR.whiteColor, boxShadow: [
+          BoxShadow(
+              offset: const Offset(0, 4),
+              color: styleSheet.COLOR.blackColor.withOpacity(0.2),
+              blurRadius: 8),
+        ]),
+        child: Text("Grocery Items (1)", style: styleSheet.TEXT_THEME.fs12Bold),
+      ),
     );
   }
 }
 
 class CustomListForProducts extends StatelessWidget {
-  const CustomListForProducts({super.key});
+  ProductModel data;
+  bool isInCart;
+  CustomListForProducts({super.key, required this.data, this.isInCart = false});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: 3,
-      shrinkWrap: true,
-      separatorBuilder: (context, i) => styleSheet.appConfig.addHeight(10),
-      itemBuilder: (context, i) {
-        return Container(
-          padding: styleSheet.DECORATION.PADDING_10,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: styleSheet.COLOR.whiteColor,
-              boxShadow: [
-                BoxShadow(
-                    offset: const Offset(0, 2),
-                    color: styleSheet.COLOR.blackColor.withOpacity(0.1),
-                    blurRadius: 6)
-              ]),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "default- PCS",
-                style: styleSheet.TEXT_THEME.fs12Bold,
+    return Stack(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                height: 66,
+                padding: styleSheet.DECORATION.PADDING_10,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: styleSheet.COLOR.whiteColor,
+                    boxShadow: [
+                      BoxShadow(
+                          offset: const Offset(0, 2),
+                          color: styleSheet.COLOR.blackColor.withOpacity(0.1),
+                          blurRadius: 6)
+                    ]),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data.description,
+                      style: styleSheet.TEXT_THEME.fs12Bold,
+                    ),
+                    styleSheet.appConfig.addHeight(4),
+                    Text(
+                      "default",
+                      style: styleSheet.TEXT_THEME.fs12Normal,
+                    ),
+                  ],
+                ),
               ),
-              styleSheet.appConfig.addHeight(4),
-              Text(
-                "default",
-                style: styleSheet.TEXT_THEME.fs12Normal,
+            ),
+          ],
+        ),
+        int.parse(data.stock) <= 5
+            ? Positioned(
+                bottom: 2,
+                left: 2,
+                child: Container(
+                  margin: styleSheet.DECORATION.PADDING_2,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                  decoration: BoxDecoration(
+                    color:
+                        int.parse(data.stock) > 0 && int.parse(data.stock) <= 5
+                            ? styleSheet.COLOR.darkGreenColor
+                            : styleSheet.COLOR.redColor,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text(
+                    "In Stock ${int.parse(data.stock)}",
+                    style: styleSheet.TEXT_THEME.fs12Medium
+                        .copyWith(color: styleSheet.COLOR.whiteColor),
+                  ),
+                ),
+              )
+            : const SizedBox(),
+        !isInCart
+            ? const SizedBox()
+            : Positioned(
+                top: 0,
+                right: 0,
+                child: Container(
+                  margin: styleSheet.DECORATION.PADDING_2,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                  decoration: BoxDecoration(
+                    color: styleSheet.COLOR.darkGreenColor,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text(
+                    data.qty.toString(),
+                    style: styleSheet.TEXT_THEME.fs12Medium
+                        .copyWith(color: styleSheet.COLOR.whiteColor),
+                  ),
+                ),
               ),
-            ],
-          ),
-        );
-      },
+      ],
     );
   }
 }

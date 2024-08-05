@@ -13,7 +13,7 @@ class BackButtonView extends StatelessWidget {
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         InkWell(
           onTap: () {

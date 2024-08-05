@@ -1,11 +1,19 @@
+import 'package:country_pickers/country.dart';
+import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/main.dart';
 
+import '../../../Components/Button/back_btn.dart';
+import '../../../keyboard_handler.dart';
+
 class SignUpComponentView extends StatefulWidget {
-  const SignUpComponentView({super.key});
+  void Function() onContinue;
+  void Function() onPop;
+  SignUpComponentView(
+      {super.key, required this.onContinue, required this.onPop});
 
   @override
   State<SignUpComponentView> createState() => _LoginComponentViewState();
@@ -20,6 +28,12 @@ class _LoginComponentViewState extends State<SignUpComponentView> {
 
   bool isPhoneSelected = true;
 
+  bool isTerms = false;
+
+  toggleTerms() {
+    setState(() => isTerms = !isTerms);
+  }
+
   @override
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
@@ -28,11 +42,18 @@ class _LoginComponentViewState extends State<SignUpComponentView> {
       child: ListView(
         shrinkWrap: true,
         children: [
-          Text(
-            "Signup",
-            style: view.loginHeadingTextSize,
+          Row(
+            children: [
+              BackButtonView(
+                onpressed: widget.onPop,
+              ),
+              styleSheet.appConfig.addWidth(10),
+              Text(
+                "Signup",
+                style: view.loginHeadingTextSize,
+              ),
+            ],
           ),
-          styleSheet.appConfig.addHeight(40),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -93,33 +114,76 @@ class _LoginComponentViewState extends State<SignUpComponentView> {
           ),
           styleSheet.appConfig.addHeight(40),
           isPhoneSelected
-              ? PrimaryTextFormField(
+              ? SecondaryTextFormField(
+                  onTap: () => openVirtualKeyboard(),
+                  prefixIcon: SizedBox(
+                    width: 140,
+                    child: CountryPickerDropdown(
+                      isExpanded: true,
+                      initialValue: 'in',
+                      itemBuilder: _buildDropdownItem,
+                      onValuePicked: (Country country) {},
+                    ),
+                  ),
                   keyboardtype: TextInputType.phone,
                   controller: phoneController,
-                  suffixicon: const Icon(Icons.phone),
-                  hinttext: "Phone Number",
+                  hinttext: "(50 | 52 | 54 | 55 | 56 | 58 | xxxxx)",
                 )
               : PrimaryTextFormField(
                   controller: emailController,
                   suffixicon: const Icon(Icons.mail),
                   hinttext: "Email",
+                  onTap: () => openVirtualKeyboard(),
                 ),
           styleSheet.appConfig.addHeight(20),
-          PrimaryTextFormField(
-            controller: passwordController,
-            suffixicon: const Icon(Icons.visibility_outlined),
-            hinttext: "Password",
-            obscureText: true,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Checkbox.adaptive(
+                  value: isTerms, onChanged: (v) => toggleTerms()),
+              Text.rich(TextSpan(
+                  text: "I agree to ",
+                  style: styleSheet.TEXT_THEME.fs12Medium,
+                  children: [
+                    TextSpan(
+                        text: "Terms And Conditions",
+                        style: styleSheet.TEXT_THEME.fs12Bold
+                            .copyWith(color: styleSheet.COLOR.primaryColor)),
+                    TextSpan(
+                        text: " & ", style: styleSheet.TEXT_THEME.fs12Medium),
+                    TextSpan(
+                        text: "Privacy Policy",
+                        style: styleSheet.TEXT_THEME.fs12Bold
+                            .copyWith(color: styleSheet.COLOR.primaryColor)),
+                  ]))
+            ],
           ),
+          // PrimaryTextFormField(
+          //   controller: passwordController,
+          //   suffixicon: const Icon(Icons.visibility_outlined),
+          //   hinttext: "Password",
+          //   obscureText: true,
+          //   onTap: () => openVirtualKeyboard(),
+          // ),
           styleSheet.appConfig.addHeight(20),
           PrimaryBtnView(
-            btnName: "Sign up",
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {}
-            },
+            btnName: "Continue",
+            onPressed: widget.onContinue,
           ),
         ],
       ),
     );
   }
+
+  Widget _buildDropdownItem(Country country) => Container(
+        child: Row(
+          children: <Widget>[
+            CountryPickerUtils.getDefaultFlagImage(country),
+            const SizedBox(
+              width: 8.0,
+            ),
+            Text("+${country.phoneCode}"),
+          ],
+        ),
+      );
 }

@@ -9,6 +9,8 @@ import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/Utils/Routes/routes.dart';
 import 'package:spreadx_web/main.dart';
 
+import '../../../keyboard_handler.dart';
+
 class LoginComponentView extends StatefulWidget {
   const LoginComponentView({super.key});
 
@@ -96,6 +98,7 @@ class _LoginComponentViewState extends State<LoginComponentView> {
           styleSheet.appConfig.addHeight(40),
           isPhoneSelected
               ? SecondaryTextFormField(
+                  onTap: () => openVirtualKeyboard(),
                   prefixIcon: SizedBox(
                     width: 140,
                     child: CountryPickerDropdown(
@@ -113,6 +116,7 @@ class _LoginComponentViewState extends State<LoginComponentView> {
                   controller: emailController,
                   suffixicon: const Icon(Icons.mail),
                   hinttext: "Email",
+                  onTap: () => openVirtualKeyboard(),
                 ),
           styleSheet.appConfig.addHeight(20),
           SecondaryTextFormField(
@@ -124,6 +128,7 @@ class _LoginComponentViewState extends State<LoginComponentView> {
                 },
                 child: const Icon(Icons.visibility_outlined)),
             hinttext: "Password",
+            onTap: () => openVirtualKeyboard(),
             obscureText: isVisibility,
           ),
           styleSheet.appConfig.addHeight(20),

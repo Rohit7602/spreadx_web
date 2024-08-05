@@ -6,6 +6,8 @@ import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/main.dart';
 
+import '../../keyboard_handler.dart';
+
 class ApplyDiscountDialog extends StatelessWidget {
   const ApplyDiscountDialog({super.key});
 
@@ -14,6 +16,7 @@ class ApplyDiscountDialog extends StatelessWidget {
     return CustomHeaderDialog(
       title: "Apply Discount",
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
@@ -45,16 +48,18 @@ class ApplyDiscountDialog extends StatelessWidget {
           styleSheet.appConfig.addHeight(12),
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: PrimaryTextFormField(
                   hinttext: "0.0",
-                  suffixicon: Icon(Icons.percent_sharp),
+                  onTap: () => openVirtualKeyboard(),
+                  suffixicon: const Icon(Icons.percent_sharp),
                 ),
               ),
               styleSheet.appConfig.addWidth(20),
-              const Expanded(
+              Expanded(
                 child: PrimaryTextFormField(
                   hinttext: "0.0",
+                  onTap: () => openVirtualKeyboard(),
                 ),
               ),
             ],

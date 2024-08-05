@@ -1,3 +1,6 @@
+import 'package:country_pickers/country.dart';
+import 'package:country_pickers/country_picker_dropdown.dart';
+import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
@@ -7,6 +10,8 @@ import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/main.dart';
 
+import '../../keyboard_handler.dart';
+
 class AssignCustomerDialog extends StatefulWidget {
   const AssignCustomerDialog({super.key});
 
@@ -15,11 +20,32 @@ class AssignCustomerDialog extends StatefulWidget {
 }
 
 class _AssignCustomerDialogState extends State<AssignCustomerDialog> {
-  int selectedValue = 0;
+  int selectedValue = 1;
   bool isNewCustomer = false;
+
+  final phoneController = TextEditingController();
 
   List<String> listOfTypes = ["Individual", "Business"];
   String selectedType = "Individual";
+
+  String dropValue = "Account Type";
+
+  bool savenew = false;
+  toggleNewCustomer() {
+    setState(() => savenew = !savenew);
+  }
+
+  Widget _buildDropdownItem(Country country) => Container(
+        child: Row(
+          children: <Widget>[
+            CountryPickerUtils.getDefaultFlagImage(country),
+            const SizedBox(
+              width: 8.0,
+            ),
+            Text("+${country.phoneCode}"),
+          ],
+        ),
+      );
   @override
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
@@ -31,6 +57,7 @@ class _AssignCustomerDialogState extends State<AssignCustomerDialog> {
             maxHeight: styleSheet.appConfig.getScreenHeight(context) * 0.8),
         width: styleSheet.appConfig.getScreenWidth(context) * view.dialogWidth,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               alignment: Alignment.center,
@@ -124,11 +151,11 @@ class _AssignCustomerDialogState extends State<AssignCustomerDialog> {
             LayoutBuilder(builder: (context, constraints) {
               if (isNewCustomer) {
                 return Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Row(
                       children: [
                         Flexible(
-                          flex: 1,
                           child: RadioListTile(
                             title: Text(
                               'Personal Account',
@@ -145,7 +172,6 @@ class _AssignCustomerDialogState extends State<AssignCustomerDialog> {
                         ),
                         styleSheet.appConfig.addWidth(20),
                         Flexible(
-                          flex: 1,
                           child: RadioListTile(
                             title: Text(
                               'Business Account',
@@ -163,35 +189,87 @@ class _AssignCustomerDialogState extends State<AssignCustomerDialog> {
                       ],
                     ),
                     styleSheet.appConfig.addHeight(10),
-                    Row(
-                      children: [
-                        const Flexible(
-                          flex: 1,
-                          child: PrimaryTextFormField(
-                            hinttext: "Customer Name",
-                          ),
-                        ),
-                        styleSheet.appConfig.addWidth(10),
-                        const Flexible(
-                          flex: 1,
-                          child: PrimaryTextFormField(
-                            hinttext: "Number",
-                          ),
-                        ),
-                      ],
+                    PrimaryTextFormField(
+                      hinttext: "Customer Name",
+                      onTap: () => openVirtualKeyboard(),
                     ),
                     styleSheet.appConfig.addHeight(10),
-                    PrimaryDropDown(
-                        isExpanded: true,
-                        dropdownValue: selectedType,
-                        items: listOfTypes,
-                        value: (val) {
-                          selectedType = val!;
-                          setState(() {});
-                        }),
+                    SecondaryTextFormField(
+                      onTap: () => openVirtualKeyboard(),
+                      prefixIcon: SizedBox(
+                        width: 140,
+                        child: CountryPickerDropdown(
+                          isExpanded: true,
+                          initialValue: 'in',
+                          itemBuilder: _buildDropdownItem,
+                          onValuePicked: (Country country) {},
+                        ),
+                      ),
+                      keyboardtype: TextInputType.phone,
+                      controller: phoneController,
+                      hinttext: "(50 | 52 | 54 | 55 | 56 | 58 | xxxxx)",
+                    ),
                     styleSheet.appConfig.addHeight(10),
-                    const PrimaryTextFormField(
-                      hinttext: "TRN",
+                    savenew
+                        ? Row(
+                            children: [
+                              Expanded(
+                                child: PrimaryDropDown(
+                                    dropdownValue: dropValue,
+                                    items: const [
+                                      "Account Type",
+                                      "CASH",
+                                      "CREDIT",
+                                    ],
+                                    value: (value) =>
+                                        setState(() => dropValue = value!)),
+                              ),
+                            ],
+                          )
+                        : const SizedBox(),
+                    savenew && dropValue == "CREDIT"
+                        ? Column(
+                            children: [
+                              styleSheet.appConfig.addHeight(10),
+                              PrimaryTextFormField(
+                                hinttext: "Credit Limit",
+                                onTap: () => openVirtualKeyboard(),
+                              ),
+                              styleSheet.appConfig.addHeight(10),
+                              PrimaryTextFormField(
+                                hinttext: "Days Limit",
+                                onTap: () => openVirtualKeyboard(),
+                              ),
+                            ],
+                          )
+                        : const SizedBox(),
+                    styleSheet.appConfig.addHeight(10),
+                    selectedValue == 2
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              PrimaryTextFormField(
+                                hinttext: "TRN",
+                                onTap: () => openVirtualKeyboard(),
+                              ),
+                              styleSheet.appConfig.addHeight(20),
+                            ],
+                          )
+                        : const SizedBox(),
+                    GestureDetector(
+                      onTap: () => toggleNewCustomer(),
+                      child: Container(
+                        color: Colors.white,
+                        child: Row(
+                          children: [
+                            Checkbox.adaptive(
+                                value: savenew,
+                                onChanged: (v) => toggleNewCustomer()),
+                            Text("Save as new Customer",
+                                style: styleSheet.TEXT_THEME.fs12Medium)
+                          ],
+                        ),
+                      ),
                     ),
                     styleSheet.appConfig.addHeight(20),
                     Row(
@@ -208,9 +286,10 @@ class _AssignCustomerDialogState extends State<AssignCustomerDialog> {
               } else {
                 return Column(
                   children: [
-                    const PrimaryTextFormField(
-                      suffixicon: Icon(Icons.search),
+                    PrimaryTextFormField(
+                      suffixicon: const Icon(Icons.search),
                       hinttext: "Search Customer",
+                      onTap: () => openVirtualKeyboard(),
                     ),
                     styleSheet.appConfig.addHeight(10),
                   ],

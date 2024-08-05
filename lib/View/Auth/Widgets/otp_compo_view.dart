@@ -11,8 +11,14 @@ import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 class OTPComponentView extends StatelessWidget {
-  void Function(AuthState) getBack;
-  OTPComponentView({required this.getBack, super.key});
+  final AuthState state;
+  void Function(AuthState) onVerify;
+  void Function() onPop;
+  OTPComponentView(
+      {required this.onVerify,
+      required this.onPop,
+      this.state = AuthState.isSignUp,
+      super.key});
 
   final otpController = TextEditingController();
 
@@ -25,13 +31,11 @@ class OTPComponentView extends StatelessWidget {
         Row(
           children: [
             BackButtonView(
-              onpressed: () {
-                getBack(AuthState.isForgot);
-              },
+              onpressed: onPop,
             ),
-            styleSheet.appConfig.addWidth(20),
+            styleSheet.appConfig.addWidth(10),
             Text(
-              "Verify OTP",
+              "OTP",
               style: view.loginHeadingTextSize,
             ),
           ],
@@ -56,9 +60,9 @@ class OTPComponentView extends StatelessWidget {
         styleSheet.appConfig.addHeight(20),
         PrimaryBtnView(
             btnName: "Verify OTP",
-            onPressed: () {
-              getBack(AuthState.createPD);
-            }).paddingSymmetric(horizontal: 100)
+            onPressed: () => onVerify(state == AuthState.isOTPViewFromSignUp
+                ? AuthState.createPD
+                : AuthState.isLOGIN)).paddingSymmetric(horizontal: 100)
       ],
     );
   }

@@ -4,6 +4,8 @@ import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/main.dart';
 
+import '../../keyboard_handler.dart';
+
 class ProductCheckDialog extends StatelessWidget {
   const ProductCheckDialog({super.key});
 
@@ -12,13 +14,15 @@ class ProductCheckDialog extends StatelessWidget {
     return CustomHeaderDialog(
       title: "Product Check",
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [
-              const Flexible(
+              Flexible(
                   flex: 3,
                   child: PrimaryTextFormField(
                     hinttext: "Barcode",
+                    onTap: () => openVirtualKeyboard(),
                   )),
               styleSheet.appConfig.addWidth(15),
               PrimaryBtnView(

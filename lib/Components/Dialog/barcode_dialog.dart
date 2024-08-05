@@ -6,9 +6,15 @@ import 'package:spreadx_web/Components/keyboard_component.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/main.dart';
 
-class BarcodeDialog extends StatelessWidget {
+class BarcodeDialog extends StatefulWidget {
   String hintText;
   BarcodeDialog({required this.hintText, super.key});
+
+  @override
+  State<BarcodeDialog> createState() => _BarcodeDialogState();
+}
+
+class _BarcodeDialogState extends State<BarcodeDialog> {
   final barcodeController = TextEditingController();
 
   @override
@@ -16,16 +22,23 @@ class BarcodeDialog extends StatelessWidget {
     return CustomHeaderDialog(
       title: "",
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           PrimaryTextFormField(
             controller: barcodeController,
             textAlign: TextAlign.center,
-            hinttext: hintText,
+            hinttext: widget.hintText,
           ).paddingSymmetric(horizontal: 20),
           KeyboardComponentView(
-            aspectRatio: 12 / 3,
-            controller: (val) {
-              barcodeController.text = val;
+            onInput: (value) {
+              setState(() => barcodeController.text += value);
+            },
+            onValueRemove: () {
+              if (barcodeController.text.isNotEmpty) {
+                barcodeController.text = barcodeController.text
+                    .substring(0, barcodeController.text.length - 1);
+              }
+              setState(() {});
             },
           ).paddingAll(20),
           PrimaryBtnView(

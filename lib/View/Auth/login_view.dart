@@ -11,6 +11,8 @@ import 'package:spreadx_web/View/Auth/Widgets/otp_compo_view.dart';
 import 'package:spreadx_web/web_config.dart';
 import 'package:spreadx_web/main.dart';
 
+import '../../Components/Button/back_btn.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
@@ -23,6 +25,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    final view = ResponsiveHandler().getResponsiveness(context);
     return Scaffold(
       backgroundColor: styleSheet.COLOR.bgLightBlueColor,
       body: Column(
@@ -50,22 +53,47 @@ class _LoginViewState extends State<LoginView> {
                         width: 280,
                       ),
                       styleSheet.appConfig.addHeight(15),
-                      TextButtonView(
-                        btnName: "Forgot Password?",
-                        onPressed: () {
-                          setAuthState(AuthState.isForgot);
-                        },
-                      ),
-                      TextButtonView(
-                        btnName: authState == AuthState.isLOGIN
-                            ? "Sign Up"
-                            : "Login",
-                        onPressed: () {
-                          setAuthState(authState == AuthState.isLOGIN
-                              ? AuthState.isSignUp
-                              : AuthState.isLOGIN);
-                        },
-                      ),
+                      authState == AuthState.isLOGIN
+                          ? Column(
+                              children: [
+                                TextButtonView(
+                                  btnName: "Forgot Password?",
+                                  onPressed: () {
+                                    setAuthState(AuthState.isForgot);
+                                  },
+                                ),
+                                TextButtonView(
+                                  btnName: authState == AuthState.isLOGIN
+                                      ? "Sign Up"
+                                      : "Login",
+                                  onPressed: () {
+                                    setAuthState(authState == AuthState.isLOGIN
+                                        ? AuthState.isSignUp
+                                        : AuthState.isLOGIN);
+                                  },
+                                ),
+                              ],
+                            )
+                          : const SizedBox(),
+                      authState == AuthState.isOTPViewFromSignUp ||
+                              authState == AuthState.isOTPViewFromForgotPassword
+                          ? Column(
+                              children: [
+                                Text(
+                                  "We sent you an OTP code",
+                                  style: view.loginHeadingTextSize,
+                                ),
+                                styleSheet.appConfig.addHeight(10),
+                                Text(
+                                    "We have sent you an OTP code. Please enter the code below to reset your password",
+                                    textAlign: TextAlign.center,
+                                    style: styleSheet.TEXT_THEME.fs12Medium
+                                        .copyWith(
+                                            color:
+                                                styleSheet.COLOR.primaryColor))
+                              ],
+                            )
+                          : const SizedBox(),
                     ],
                   ),
                 ),
@@ -85,17 +113,33 @@ class _LoginViewState extends State<LoginView> {
                       switch (authState) {
                         case AuthState.isForgot:
                           return ForgotPDCompoView(
-                            onSendOTP: setAuthState,
+                            onSendOTP: () => setState(() => authState =
+                                AuthState.isOTPViewFromForgotPassword),
+                            onPop: () =>
+                                setState(() => authState = AuthState.isLOGIN),
                           );
-                        case AuthState.isOTPView:
+                        case AuthState.isOTPViewFromForgotPassword ||
+                              AuthState.isOTPViewFromSignUp:
                           return OTPComponentView(
-                            getBack: setAuthState,
+                            state: authState,
+                            onVerify: (state) =>
+                                setState(() => authState = state),
+                            onPop: () =>
+                                setState(() => authState = AuthState.isLOGIN),
                           );
                         case AuthState.isSignUp:
-                          return const SignUpComponentView();
+                          return SignUpComponentView(
+                            onPop: () =>
+                                setState(() => authState = AuthState.isLOGIN),
+                            onContinue: () => setState(() =>
+                                authState = AuthState.isOTPViewFromSignUp),
+                          );
                         case AuthState.createPD:
                           return CreatePDComponentView(
-                            getBack: setAuthState,
+                            onPop: () =>
+                                setState(() => authState = AuthState.isLOGIN),
+                            onCreatePassword: () =>
+                                setState(() => authState = AuthState.isLOGIN),
                           );
                         default:
                           return const LoginComponentView();

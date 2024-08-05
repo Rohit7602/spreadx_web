@@ -8,8 +8,15 @@ import 'package:spreadx_web/main.dart';
 class CustomHeaderDialog extends StatelessWidget {
   String title;
   Widget child;
+  double? maxwidth;
+  double? maxheight;
 
-  CustomHeaderDialog({required this.title, required this.child, super.key});
+  CustomHeaderDialog(
+      {required this.title,
+      required this.child,
+      this.maxwidth,
+      this.maxheight,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +24,10 @@ class CustomHeaderDialog extends StatelessWidget {
     return Dialog(
       child: Container(
         constraints: BoxConstraints(
-            minHeight: 350,
-            maxHeight: styleSheet.appConfig.getScreenHeight(context) * 0.8),
-        width: styleSheet.appConfig.getScreenWidth(context) * view.dialogWidth,
+            minHeight: maxheight ?? 350,
+            maxHeight: styleSheet.appConfig.getScreenHeight(context) * 0.9),
+        width: maxwidth ??
+            styleSheet.appConfig.getScreenWidth(context) * view.dialogWidth,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -56,7 +64,7 @@ class CustomHeaderDialog extends StatelessWidget {
             if (title.isNotEmpty) styleSheet.appConfig.addHeight(20),
 
             // Widget to add Childs
-            child.paddingAll(10)
+            Flexible(child: child.paddingAll(10))
           ],
         ),
       ),

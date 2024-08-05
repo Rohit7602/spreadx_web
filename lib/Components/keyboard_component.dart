@@ -2,15 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/custom_grid.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 class KeyboardComponentView extends StatelessWidget {
-  Function(String) controller;
-  double? aspectRatio;
+  void Function(String value) onInput;
+  void Function() onValueRemove;
   KeyboardComponentView(
-      {required this.controller, this.aspectRatio, super.key});
+      {required this.onInput, required this.onValueRemove, super.key});
 
   String amountController = "";
 
@@ -20,12 +21,11 @@ class KeyboardComponentView extends StatelessWidget {
     return GridView.builder(
       itemCount: LocalData.keyboardBtnList.length,
       shrinkWrap: true,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: CustomSliverGridDelegate(
           crossAxisCount: 3,
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
-          childAspectRatio:
-              aspectRatio != null ? aspectRatio! : view.keyboardBtnSize),
+          itemHeight: 70),
       itemBuilder: (context, i) {
         var btn = LocalData.keyboardBtnList[i];
         return KeyboardButtonView(
@@ -37,14 +37,10 @@ class KeyboardComponentView extends StatelessWidget {
             btnName: btn.btnName,
             onPressed: () {
               if (i == 11) {
-                if (amountController.isNotEmpty) {
-                  amountController = amountController.substring(
-                      0, amountController.length - 1);
-                  controller(amountController);
-                }
+                onValueRemove();
               } else {
                 amountController += btn.btnName;
-                controller(amountController);
+                onInput(btn.btnName);
               }
             });
       },

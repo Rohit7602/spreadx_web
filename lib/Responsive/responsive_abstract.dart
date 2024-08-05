@@ -57,6 +57,9 @@ abstract class ResponsiveValues {
 // ************ Dialog  Responsive ***************
 
   late double dialogWidth;
+
+  /// *******DASHBOARD GRID BUTTONS RESPONSIVE ***********
+  late int crossCount;
 }
 
 // ************ Tab View ***************
@@ -96,7 +99,8 @@ class TabView implements ResponsiveValues {
   double loginContainerHeight = 0.4;
 
   @override
-  var loginHeadingTextSize = styleSheet.TEXT_THEME.fs18Bold;
+  var loginHeadingTextSize = styleSheet.TEXT_THEME.fs18Bold
+      .copyWith(color: styleSheet.COLOR.primaryColor);
 
   @override
   double iconSize = 22;
@@ -127,13 +131,16 @@ class TabView implements ResponsiveValues {
   bool drawerTabView = true;
 
   @override
-  double dashboardSummaryCardWidth = 280;
+  double dashboardSummaryCardWidth = 260;
 
   @override
-  double dialogWidth = 0.6;
+  double dialogWidth = 0.4;
 
   @override
   double dashboardProductCardFlex = 2;
+
+  @override
+  int crossCount = 3;
 }
 
 // ************ Web View ***************
@@ -176,7 +183,8 @@ class WebView implements ResponsiveValues {
   double loginContainerHeight = 0.7;
 
   @override
-  var loginHeadingTextSize = styleSheet.TEXT_THEME.fs24Bold;
+  var loginHeadingTextSize = styleSheet.TEXT_THEME.fs24Bold
+      .copyWith(color: styleSheet.COLOR.primaryColor);
 
   @override
   double iconSize = 20;
@@ -204,13 +212,16 @@ class WebView implements ResponsiveValues {
   bool drawerTabView = false;
 
   @override
-  double dashboardSummaryCardWidth = 320;
+  double dashboardSummaryCardWidth = 300;
 
   @override
-  double dialogWidth = 0.5;
+  double dialogWidth = 0.4;
 
   @override
   double dashboardProductCardFlex = 2;
+
+  @override
+  int crossCount = 4;
 }
 
 // ************ DeskTop View ***************
@@ -253,7 +264,8 @@ class DesktopView implements ResponsiveValues {
   double loginContainerHeight = 0.4;
 
   @override
-  var loginHeadingTextSize = styleSheet.TEXT_THEME.fs26Bold;
+  var loginHeadingTextSize = styleSheet.TEXT_THEME.fs26Bold
+      .copyWith(color: styleSheet.COLOR.primaryColor);
 
   @override
   double iconSize = 20;
@@ -284,8 +296,11 @@ class DesktopView implements ResponsiveValues {
   double dashboardSummaryCardWidth = 350;
 
   @override
-  double dialogWidth = 0.4;
+  double dialogWidth = 0.3;
 
   @override
   double dashboardProductCardFlex = 1;
+
+  @override
+  int crossCount = 6;
 }

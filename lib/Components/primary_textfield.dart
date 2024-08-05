@@ -18,6 +18,7 @@ class PrimaryTextFormField extends StatelessWidget {
   final bool isDense;
   final bool label;
   final Function? onTap;
+  final bool readonly;
   const PrimaryTextFormField({
     super.key,
     this.textAlign,
@@ -33,6 +34,7 @@ class PrimaryTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.label = false,
     this.isDense = true,
+    this.readonly = false,
     this.onTap,
   });
 
@@ -56,7 +58,7 @@ class PrimaryTextFormField extends StatelessWidget {
           // validator: validator == null ? null : (v) => validator!.validator(v),
           style: view.textFontLargeMedium,
           obscureText: obscureText,
-
+          readOnly: readonly,
           decoration: InputDecoration(
             filled: true,
             fillColor: styleSheet.COLOR.fieldGreyColor,

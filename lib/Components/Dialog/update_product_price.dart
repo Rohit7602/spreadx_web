@@ -6,6 +6,8 @@ import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/main.dart';
 
+import '../../keyboard_handler.dart';
+
 class UpdateProductPriceDialog extends StatefulWidget {
   const UpdateProductPriceDialog({super.key});
 
@@ -27,10 +29,11 @@ class _UpdateProductPriceDialogState extends State<UpdateProductPriceDialog> {
           children: [
             Row(
               children: [
-                const Flexible(
+                Flexible(
                     flex: 3,
                     child: PrimaryTextFormField(
                       hinttext: "Barcode",
+                      onTap: () => openVirtualKeyboard(),
                     )),
                 styleSheet.appConfig.addWidth(20),
                 Flexible(

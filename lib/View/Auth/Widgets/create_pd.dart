@@ -11,8 +11,10 @@ import 'package:spreadx_web/Utils/Routes/routes.dart';
 import 'package:spreadx_web/main.dart';
 
 class CreatePDComponentView extends StatefulWidget {
-  void Function(AuthState) getBack;
-  CreatePDComponentView({required this.getBack, super.key});
+  void Function() onCreatePassword;
+  void Function() onPop;
+  CreatePDComponentView(
+      {required this.onCreatePassword, required this.onPop, super.key});
 
   @override
   State<CreatePDComponentView> createState() => _CreatePDComponentViewState();
@@ -24,16 +26,15 @@ class _CreatePDComponentViewState extends State<CreatePDComponentView> {
   @override
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
-    return Column(
+    return ListView(
+      shrinkWrap: true,
       children: [
         Row(
           children: [
             BackButtonView(
-              onpressed: () {
-                widget.getBack(AuthState.isForgot);
-              },
+              onpressed: widget.onPop,
             ),
-            styleSheet.appConfig.addWidth(20),
+            styleSheet.appConfig.addWidth(10),
             Text(
               "Create Password",
               style: view.loginHeadingTextSize,
@@ -67,9 +68,7 @@ class _CreatePDComponentViewState extends State<CreatePDComponentView> {
         styleSheet.appConfig.addHeight(20),
         PrimaryBtnView(
           btnName: "Create Password",
-          onPressed: () {
-            context.go(MyRoute.mainDashboard);
-          },
+          onPressed: () => context.go(MyRoute.mainDashboard),
         ),
       ],
     );

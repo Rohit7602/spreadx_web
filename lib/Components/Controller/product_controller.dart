@@ -6,13 +6,18 @@ class ProductController extends GetxController {
   List<ProductModel> get productList => _productList;
 
   addProducts(ProductModel product) {
-    _productList.add(product);
+    if (_productList.any((value) => value.id == product.id)) {
+      final i = _productList.indexOf(product);
+      _productList[i].qty = (int.parse(_productList[i].qty) + 1).toString();
+    } else {
+      product.qty = "1";
+      _productList.add(product);
+    }
     update();
   }
 
-  removeProduct() {
-    _productList.removeLast();
-
+  removeProduct(String id) {
+    _productList.removeWhere((v) => v.id == id);
     update();
   }
 }

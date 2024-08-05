@@ -6,14 +6,17 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Controller/product_controller.dart';
+import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/apply_discount.dart';
 import 'package:spreadx_web/Components/Dialog/assign_customer_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/barcode_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/custom_item_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/money_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/product_check.dart';
+import 'package:spreadx_web/Components/Dialog/split_pay.dart';
 import 'package:spreadx_web/Components/Dialog/update_item_quantity.dart';
 import 'package:spreadx_web/Components/Dialog/update_product_price.dart';
+import 'package:spreadx_web/Components/custom_grid.dart';
 import 'package:spreadx_web/Components/custom_row.dart';
 import 'package:spreadx_web/Components/keyboard_component.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
@@ -34,7 +37,8 @@ class DashboardScreenView extends StatefulWidget {
   State<DashboardScreenView> createState() => _DashboardScreenViewState();
 }
 
-class _DashboardScreenViewState extends State<DashboardScreenView> {
+class _DashboardScreenViewState extends State<DashboardScreenView>
+    with WidgetsBindingObserver {
   final amountController = TextEditingController();
   final barcodeController = TextEditingController();
   final quantityController = TextEditingController();
@@ -48,10 +52,45 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
   dynamic isPaymentCash;
   int selectedValue = 0;
 
+  double _keyboardHeight = 0.0;
+
+  void showDetails() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return ItemDetailsDialog(
+            itemCount: 1,
+          );
+        });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeMetrics() {
+    final bottomInset = WidgetsBinding.instance.window.viewInsets.bottom;
+    setState(() {
+      _keyboardHeight = bottomInset;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
+    final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leadingWidth: 0,
         title: Image.asset(
@@ -74,92 +113,88 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
           Expanded(
             child: Container(
               padding: const EdgeInsets.all(10),
+              height: MediaQuery.of(context).size.height +
+                  _keyboardHeight -
+                  (AppBar().preferredSize.height + 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    children: [
-                      styleSheet.appConfig.addHeight(10),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: PrimaryTextFormField(
-                              controller: barcodeController,
-                              onTap: () async {
-                                await showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return BarcodeDialog(
-                                        hintText: "Enter Barcode",
-                                      );
-                                    }).then((val) {
-                                  barcodeController.text = val;
-                                  setState(() {});
-                                });
-                              },
-                              hinttext: "Barcode",
-                            ),
-                          ),
-                          styleSheet.appConfig.addWidth(10),
-                          Expanded(
-                            child: PrimaryTextFormField(
-                                controller: quantityController,
-                                hinttext: "Qty",
+                  Expanded(
+                    child: Column(
+                      children: [
+                        styleSheet.appConfig.addHeight(10),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: PrimaryTextFormField(
+                                controller: barcodeController,
+                                readonly: true,
                                 onTap: () async {
                                   await showDialog(
                                       context: context,
                                       builder: (context) {
                                         return BarcodeDialog(
-                                          hintText: "Enter QTY",
+                                          hintText: "Enter Barcode",
                                         );
                                       }).then((val) {
-                                    quantityController.text = val;
+                                    barcodeController.text = val;
                                     setState(() {});
                                   });
-                                }),
-                          ),
-                          styleSheet.appConfig.addWidth(10),
-                          SecondaryButtonView(
-                            btnName: "Add",
-                            onPressed: () {},
-                          )
-                        ],
-                      ),
-                      styleSheet.appConfig.addHeight(10),
-                      styleSheet.appConfig.addHeight(10),
-                      GetBuilder(
-                        init: ProductController(),
-                        builder: (data) {
-                          return data.productList.isEmpty
-                              ? Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    styleSheet.appConfig.addHeight(30),
-                                    Image.asset(styleSheet.images.empty_cart),
-                                    Text(
-                                      "Cart is empty. Add items to show",
-                                      style: styleSheet.TEXT_THEME.fs14Medium
-                                          .copyWith(
-                                              color:
-                                                  styleSheet.COLOR.greyColor),
-                                    ),
-                                  ],
-                                )
-                              : SizedBox(
-                                  height: styleSheet.appConfig
-                                          .getScreenHeight(context) *
-                                      0.4,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return ItemDetailsDialog(
-                                              itemCount: 1,
-                                            );
-                                          });
-                                    },
+                                },
+                                hinttext: "Barcode",
+                              ),
+                            ),
+                            styleSheet.appConfig.addWidth(10),
+                            Expanded(
+                              child: PrimaryTextFormField(
+                                  controller: quantityController,
+                                  hinttext: "Qty",
+                                  readonly: true,
+                                  onTap: () async {
+                                    await showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return BarcodeDialog(
+                                            hintText: "Enter QTY",
+                                          );
+                                        }).then((val) {
+                                      quantityController.text = val;
+                                      setState(() {});
+                                    });
+                                  }),
+                            ),
+                            styleSheet.appConfig.addWidth(10),
+                            SecondaryButtonView(
+                              btnName: "Add",
+                              onPressed: () {},
+                            )
+                          ],
+                        ),
+                        styleSheet.appConfig.addHeight(10),
+                        styleSheet.appConfig.addHeight(10),
+                        GetBuilder(
+                          init: ProductController(),
+                          builder: (data) {
+                            return data.productList.isEmpty
+                                ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      styleSheet.appConfig.addHeight(30),
+                                      Image.asset(styleSheet.images.empty_cart),
+                                      Text(
+                                        "Cart is empty. Add items to show",
+                                        style: styleSheet.TEXT_THEME.fs14Medium
+                                            .copyWith(
+                                                color:
+                                                    styleSheet.COLOR.greyColor),
+                                      ),
+                                    ],
+                                  )
+                                : SizedBox(
+                                    height: styleSheet.appConfig
+                                            .getScreenHeight(context) *
+                                        0.4,
                                     child: DataTable2(
                                       dataRowHeight: 40,
                                       headingRowHeight: 30,
@@ -197,21 +232,31 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
                                         data.productList.length,
                                         (index) => DataRow(
                                           cells: [
-                                            DataCell(Text(
-                                                "${(index + 1)}.".toString())),
-                                            DataCell(Text(data
-                                                .productList[index]
-                                                .description)),
-                                            DataCell(Text(
-                                                "${data.productList[index].price}.0")),
-                                            DataCell(Text(
-                                                "${data.productList[index].qty}.0")),
-                                            DataCell(Text(
-                                                "${double.parse(data.productList[index].qty.toString()) * double.parse(data.productList[index].qty.toString())}.0")),
+                                            DataCell(
+                                                onTap: showDetails,
+                                                Text("${(index + 1)}."
+                                                    .toString())),
+                                            DataCell(
+                                                onTap: showDetails,
+                                                Text(data.productList[index]
+                                                    .description)),
+                                            DataCell(
+                                                onTap: showDetails,
+                                                Text(
+                                                    "${data.productList[index].price}.0")),
+                                            DataCell(
+                                                onTap: showDetails,
+                                                Text(
+                                                    "${data.productList[index].qty}.0")),
+                                            DataCell(
+                                                onTap: showDetails,
+                                                Text(
+                                                    "${double.parse(data.productList[index].qty.toString()) * double.parse(data.productList[index].qty.toString())}.0")),
                                             DataCell(
                                               InkWell(
                                                 onTap: () {
-                                                  product.removeProduct();
+                                                  product.removeProduct(data
+                                                      .productList[index].id);
                                                 },
                                                 child: Container(
                                                   padding:
@@ -234,26 +279,32 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                );
-                        },
-                      ),
-                    ],
+                                  );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                  Wrap(
-                    runSpacing: 10,
-                    spacing: 10,
-                    children: [
-                      ...List.generate(btnList.length, (i) {
-                        return SecondaryButtonView(
-                          btnColor: styleSheet.COLOR.primarybuttonColor,
-                          btnName: btnList[i].title.toUpperCase(),
-                          onPressed: () =>
-                              getButtonRoute(btnList[i].title, context),
-                        );
-                      })
-                    ],
-                  ).paddingAll(20),
+                  SizedBox(
+                    child: GridView.builder(
+                        shrinkWrap: true,
+                        itemCount: btnList.length,
+                        gridDelegate: CustomSliverGridDelegate(
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                            crossAxisCount: width <= 1140
+                                ? 3
+                                : width > 1140 && width <= 1480
+                                    ? 4
+                                    : 6,
+                            itemHeight: 50),
+                        itemBuilder: (context, i) => SecondaryButtonView(
+                              btnColor: styleSheet.COLOR.primarybuttonColor,
+                              btnName: btnList[i].title.toUpperCase(),
+                              onPressed: () =>
+                                  getButtonRoute(btnList[i].title, context),
+                            )),
+                  )
                 ],
               ),
             ),
@@ -355,12 +406,23 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
                   Row(
                     children: [
                       Expanded(
-                        child: OutlineButtonView(
-                            btnColor: styleSheet.COLOR.whiteColor,
-                            txtColor: styleSheet.COLOR.blackColor,
-                            btnName: "Split Pay",
-                            onPressed: () {}),
-                      ),
+                          child: OutlineButtonView(
+                        btnColor: styleSheet.COLOR.whiteColor,
+                        txtColor: styleSheet.COLOR.blackColor,
+                        btnName: "Split Pay",
+                        onPressed: () => showDialog(
+                          context: context,
+                          builder: (context) => SplitPayDialog(
+                              amount: amountController.text.isEmpty
+                                  ? "0"
+                                  : amountController.text,
+                              method: isPaymentCash != null
+                                  ? isPaymentCash
+                                      ? "CASH"
+                                      : 'CARD'
+                                  : "CASH"),
+                        ),
+                      ))
                     ],
                   ),
                   styleSheet.appConfig.addHeight(8),
@@ -369,9 +431,47 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
                       Expanded(
                         child: SecondaryButtonView(
                             btnName: "Checkout".toUpperCase(),
-                            onPressed: () {
-                              openVirtualKeyboard();
-                            }),
+                            onPressed: () => showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return CustomHeaderDialog(
+                                      title: "Open New Drawer",
+                                      maxheight: 150,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              "OPENING AMOUNT",
+                                              style: styleSheet
+                                                  .TEXT_THEME.fs12Bold
+                                                  .copyWith(
+                                                      color: styleSheet
+                                                          .COLOR.blackColor
+                                                          .withOpacity(0.7)),
+                                            ),
+                                            const SecondaryTextFormField(
+                                              fieldColor: true,
+                                              hinttext: "0.0",
+                                            ),
+                                            styleSheet.appConfig.addHeight(20),
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: PrimaryBtnView(
+                                                      btnName:
+                                                          "Open New Drawer",
+                                                      onPressed: () {}),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ));
+                                })),
                       ),
                     ],
                   ),
@@ -380,8 +480,15 @@ class _DashboardScreenViewState extends State<DashboardScreenView> {
                   // Widget to show Keypad Buttons
 
                   KeyboardComponentView(
-                    controller: (val) {
-                      amountController.text = val;
+                    onInput: (value) {
+                      setState(() => amountController.text += value);
+                    },
+                    onValueRemove: () {
+                      if (amountController.text.isNotEmpty) {
+                        amountController.text = amountController.text
+                            .substring(0, amountController.text.length - 1);
+                      }
+                      setState(() {});
                     },
                   ),
                 ],

@@ -13,7 +13,8 @@ class CustomItemDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomHeaderDialog(
       title: "Custom Item",
-      child: Column(
+      child: ListView(
+        shrinkWrap: true,
         children: [
           TextFormField(
             textAlign: TextAlign.center,
@@ -45,7 +46,7 @@ class CustomItemDialog extends StatelessWidget {
               var btn = LocalData.keyboardBtnList[i];
               return KeyboardButtonView(
                 widget: Icon(
-                  Icons.backspace_outlined,
+                  Icons.backspace,
                   color: styleSheet.COLOR.redColor,
                 ),
                 index: i,

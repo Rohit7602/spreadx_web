@@ -120,6 +120,7 @@ class SecondaryButtonView extends StatelessWidget {
       onPressed: () => onPressed(),
       child: Text(
         btnName,
+        textAlign: TextAlign.center,
         style: styleSheet.TEXT_THEME.fs12Normal
             .copyWith(color: txtColor ?? styleSheet.COLOR.whiteColor),
       ),
