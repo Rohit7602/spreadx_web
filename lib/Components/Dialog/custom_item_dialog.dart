@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
-import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/main.dart';
 
 class CustomItemDialog extends StatelessWidget {
-  const CustomItemDialog({super.key});
+  CustomItemDialog({super.key});
+
+  final customItemController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +26,16 @@ class CustomItemDialog extends StatelessWidget {
                 border: InputBorder.none,
                 hintText: "AED 0.00"),
           ).paddingSymmetric(horizontal: 20),
-          styleSheet.appConfig.addHeight(30),
-          TextButton.icon(
-              icon: const Icon(Icons.movie_edit),
-              onPressed: () {},
-              label: Text(
-                "Custom Item",
-                style: styleSheet.TEXT_THEME.fs12Normal,
-              )),
+          TextFormField(
+            controller: customItemController,
+            style: styleSheet.TEXT_THEME.fs12Medium,
+            textAlign: TextAlign.center,
+            decoration: InputDecoration(
+                hintText: "Custom Item",
+                hintStyle: styleSheet.TEXT_THEME.fs14Bold
+                    .copyWith(color: styleSheet.COLOR.primaryColor),
+                border: InputBorder.none),
+          ),
           GridView.builder(
             padding: styleSheet.DECORATION.PADDING_20,
             itemCount: LocalData.keyboardBtnList.length,

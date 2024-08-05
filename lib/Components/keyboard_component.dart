@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/custom_grid.dart';
 import 'package:spreadx_web/Data/local_data.dart';
-import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 class KeyboardComponentView extends StatelessWidget {
@@ -17,7 +16,6 @@ class KeyboardComponentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final view = ResponsiveHandler().getResponsiveness(context);
     return GridView.builder(
       itemCount: LocalData.keyboardBtnList.length,
       shrinkWrap: true,

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_picker_dropdown.dart';
 import 'package:country_pickers/utils/utils.dart';
@@ -156,7 +158,7 @@ class _LoginComponentViewState extends State<LoginComponentView> {
             btnName: "Login",
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                context.go(MyRoute.mainDashboard);
+                context.go(MyRoute.homeScreen);
               }
             },
           ),

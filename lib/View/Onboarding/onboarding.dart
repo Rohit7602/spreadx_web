@@ -2,12 +2,9 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Data/local_data.dart';
-import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/Utils/Routes/routes.dart';
 import 'package:spreadx_web/main.dart';
 

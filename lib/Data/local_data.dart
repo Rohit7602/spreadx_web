@@ -75,8 +75,8 @@ class LocalData {
 
   // *************** Menu Drawer List ********************
   static List<MenuDrawerList> menuDrawerList = [
-    MenuDrawerList(styleSheet.icons.dashboardIcon, "Dashboard"),
-    MenuDrawerList(styleSheet.icons.saleIcon, "Sales"),
+    // MenuDrawerList(styleSheet.icons.dashboardIcon, "Dashboard"),
+    // MenuDrawerList(styleSheet.icons.saleIcon, "Sales"),
     MenuDrawerList(styleSheet.icons.productIcon, "Products"),
     MenuDrawerList(styleSheet.icons.inventoryIcon, "Inventory"),
     MenuDrawerList(styleSheet.icons.transactionIcon, "Transactions"),
@@ -106,6 +106,15 @@ class LocalData {
     ProductModel("1", "default - PCS", "1", "0", "0"),
     ProductModel("2", "default - PCS", "1", "0", "4"),
     ProductModel("3", "default - PCS", "1", "0", "2"),
+  ];
+
+// *************** Existing Customer List ********************
+  static List<ExistingCustomer> existingCustomerList = [
+    ExistingCustomer("Dogw", "KD Makwana", "Cash Customer"),
+    ExistingCustomer("123000", "KDMC Mac", "Cash Customer"),
+    ExistingCustomer("355", "KDM Mac", "Cash Customer"),
+    ExistingCustomer("pXM5", "TEST MASTER2", "Credit Customer"),
+    ExistingCustomer("nsIR", "KDM Cash", "Cash Customer")
   ];
 }
 
@@ -154,4 +163,11 @@ class MoneyList {
   String amount;
 
   MoneyList(this.amount);
+}
+
+// class For Assign Customer
+class ExistingCustomer {
+  String id, name, customerType;
+
+  ExistingCustomer(this.id, this.name, this.customerType);
 }

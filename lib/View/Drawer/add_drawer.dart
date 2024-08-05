@@ -36,7 +36,7 @@ class _AddDrawerViewState extends State<AddDrawerView> {
           children: [
             Row(
               children: [
-                const Flexible(
+                Flexible(
                   flex: 1,
                   child: PrimaryTextFormField(
                     title: "Description",
@@ -44,7 +44,7 @@ class _AddDrawerViewState extends State<AddDrawerView> {
                   ),
                 ),
                 styleSheet.appConfig.addWidth(10),
-                const Flexible(
+                Flexible(
                   flex: 1,
                   child: PrimaryTextFormField(
                     title: "Amount",

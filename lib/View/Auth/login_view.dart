@@ -7,11 +7,9 @@ import 'package:spreadx_web/View/Auth/Widgets/create_pd.dart';
 import 'package:spreadx_web/View/Auth/Widgets/login_component.dart';
 import 'package:spreadx_web/View/Auth/Widgets/forgot_pd_comp.dart';
 import 'package:spreadx_web/View/Auth/Widgets/signup_comp.dart';
-import 'package:spreadx_web/View/Auth/Widgets/otp_compo_view.dart';
-import 'package:spreadx_web/web_config.dart';
+import 'package:spreadx_web/View/Auth/Widgets/otp_compo_view.dart'; 
 import 'package:spreadx_web/main.dart';
-
-import '../../Components/Button/back_btn.dart';
+ 
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});

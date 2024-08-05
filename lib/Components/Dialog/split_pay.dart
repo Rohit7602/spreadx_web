@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
@@ -46,7 +48,6 @@ class _SplitPayDialogState extends State<SplitPayDialog> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((t) {
       _splits.add({'type': 'CARD', 'amount': widget.amount});

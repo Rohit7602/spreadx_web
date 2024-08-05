@@ -19,7 +19,7 @@ class CustomRow extends StatelessWidget {
             style: styleSheet.TEXT_THEME.fs12Bold
                 .copyWith(color: txtColor ?? styleSheet.COLOR.greyColor)),
         Text(trailing,
-            style: styleSheet.TEXT_THEME.fs12Medium
+            style: styleSheet.TEXT_THEME.fs12Bold
                 .copyWith(color: txtColor ?? styleSheet.COLOR.blackColor))
       ],
     );

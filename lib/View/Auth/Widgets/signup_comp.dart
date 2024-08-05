@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
@@ -175,15 +177,13 @@ class _LoginComponentViewState extends State<SignUpComponentView> {
     );
   }
 
-  Widget _buildDropdownItem(Country country) => Container(
-        child: Row(
-          children: <Widget>[
-            CountryPickerUtils.getDefaultFlagImage(country),
-            const SizedBox(
-              width: 8.0,
-            ),
-            Text("+${country.phoneCode}"),
-          ],
-        ),
+  Widget _buildDropdownItem(Country country) => Row(
+        children: <Widget>[
+          CountryPickerUtils.getDefaultFlagImage(country),
+          const SizedBox(
+            width: 8.0,
+          ),
+          Text("+${country.phoneCode}"),
+        ],
       );
 }

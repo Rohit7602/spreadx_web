@@ -12,14 +12,12 @@ enum AuthState {
 enum ScreenView { Tablet, Web, Desktop }
 
 enum DrawerState {
-  Dashboard,
-  Sales,
-  Product,
+  Products,
   Inventory,
   Transactions,
-  Supplier,
-  Customer,
-  Report,
+  Suppliers,
+  Customers,
+  Reports,
   DataCenter,
   MainSetup,
   Support

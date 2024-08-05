@@ -1,7 +1,6 @@
 import 'package:go_router/go_router.dart';
-import 'package:spreadx_web/View/Dashboard/dashboard_screen.dart';
-import 'package:spreadx_web/View/Dashboard/main_dashboard.dart';
-import 'package:spreadx_web/View/Dashboard/menu_drawer.dart';
+import 'package:spreadx_web/View/Home/home_screen.dart';
+import 'package:spreadx_web/View/Drawer/menu_drawer.dart';
 import 'package:spreadx_web/View/Drawer/drawer_report.dart';
 import 'package:spreadx_web/View/Onboarding/onboarding.dart';
 import 'package:spreadx_web/Utils/Routes/routes.dart';
@@ -50,8 +49,8 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const AddDrawerView(),
     ),
     GoRoute(
-      path: MyRoute.dashboard,
-      builder: (context, state) => const DashboardScreenView(),
+      path: MyRoute.homeScreen,
+      builder: (context, state) => const HomeScreenView(),
     ),
     GoRoute(
       path: MyRoute.reportView,
@@ -60,10 +59,6 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: MyRoute.drawerReportView,
       builder: (context, state) => const DrawerReportView(),
-    ),
-    GoRoute(
-      path: MyRoute.mainDashboard,
-      builder: (context, state) => const MainDashboard(),
     ),
     GoRoute(
       path: MyRoute.mainMenuDrawer,

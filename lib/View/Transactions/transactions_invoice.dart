@@ -58,7 +58,7 @@ class _TransactionsInvoiceViewState extends State<TransactionsInvoiceView> {
                   styleSheet.appConfig.addWidth(20),
                   SizedBox(
                     width: styleSheet.appConfig.getScreenWidth(context) * 0.25,
-                    child: const PrimaryTextFormField(
+                    child: PrimaryTextFormField(
                       hinttext: "Search in menu",
                     ),
                   ),

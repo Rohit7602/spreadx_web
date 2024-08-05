@@ -1,12 +1,13 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'package:country_pickers/country.dart';
-import 'package:country_pickers/country_picker_dropdown.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
-import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
 import 'package:spreadx_web/Components/Dropdown/primary_drop_down.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
+import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -24,8 +25,10 @@ class _AssignCustomerDialogState extends State<AssignCustomerDialog> {
   bool isNewCustomer = false;
 
   final phoneController = TextEditingController();
+  final searchController = TextEditingController();
 
   List<String> listOfTypes = ["Individual", "Business"];
+  List<ExistingCustomer> listOfsearch = [];
   String selectedType = "Individual";
 
   String dropValue = "Account Type";
@@ -46,6 +49,27 @@ class _AssignCustomerDialogState extends State<AssignCustomerDialog> {
           ],
         ),
       );
+
+  _searchText() {
+    if (searchController.text.isNotEmpty) {
+      listOfsearch = LocalData.existingCustomerList
+          .where((e) =>
+              e.name.toLowerCase().contains(searchController.text) ||
+              e.customerType.toLowerCase().contains(searchController.text) ||
+              e.id.toLowerCase().contains(searchController.text))
+          .toList();
+    } else {
+      listOfsearch = LocalData.existingCustomerList.toList();
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    _searchText();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
@@ -287,11 +311,51 @@ class _AssignCustomerDialogState extends State<AssignCustomerDialog> {
                 return Column(
                   children: [
                     PrimaryTextFormField(
+                      controller: searchController,
+                      onChanged: (val) {
+                        _searchText();
+                      },
                       suffixicon: const Icon(Icons.search),
                       hinttext: "Search Customer",
                       onTap: () => openVirtualKeyboard(),
                     ),
                     styleSheet.appConfig.addHeight(10),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      separatorBuilder: (context, i) =>
+                          styleSheet.appConfig.addHeight(10),
+                      itemCount: listOfsearch.length,
+                      itemBuilder: (context, i) {
+                        var customer = listOfsearch[i];
+
+                        return Container(
+                          padding: styleSheet.DECORATION.PADDING_10,
+                          decoration: BoxDecoration(
+                            borderRadius: styleSheet.DECORATION.RADIUS_10,
+                            color: styleSheet.COLOR.productCardGreyColor
+                                .withOpacity(0.4),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                customer.id,
+                                style: styleSheet.TEXT_THEME.fs12Bold,
+                              ),
+                              Text(
+                                customer.name,
+                                style: styleSheet.TEXT_THEME.fs12Medium,
+                              ),
+                              styleSheet.appConfig.addHeight(3),
+                              Text(
+                                customer.customerType,
+                                style: styleSheet.TEXT_THEME.fs12Medium,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    )
                   ],
                 ).paddingAll(10);
               }

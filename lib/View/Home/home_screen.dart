@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, deprecated_member_use
 
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +13,7 @@ import 'package:spreadx_web/Components/Dialog/barcode_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/custom_item_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/money_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/product_check.dart';
+import 'package:spreadx_web/Components/Dialog/queue_remove_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/split_pay.dart';
 import 'package:spreadx_web/Components/Dialog/update_item_quantity.dart';
 import 'package:spreadx_web/Components/Dialog/update_product_price.dart';
@@ -23,21 +24,20 @@ import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/Utils/Routes/routes.dart';
-import 'package:spreadx_web/View/Dashboard/Widget/product_check.dart';
-import 'package:spreadx_web/View/Dashboard/queue_list.dart';
-import 'package:spreadx_web/keyboard_handler.dart';
+import 'package:spreadx_web/View/Home/Widget/product_check.dart';
+import 'package:spreadx_web/View/Home/queue_list.dart';
 import 'package:spreadx_web/main.dart';
 
 import '../../Components/Dialog/item_details_dialog.dart';
 
-class DashboardScreenView extends StatefulWidget {
-  const DashboardScreenView({super.key});
+class HomeScreenView extends StatefulWidget {
+  const HomeScreenView({super.key});
 
   @override
-  State<DashboardScreenView> createState() => _DashboardScreenViewState();
+  State<HomeScreenView> createState() => _HomeScreenViewState();
 }
 
-class _DashboardScreenViewState extends State<DashboardScreenView>
+class _HomeScreenViewState extends State<HomeScreenView>
     with WidgetsBindingObserver {
   final amountController = TextEditingController();
   final barcodeController = TextEditingController();
@@ -251,7 +251,7 @@ class _DashboardScreenViewState extends State<DashboardScreenView>
                                             DataCell(
                                                 onTap: showDetails,
                                                 Text(
-                                                    "${double.parse(data.productList[index].qty.toString()) * double.parse(data.productList[index].qty.toString())}.0")),
+                                                    "${double.parse(data.productList[index].price.toString()) * double.parse(data.productList[index].qty.toString())}")),
                                             DataCell(
                                               InkWell(
                                                 onTap: () {
@@ -328,15 +328,41 @@ class _DashboardScreenViewState extends State<DashboardScreenView>
                   styleSheet.appConfig.addHeight(6),
                   CustomRow(title: "Total Tax", trailing: "0.00"),
                   styleSheet.appConfig.addHeight(6),
-                  CustomRow(
-                      txtColor: styleSheet.COLOR.primaryColor,
-                      title: "Grand Total",
-                      trailing: "AED 120"),
+                  GetBuilder<ProductController>(
+                    builder: (data) {
+                      int qty = 0;
+                      for (var element in data.productList) {
+                        qty += int.parse(element.qty.toString());
+                      }
+                      return CustomRow(
+                          txtColor: styleSheet.COLOR.primaryColor,
+                          title: "Grand Total",
+                          trailing: "AED $qty.00");
+                    },
+                  ),
                   styleSheet.appConfig.addHeight(6),
-                  CustomRow(
-                      txtColor: styleSheet.COLOR.redColor,
-                      title: "Balance",
-                      trailing: "AED 120"),
+                  GetBuilder<ProductController>(
+                    builder: (data) {
+                      double price = 0;
+
+                      for (var element in data.productList) {
+                        price += double.parse(element.price.toString()) *
+                            double.parse(element.qty);
+                      }
+                      var newPrice = amountController.text.isNotEmpty
+                          ? (double.parse(amountController.text) - price)
+                          : price == 0
+                              ? price
+                              : -price;
+                      return CustomRow(
+                          txtColor: newPrice.isNegative
+                              ? styleSheet.COLOR.redColor
+                              : styleSheet.COLOR.greenColor,
+                          title: "Balance",
+                          trailing: "AED $newPrice");
+                    },
+                  ),
+
                   styleSheet.appConfig.addHeight(10),
 
                   PlainTextField(
@@ -430,48 +456,49 @@ class _DashboardScreenViewState extends State<DashboardScreenView>
                     children: [
                       Expanded(
                         child: SecondaryButtonView(
-                            btnName: "Checkout".toUpperCase(),
-                            onPressed: () => showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return CustomHeaderDialog(
-                                      title: "Open New Drawer",
-                                      maxheight: 150,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text(
-                                              "OPENING AMOUNT",
-                                              style: styleSheet
-                                                  .TEXT_THEME.fs12Bold
-                                                  .copyWith(
-                                                      color: styleSheet
-                                                          .COLOR.blackColor
-                                                          .withOpacity(0.7)),
-                                            ),
-                                            const SecondaryTextFormField(
-                                              fieldColor: true,
-                                              hinttext: "0.0",
-                                            ),
-                                            styleSheet.appConfig.addHeight(20),
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                  child: PrimaryBtnView(
-                                                      btnName:
-                                                          "Open New Drawer",
-                                                      onPressed: () {}),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ));
-                                })),
+                          btnName: "Checkout".toUpperCase(),
+                          onPressed: () => showDialog(
+                            context: context,
+                            builder: (context) {
+                              return CustomHeaderDialog(
+                                title: "Open New Drawer",
+                                maxheight: 150,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        "OPENING AMOUNT",
+                                        style: styleSheet.TEXT_THEME.fs12Bold
+                                            .copyWith(
+                                                color: styleSheet
+                                                    .COLOR.blackColor
+                                                    .withOpacity(0.7)),
+                                      ),
+                                      const SecondaryTextFormField(
+                                        fieldColor: true,
+                                        hinttext: "0.0",
+                                      ),
+                                      styleSheet.appConfig.addHeight(20),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: PrimaryBtnView(
+                                                btnName: "Open New Drawer",
+                                                onPressed: () {}),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -531,7 +558,7 @@ class _DashboardScreenViewState extends State<DashboardScreenView>
             builder: (context) => const AssignCustomerDialog());
       case "custom item":
         return showDialog(
-            context: context, builder: (context) => const CustomItemDialog());
+            context: context, builder: (context) => CustomItemDialog());
       case "product check":
         return showDialog(
             context: context, builder: (context) => const ProductCheckDialog());
@@ -553,9 +580,24 @@ class _DashboardScreenViewState extends State<DashboardScreenView>
           isProductCheck = false;
           isQueueList = !isQueueList;
         });
+      case "add to queue":
+        return addItemsInQueue();
 
       default:
         return null;
+    }
+  }
+
+  addItemsInQueue() {
+    if (product.productList.isNotEmpty) {
+      product.updateQueueList(product.productList);
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const EmptyQueueDialog();
+        },
+      );
     }
   }
 }

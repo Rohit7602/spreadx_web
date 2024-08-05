@@ -7,9 +7,8 @@ class MyRoute {
   static String transactionList = "/transactionList";
   static String producWiseReport = "/productWise";
   static String addDrawer = "/addDrawer";
-  static String dashboard = "/dashboard";
+  static String homeScreen = "/dashboard";
   static String reportView = "/reportView";
   static String drawerReportView = "/drawerReport";
-  static String mainDashboard = "/mainDashboard";
   static String mainMenuDrawer = "/mainMenuDrawer";
 }

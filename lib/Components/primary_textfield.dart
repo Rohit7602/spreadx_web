@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
@@ -14,12 +16,13 @@ class PrimaryTextFormField extends StatelessWidget {
   final FocusNode? focusNode;
   final TextInputType? keyboardtype;
   final Function(String)? fieldSubmitted;
+  void Function(String)? onChanged;
   final bool obscureText;
   final bool isDense;
   final bool label;
   final Function? onTap;
   final bool readonly;
-  const PrimaryTextFormField({
+  PrimaryTextFormField({
     super.key,
     this.textAlign,
     this.title,
@@ -28,6 +31,7 @@ class PrimaryTextFormField extends StatelessWidget {
     this.controller,
     this.focusNode,
     this.fieldSubmitted,
+    this.onChanged,
     this.keyboardtype,
     this.suffixicon,
     this.prefixIcon,
@@ -41,54 +45,50 @@ class PrimaryTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextFormField(
-          textAlign: textAlign ?? TextAlign.left,
-          onTap: () {
-            onTap != null ? onTap!() : null;
-          },
-          controller: controller,
-          focusNode: focusNode,
-          onFieldSubmitted:
-              fieldSubmitted != null ? (value) => fieldSubmitted!(value) : null,
-          keyboardType: keyboardtype,
+    return TextFormField(
+      onChanged: (val) => onChanged!(val),
+      textAlign: textAlign ?? TextAlign.left,
+      onTap: () {
+        onTap != null ? onTap!() : null;
+      },
+      controller: controller,
+      focusNode: focusNode,
+      onFieldSubmitted:
+          fieldSubmitted != null ? (value) => fieldSubmitted!(value) : null,
+      keyboardType: keyboardtype,
 
-          // validator: validator == null ? null : (v) => validator!.validator(v),
-          style: view.textFontLargeMedium,
-          obscureText: obscureText,
-          readOnly: readonly,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: styleSheet.COLOR.fieldGreyColor,
-            constraints:
-                BoxConstraints(minHeight: 30, maxHeight: view.textFieldheight),
-            labelText: label ? hinttext : null,
-            labelStyle:
-                view.textFontMedium.copyWith(color: styleSheet.COLOR.greyColor),
-            hintText: hinttext,
-            hintStyle: view.textFontMedium
-                .copyWith(color: hinttextColor ?? styleSheet.COLOR.greyColor),
-            suffixIconColor: styleSheet.COLOR.greyColor,
-            suffixIcon: suffixicon?.paddingOnly(right: 20),
-            prefixIconColor: styleSheet.COLOR.greyColor,
-            prefixIcon: prefixIcon?.paddingOnly(left: 5),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide(color: styleSheet.COLOR.whiteColor)),
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide(color: styleSheet.COLOR.whiteColor)),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide(color: styleSheet.COLOR.whiteColor)),
-            errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-                borderSide: BorderSide(color: styleSheet.COLOR.redColor)),
-          ),
-        ),
-      ],
+      // validator: validator == null ? null : (v) => validator!.validator(v),
+      style: view.textFontLargeMedium,
+      obscureText: obscureText,
+      readOnly: readonly,
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: styleSheet.COLOR.fieldGreyColor,
+        constraints:
+            BoxConstraints(minHeight: 30, maxHeight: view.textFieldheight),
+        labelText: label ? hinttext : null,
+        labelStyle:
+            view.textFontMedium.copyWith(color: styleSheet.COLOR.greyColor),
+        hintText: hinttext,
+        hintStyle: view.textFontMedium
+            .copyWith(color: hinttextColor ?? styleSheet.COLOR.greyColor),
+        suffixIconColor: styleSheet.COLOR.greyColor,
+        suffixIcon: suffixicon?.paddingOnly(right: 20),
+        prefixIconColor: styleSheet.COLOR.greyColor,
+        prefixIcon: prefixIcon?.paddingOnly(left: 5),
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(4),
+            borderSide: BorderSide(color: styleSheet.COLOR.whiteColor)),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(4),
+            borderSide: BorderSide(color: styleSheet.COLOR.whiteColor)),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(4),
+            borderSide: BorderSide(color: styleSheet.COLOR.whiteColor)),
+        errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(4),
+            borderSide: BorderSide(color: styleSheet.COLOR.redColor)),
+      ),
     );
   }
 }

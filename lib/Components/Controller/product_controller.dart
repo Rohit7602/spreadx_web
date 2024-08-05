@@ -20,4 +20,20 @@ class ProductController extends GetxController {
     _productList.removeWhere((v) => v.id == id);
     update();
   }
+
+  clearProducts() {
+    _productList.clear();
+    update();
+  }
+
+  // Queue List Controller
+
+  final List<ProductModel> _queueList = [];
+  List<ProductModel> get queueList => _queueList;
+
+  updateQueueList(List<ProductModel> pr) {
+    _queueList.addAll(pr);
+    clearProducts();
+    update();
+  }
 }
