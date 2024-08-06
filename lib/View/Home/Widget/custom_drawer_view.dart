@@ -84,7 +84,7 @@ class CustomDrawerView extends StatelessWidget {
                             itemBuilder: (context, i) {
                               return InkWell(
                                 onTap: () {
-                                  getRoute(menuList[i].btnName);
+                                  getRoute(menuList[i].btnName.toLowerCase());
                                 },
                                 child: Container(
                                   alignment: Alignment.center,

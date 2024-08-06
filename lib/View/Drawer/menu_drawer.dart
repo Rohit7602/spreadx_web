@@ -5,7 +5,12 @@ import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Data/enum.dart';
 import 'package:spreadx_web/Utils/Routes/routes.dart';
 import 'package:spreadx_web/View/Home/Widget/custom_drawer_view.dart';
+import 'package:spreadx_web/View/Inventory/inventory_view.dart';
 import 'package:spreadx_web/View/Product/product_view.dart';
+import 'package:spreadx_web/View/Support/support_and_legal.dart';
+import 'package:spreadx_web/View/Transactions/transaction_list.dart';
+import 'package:spreadx_web/View/Transactions/transaction_view.dart';
+import 'package:spreadx_web/View/main_setup/main_setup.dart';
 import 'package:spreadx_web/main.dart';
 
 class MainMenuDrawerView extends StatefulWidget {
@@ -46,9 +51,9 @@ class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
             case DrawerState.Products:
               return ProductView();
             case DrawerState.Inventory:
-              return const SizedBox();
+              return const InventoryView();
             case DrawerState.Transactions:
-              return const SizedBox();
+              return const TransactionView();
             case DrawerState.Suppliers:
               return const SizedBox();
             case DrawerState.Customers:
@@ -58,9 +63,9 @@ class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
             case DrawerState.DataCenter:
               return const SizedBox();
             case DrawerState.MainSetup:
-              return const SizedBox();
+              return const MainSetupView();
             case DrawerState.Support:
-              return const SizedBox();
+              return SupportAndLegalView();
 
             default:
               return Center(
@@ -77,8 +82,9 @@ class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
   }
 
   setDrawerState(DrawerState state) {
+    print(state);
     drawerState = state;
-    setState(() {});
     Navigator.of(context).pop();
+    setState(() {});
   }
 }
