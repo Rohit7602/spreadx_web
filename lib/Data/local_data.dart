@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:spreadx_web/Components/Models/product_model.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -170,4 +171,20 @@ class ExistingCustomer {
   String id, name, customerType;
 
   ExistingCustomer(this.id, this.name, this.customerType);
+}
+
+// class for Users
+class UserModel {
+  final String name;
+  final String phone;
+  final String email;
+  final String role;
+  final String status;
+  const UserModel({
+    required this.name,
+    required this.phone,
+    required this.email,
+    required this.role,
+    required this.status,
+  });
 }

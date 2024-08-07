@@ -1,11 +1,11 @@
 // ignore_for_file: avoid_unnecessary_containers
 
 import 'package:country_pickers/country.dart';
-import 'package:country_pickers/country_picker_dropdown.dart';
-import 'package:country_pickers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/password_text_field.dart';
+import 'package:spreadx_web/Components/phone_text_field.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/Utils/Routes/routes.dart';
@@ -99,21 +99,9 @@ class _LoginComponentViewState extends State<LoginComponentView> {
           ),
           styleSheet.appConfig.addHeight(40),
           isPhoneSelected
-              ? SecondaryTextFormField(
-                  onTap: () => openVirtualKeyboard(),
-                  prefixIcon: SizedBox(
-                    width: 140,
-                    child: CountryPickerDropdown(
-                      isExpanded: true,
-                      initialValue: 'in',
-                      itemBuilder: _buildDropdownItem,
-                      onValuePicked: (Country country) {},
-                    ),
-                  ),
-                  keyboardtype: TextInputType.phone,
+              ? PhoneTextField(
                   controller: phoneController,
-                  hinttext: "(50 | 52 | 54 | 55 | 56 | 58 | xxxxx)",
-                )
+                  onValuePick: (Country country) {})
               : SecondaryTextFormField(
                   controller: emailController,
                   suffixicon: const Icon(Icons.mail),
@@ -121,18 +109,7 @@ class _LoginComponentViewState extends State<LoginComponentView> {
                   onTap: () => openVirtualKeyboard(),
                 ),
           styleSheet.appConfig.addHeight(20),
-          SecondaryTextFormField(
-            controller: passwordController,
-            suffixicon: GestureDetector(
-                onTap: () {
-                  isVisibility = !isVisibility;
-                  setState(() {});
-                },
-                child: const Icon(Icons.visibility_outlined)),
-            hinttext: "Password",
-            onTap: () => openVirtualKeyboard(),
-            obscureText: isVisibility,
-          ),
+          PasswordTextField(controller: passwordController),
           styleSheet.appConfig.addHeight(20),
           Row(
             children: [
@@ -166,16 +143,4 @@ class _LoginComponentViewState extends State<LoginComponentView> {
       ),
     );
   }
-
-  Widget _buildDropdownItem(Country country) => Container(
-        child: Row(
-          children: <Widget>[
-            CountryPickerUtils.getDefaultFlagImage(country),
-            const SizedBox(
-              width: 8.0,
-            ),
-            Text("+${country.phoneCode}"),
-          ],
-        ),
-      );
 }

@@ -58,5 +58,13 @@ class AppIcons {
   String refundIcon = "assets/Icons/refund_icon.png";
   String receiptIcon = "assets/Icons/receipt_icon.png";
 
+  // Printer Settings Icon
+  String bluetooth = "assets/Icons/bluetooth.png";
+  String m2 = "assets/Icons/m2.png";
+  String phone = "assets/Icons/phone.png";
+  String pos = "assets/Icons/pos.png";
+  String printer = "assets/Icons/printer.png";
+
+  String user = "assets/Icons/user.png";
   //
 }
