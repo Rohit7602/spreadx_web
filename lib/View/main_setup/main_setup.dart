@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:spreadx_web/Data/enum.dart';
 import 'package:spreadx_web/Utils/Routes/routes.dart';
+import 'package:spreadx_web/View/main_setup/Business_Setup/business_setup_view.dart';
+import 'package:spreadx_web/View/main_setup/Printer_Settings/printer_settings.dart';
+import 'package:spreadx_web/View/main_setup/User_Management/user_management.dart';
+import 'package:spreadx_web/View/main_setup/security/security_view.dart';
+import 'package:spreadx_web/View/main_setup/store_settings/store_settings_view.dart';
 import 'package:spreadx_web/View/main_setup/widgets/main_setup_button.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -20,9 +25,15 @@ class _MainSetupViewState extends State<MainSetupView> {
     {"title": "Store Settings", "route": MyRoute.storeSettings},
   ];
 
+  MainSetUpState _state = MainSetUpState.Default;
+
+  setViewState(MainSetUpState newState) {
+    setState(() => _state = newState);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    final defaultView = Padding(
       padding: styleSheet.DECORATION.PADDING_20,
       child: Row(
         children: [
@@ -44,7 +55,7 @@ class _MainSetupViewState extends State<MainSetupView> {
                 ...List.generate(btnList.length, (index) {
                   return MainSetupButton(
                       ontap: () {
-                        context.go(btnList[index]['route']);
+                        setViewState(getViewByRoutes(btnList[index]['title']));
                       },
                       title: btnList[index]['title']);
                 })
@@ -54,5 +65,56 @@ class _MainSetupViewState extends State<MainSetupView> {
         ],
       ),
     );
+
+    return getView(defaultView);
+  }
+
+  void onPressBack() {
+    setState(() => _state = MainSetUpState.Default);
+  }
+
+  getViewByRoutes(String route) {
+    switch (route) {
+      case "Business Setup":
+        return MainSetUpState.Business;
+      case "Printer Settings":
+        return MainSetUpState.Printer;
+      case "Users Management":
+        return MainSetUpState.Users;
+      case "Security":
+        return MainSetUpState.Security;
+      case "Store Settings":
+        return MainSetUpState.Store;
+
+      default:
+        return MainSetUpState.Default;
+    }
+  }
+
+  getView(Widget defaultView) {
+    switch (_state) {
+      case MainSetUpState.Business:
+        return BusinessSetupView(
+          onPressedBack: onPressBack,
+        );
+      case MainSetUpState.Printer:
+        return PrinterSettings(
+          onPressedBack: onPressBack,
+        );
+      case MainSetUpState.Security:
+        return SecurityView(
+          onPressedBack: onPressBack,
+        );
+      case MainSetUpState.Store:
+        return StoreSettingsView(
+          onPressedBack: onPressBack,
+        );
+      case MainSetUpState.Users:
+        return UserManagementView(
+          onPressedBack: onPressBack,
+        );
+      default:
+        return defaultView;
+    }
   }
 }

@@ -2,23 +2,29 @@ import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:spreadx_web/Components/Appbar/custom_appbar.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Controller/users_controller.dart';
 import 'package:spreadx_web/Utils/Routes/routes.dart';
 import 'package:spreadx_web/main.dart';
 
 class UserManagementView extends StatelessWidget {
-  const UserManagementView({super.key});
+  final void Function()? onPressedBack;
+  const UserManagementView({super.key, this.onPressedBack});
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<UsersController>();
 
     return Scaffold(
-      appBar: CustomAppbarView(title: "Users"),
+      // appBar: CustomAppbarView(title: "Users"),
       body: Column(
         children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: IconButton(
+                onPressed: onPressedBack,
+                icon: const Icon(Icons.arrow_back_outlined)),
+          ),
           Expanded(
             child: ListView.separated(
                 separatorBuilder: (context, i) =>

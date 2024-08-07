@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:spreadx_web/Components/Appbar/custom_appbar.dart';
 
 class AddNewSupplierView extends StatelessWidget {
-  const AddNewSupplierView({super.key});
+  final void Function()? onPressedBack;
+  const AddNewSupplierView({super.key, this.onPressedBack});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DrawerAppBarView(showLeading: true, title: "Add New Supplier"),
-      body: const Column(
-        children: [],
+      // appBar: DrawerAppBarView(showLeading: true, title: "Add New Supplier"),
+      body: Column(
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: IconButton(
+                onPressed: onPressedBack,
+                icon: const Icon(Icons.arrow_back_outlined)),
+          ),
+        ],
       ),
     );
   }

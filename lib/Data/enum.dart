@@ -22,3 +22,5 @@ enum DrawerState {
   MainSetup,
   Support
 }
+
+enum MainSetUpState { Default, Business, Printer, Users, Security, Store }

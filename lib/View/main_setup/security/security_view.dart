@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
 
 class SecurityView extends StatelessWidget {
-  const SecurityView({super.key});
+  final void Function()? onPressedBack;
+  const SecurityView({super.key, this.onPressedBack});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      body: SafeArea(
+          child: Column(
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: IconButton(
+                onPressed: onPressedBack,
+                icon: const Icon(Icons.arrow_back_outlined)),
+          ),
+        ],
+      )),
+    );
   }
 }

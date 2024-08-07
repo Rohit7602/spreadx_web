@@ -24,7 +24,7 @@ class CustomAppbarView extends StatelessWidget implements PreferredSizeWidget {
       leading: showLeading
           ? IconButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                context.pop();
               },
               icon: Icon(
                 Icons.arrow_back,

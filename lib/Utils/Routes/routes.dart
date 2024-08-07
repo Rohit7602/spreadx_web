@@ -12,12 +12,15 @@ class MyRoute {
   static String drawerReportView = "/drawerReport";
   static String mainMenuDrawer = "/mainMenuDrawer";
   static String addNewSupplier = "/addNewSupplier";
-  static String businessSetup = "/businessSetup";
-  static String profileSetupView = "/profileSetupView";
-  static String businessProfileSetupview = "/businessProfileSetupview";
-  static String printerSetting = "/printerSetting";
-  static String usersManagement = "/usersManagement";
-  static String userProfileView = "/userProfileView";
-  static String security = "/security";
-  static String storeSettings = "/storeSettings";
+  static String businessSetup = "/mainMenuDrawer/businessSetup";
+  static String profileSetupView =
+      "/mainMenuDrawer/businessSetup/profileSetupView";
+  static String businessProfileSetupview =
+      "/mainMenuDrawer/businessSetup/businessProfileSetupview";
+  static String printerSetting = "/mainMenuDrawer/printerSetting";
+  static String usersManagement = "/mainMenuDrawer/usersManagement";
+  static String userProfileView =
+      "/mainMenuDrawer/usersManagement/userProfileView";
+  static String security = "/mainMenuDrawer/security";
+  static String storeSettings = "/mainMenuDrawer/storeSettings";
 }

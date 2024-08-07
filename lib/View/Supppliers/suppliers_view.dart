@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
-import 'package:spreadx_web/Utils/Routes/routes.dart';
+import 'package:spreadx_web/View/Supppliers/add_new_supplier.dart';
 import 'package:spreadx_web/main.dart';
 
-class SuppliersView extends StatelessWidget {
+class SuppliersView extends StatefulWidget {
   const SuppliersView({super.key});
 
   @override
+  State<SuppliersView> createState() => _SuppliersViewState();
+}
+
+class _SuppliersViewState extends State<SuppliersView> {
+  bool showSupplierForm = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Stack(
+    final defaultView = Stack(
       alignment: Alignment.bottomCenter,
       children: [
         Column(
@@ -53,12 +59,17 @@ class SuppliersView extends StatelessWidget {
           ],
         ).paddingAll(20),
         DrawerButtonView(
-                btnName: "Add New Supplier",
-                onPressed: () {
-                  // context.go(MyRoute.addNewSupplier);
-                })
-            .paddingAll(15)
+            btnName: "Add New Supplier",
+            onPressed: () {
+              setState(() => showSupplierForm = true);
+            }).paddingAll(15)
       ],
     );
+
+    return showSupplierForm
+        ? AddNewSupplierView(
+            onPressedBack: () => setState(() => showSupplierForm = false),
+          )
+        : defaultView;
   }
 }

@@ -1,10 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Components/Appbar/custom_appbar.dart';
 import 'package:spreadx_web/Data/enum.dart';
-import 'package:spreadx_web/Utils/Routes/routes.dart';
 import 'package:spreadx_web/View/Customer/customer_list.dart';
 import 'package:spreadx_web/View/Home/Widget/custom_drawer_view.dart';
 import 'package:spreadx_web/View/Inventory/inventory_view.dart';
@@ -12,7 +10,6 @@ import 'package:spreadx_web/View/Product/product_view.dart';
 import 'package:spreadx_web/View/Reports/reports_view.dart';
 import 'package:spreadx_web/View/Support/support_and_legal.dart';
 import 'package:spreadx_web/View/Supppliers/suppliers_view.dart';
-import 'package:spreadx_web/View/Transactions/transaction_list.dart';
 import 'package:spreadx_web/View/Transactions/transaction_view.dart';
 import 'package:spreadx_web/View/main_setup/main_setup.dart';
 import 'package:spreadx_web/main.dart';
