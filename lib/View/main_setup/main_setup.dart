@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:spreadx_web/Utils/Routes/routes.dart';
+import 'package:spreadx_web/View/main_setup/widgets/main_setup_button.dart';
 import 'package:spreadx_web/main.dart';
-import 'package:spreadx_web/web_config.dart';
 
 class MainSetupView extends StatefulWidget {
   const MainSetupView({super.key});
@@ -10,58 +12,47 @@ class MainSetupView extends StatefulWidget {
 }
 
 class _MainSetupViewState extends State<MainSetupView> {
-  List<String> btnList = [
-    "Business Setup",
-    "Printer Settings",
-    "Users Management",
-    "Security",
-    "Store Settings"
+  List<Map<String, dynamic>> btnList = [
+    {"title": "Business Setup", "route": MyRoute.businessSetup},
+    {"title": "Printer Settings", "route": MyRoute.printerSetting},
+    {"title": "Users Management", "route": MyRoute.usersManagement},
+    {"title": "Security", "route": MyRoute.security},
+    {"title": "Store Settings", "route": MyRoute.storeSettings},
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Flexible(
-          flex: 1,
-          child: Center(
-            child: Image.network(
-              WebConfig.demoImage,
-              height: 400,
+    return Padding(
+      padding: styleSheet.DECORATION.PADDING_20,
+      child: Row(
+        children: [
+          Flexible(
+            flex: 1,
+            child: Center(
+              child: Image.asset(
+                styleSheet.images.main_setup_img,
+                height: 300,
+              ),
             ),
           ),
-        ),
-        styleSheet.appConfig.addWidth(10),
-        Flexible(
-          flex: 1,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ...List.generate(btnList.length, (index) {
-                return InkWell(
-                  onTap: () {},
-                  child: Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    alignment: Alignment.center,
-                    width: styleSheet.appConfig.getScreenWidth(context),
-                    height: 55,
-                    decoration: BoxDecoration(
-                        borderRadius: styleSheet.DECORATION.RADIUS_5,
-                        border:
-                            Border.all(color: styleSheet.COLOR.lightGreyColor),
-                        color: styleSheet.COLOR.primaryColor),
-                    child: Text(
-                      btnList[index],
-                      style: styleSheet.TEXT_THEME.fs16Medium
-                          .copyWith(color: styleSheet.COLOR.whiteColor),
-                    ),
-                  ),
-                );
-              })
-            ],
+          styleSheet.appConfig.addWidth(10),
+          Flexible(
+            flex: 1,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ...List.generate(btnList.length, (index) {
+                  return MainSetupButton(
+                      ontap: () {
+                        context.go(btnList[index]['route']);
+                      },
+                      title: btnList[index]['title']);
+                })
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

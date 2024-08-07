@@ -3,5 +3,6 @@
 "files.associations": {
     "*.embeddedhtml": "html",
     "memory": "cpp"
-}
+},
+"dart.flutterSdkPath": "C:\\flutter_sdk\\flutter_3.22.2"
 }
