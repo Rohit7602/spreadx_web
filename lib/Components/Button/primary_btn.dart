@@ -207,3 +207,48 @@ class KeyboardButtonView extends StatelessWidget {
     );
   }
 }
+
+class DrawerButtonView extends StatelessWidget {
+  String btnName;
+  Function onPressed;
+  Color? btnColor;
+  Color? txtColor;
+  double? elevation;
+  bool isExpanded;
+
+  DrawerButtonView(
+      {required this.btnName,
+      required this.onPressed,
+      this.btnColor,
+      this.txtColor,
+      this.elevation,
+      this.isExpanded = true,
+      super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var btn = ElevatedButton(
+      style: ButtonStyle(
+        elevation: WidgetStateProperty.all(elevation ?? 2),
+        shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(2))),
+        minimumSize: WidgetStateProperty.all(
+            Size(MediaQuery.of(context).size.width * 0.2, 55)),
+        backgroundColor: WidgetStateProperty.all<Color>(
+            btnColor ?? styleSheet.COLOR.primaryColor),
+      ),
+      onPressed: () => onPressed(),
+      child: Text(
+        btnName,
+        style: styleSheet.TEXT_THEME.fs16Medium
+            .copyWith(color: txtColor ?? styleSheet.COLOR.whiteColor),
+      ),
+    );
+
+    return isExpanded
+        ? Row(
+            children: [Expanded(child: btn)],
+          )
+        : btn;
+  }
+}

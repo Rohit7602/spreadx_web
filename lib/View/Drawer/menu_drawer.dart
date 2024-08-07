@@ -2,12 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:spreadx_web/Components/Appbar/custom_appbar.dart';
 import 'package:spreadx_web/Data/enum.dart';
 import 'package:spreadx_web/Utils/Routes/routes.dart';
+import 'package:spreadx_web/View/Customer/customer_list.dart';
 import 'package:spreadx_web/View/Home/Widget/custom_drawer_view.dart';
 import 'package:spreadx_web/View/Inventory/inventory_view.dart';
 import 'package:spreadx_web/View/Product/product_view.dart';
+import 'package:spreadx_web/View/Reports/reports_view.dart';
 import 'package:spreadx_web/View/Support/support_and_legal.dart';
+import 'package:spreadx_web/View/Supppliers/suppliers_view.dart';
 import 'package:spreadx_web/View/Transactions/transaction_list.dart';
 import 'package:spreadx_web/View/Transactions/transaction_view.dart';
 import 'package:spreadx_web/View/main_setup/main_setup.dart';
@@ -26,22 +30,26 @@ class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: styleSheet.COLOR.primaryColor,
-        title: Text(
-          "Dashboard",
-          style: styleSheet.TEXT_THEME.fs14Medium.copyWith(
-            color: styleSheet.COLOR.whiteColor,
-          ),
-        ),
-        actions: [
-          InkWell(
-              onTap: () {
-                context.go(MyRoute.homeScreen);
-              },
-              child: Image.asset(styleSheet.icons.screenIcon)),
-        ],
-      ),
+      appBar: DrawerAppBarView(
+          showLeading: false, title: getDrawerName(drawerState)),
+
+      // AppBar(
+      //   backgroundColor: styleSheet.COLOR.primaryColor,
+      //   title: Text(
+      //     getDrawerName(drawerState),
+      //     style: styleSheet.TEXT_THEME.fs16Medium.copyWith(
+      //       letterSpacing: 1.2,
+      //       color: styleSheet.COLOR.whiteColor,
+      //     ),
+      //   ),
+      //   actions: [
+      //     InkWell(
+      //         onTap: () {
+      //           context.go(MyRoute.homeScreen);
+      //         },
+      //         child: Image.asset(styleSheet.icons.screenIcon)),
+      //   ],
+      // ),
       drawer: CustomDrawerView(
         onTap: setDrawerState,
       ),
@@ -55,13 +63,13 @@ class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
             case DrawerState.Transactions:
               return const TransactionView();
             case DrawerState.Suppliers:
-              return const SizedBox();
+              return const SuppliersView();
             case DrawerState.Customers:
-              return const SizedBox();
+              return const CustomerListView();
             case DrawerState.Reports:
-              return const SizedBox();
+              return const ReportsView();
             case DrawerState.DataCenter:
-              return const SizedBox();
+              return const Center(child: Text("Comming Soon"));
             case DrawerState.MainSetup:
               return const MainSetupView();
             case DrawerState.Support:
@@ -82,9 +90,35 @@ class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
   }
 
   setDrawerState(DrawerState state) {
-    print(state);
     drawerState = state;
+
     Navigator.of(context).pop();
     setState(() {});
+  }
+
+  String getDrawerName(DrawerState state) {
+    switch (drawerState) {
+      case DrawerState.Products:
+        return "Products";
+      case DrawerState.Inventory:
+        return "Inventory";
+      case DrawerState.Transactions:
+        return "Transactions";
+      case DrawerState.Suppliers:
+        return "Suppliers";
+      case DrawerState.Customers:
+        return "Customers";
+      case DrawerState.Reports:
+        return "Reports";
+      case DrawerState.DataCenter:
+        return "Data Center";
+      case DrawerState.MainSetup:
+        return "Main Setup";
+      case DrawerState.Support:
+        return "Support & Legal";
+
+      default:
+        return "Dashboard";
+    }
   }
 }

@@ -29,12 +29,13 @@ class ReportsView extends StatelessWidget {
       itemBuilder: (context, i) {
         var report = LocalData.reportList[i];
         return ReportDashboardCard(
-            title: report.title,
-            description: report.description,
-            icon: report.icon,
-            onPressed: () {
-              context.go(MyRoute.drawerView);
-            });
+          title: report.title,
+          description: report.description,
+          icon: report.icon,
+          onPressed: () {
+            // context.go(MyRoute.drawerView);
+          },
+        );
       },
     );
     // );

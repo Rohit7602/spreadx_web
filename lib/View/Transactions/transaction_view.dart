@@ -26,31 +26,19 @@ class _TransactionViewState extends State<TransactionView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ...List.generate(btnList.length, (index) {
-                return InkWell(
-                  onTap: () {
-                    btnIndex = index;
-                    setState(() {});
-                  },
-                  child: Container(
-                      margin: const EdgeInsets.only(bottom: 5),
-                      alignment: Alignment.center,
-                      width: styleSheet.appConfig.getScreenWidth(context),
-                      height: 55,
-                      decoration: BoxDecoration(
-                          borderRadius: styleSheet.DECORATION.RADIUS_5,
-                          border: Border.all(
-                              color: styleSheet.COLOR.lightGreyColor),
-                          color: btnIndex == index
-                              ? styleSheet.COLOR.primaryColor
-                              : styleSheet.COLOR.whiteColor),
-                      child: Text(
-                        btnList[index],
-                        style: styleSheet.TEXT_THEME.fs16Medium.copyWith(
-                            color: btnIndex == index
-                                ? styleSheet.COLOR.whiteColor
-                                : styleSheet.COLOR.blackColor),
-                      )),
-                );
+                return DrawerButtonView(
+                    elevation: 0,
+                    btnColor: btnIndex == index
+                        ? styleSheet.COLOR.primaryColor
+                        : styleSheet.COLOR.whiteColor,
+                    txtColor: btnIndex == index
+                        ? styleSheet.COLOR.whiteColor
+                        : styleSheet.COLOR.blackColor,
+                    btnName: btnList[index],
+                    onPressed: () {
+                      btnIndex = index;
+                      setState(() {});
+                    }).paddingOnly(bottom: 15);
               })
             ],
           ),

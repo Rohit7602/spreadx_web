@@ -22,9 +22,8 @@ class SupportAndLegalView extends StatelessWidget {
             onTap: () {},
             child: Container(
               padding: const EdgeInsets.only(left: 15),
-              margin: const EdgeInsets.only(bottom: 10),
               width: styleSheet.appConfig.getScreenWidth(context),
-              height: 80,
+              height: 60,
               decoration: BoxDecoration(
                   borderRadius: styleSheet.DECORATION.RADIUS_5,
                   border: Border.all(color: styleSheet.COLOR.lightGreyColor),
@@ -39,13 +38,13 @@ class SupportAndLegalView extends StatelessWidget {
                   styleSheet.appConfig.addWidth(10),
                   Text(
                     btnList[index].name,
-                    style: styleSheet.TEXT_THEME.fs20Medium
+                    style: styleSheet.TEXT_THEME.fs18Medium
                         .copyWith(color: styleSheet.COLOR.whiteColor),
                   ),
                 ],
               ),
             ),
-          );
+          ).paddingOnly(bottom: 15);
         })
       ],
     ).paddingAll(20);

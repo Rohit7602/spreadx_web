@@ -10,6 +10,7 @@ import 'package:spreadx_web/View/Drawer/drawer_view.dart';
 import 'package:spreadx_web/View/Reports/reports_view.dart';
 import 'package:spreadx_web/View/Sales/product_wise_report.dart';
 import 'package:spreadx_web/View/Sales/sales_report.dart';
+import 'package:spreadx_web/View/Supppliers/add_new_supplier.dart';
 import 'package:spreadx_web/View/Transactions/transaction_list.dart';
 import 'package:spreadx_web/View/Transactions/transactions_invoice.dart';
 
@@ -63,6 +64,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: MyRoute.mainMenuDrawer,
       builder: (context, state) => const MainMenuDrawerView(),
+    ),
+    GoRoute(
+      path: MyRoute.addNewSupplier,
+      builder: (context, state) => const AddNewSupplierView(),
     ),
   ],
 );

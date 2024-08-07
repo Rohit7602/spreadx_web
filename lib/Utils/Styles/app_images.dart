@@ -12,6 +12,10 @@ class AppImage {
   String appLogoWhite = "assets/Logo/logo_white.png";
   String appLogoLarge = "assets/Logo/large_logo.png";
 
+  // *************** Drawer Images ***********
+  String inventoryImage = "assets/Image/inventoryImage.png";
+  String main_setup_img = "assets/Image/main_setup_img.png";
+
   // ***************  Images ***********
 
   String onboardingImg = "assets/Image/onboarding.png";

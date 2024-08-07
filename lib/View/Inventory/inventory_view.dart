@@ -13,13 +13,19 @@ class InventoryView extends StatelessWidget {
       children: [
         Flexible(
           flex: 1,
-          child: Center(
-            child: Text(
-              "Manage your inventory by viewing, create MRN or make stock transfer",
-              textAlign: TextAlign.center,
-              style: styleSheet.TEXT_THEME.fs12Bold,
-            ),
-          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(styleSheet.images.inventoryImage),
+              styleSheet.appConfig.addHeight(10),
+              Text(
+                "Manage your inventory by viewing, create MRN or make stock transfer",
+                textAlign: TextAlign.center,
+                style: styleSheet.TEXT_THEME.fs12Bold
+                    .copyWith(color: styleSheet.COLOR.greyColor),
+              ),
+            ],
+          ).paddingSymmetric(horizontal: 20),
         ),
         Container(
           width: 3,
@@ -30,29 +36,11 @@ class InventoryView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                children: [
-                  Expanded(
-                      child: PrimaryBtnView(
-                          btnName: "View Stock", onPressed: () {})),
-                ],
-              ),
+              DrawerButtonView(btnName: "View Stock", onPressed: () {}),
               styleSheet.appConfig.addHeight(10),
-              Row(
-                children: [
-                  Expanded(
-                      child: PrimaryBtnView(
-                          btnName: "Purchase Products", onPressed: () {})),
-                ],
-              ),
+              DrawerButtonView(btnName: "Purchase Products", onPressed: () {}),
               styleSheet.appConfig.addHeight(10),
-              Row(
-                children: [
-                  Expanded(
-                      child: PrimaryBtnView(
-                          btnName: "Purchase History", onPressed: () {})),
-                ],
-              ),
+              DrawerButtonView(btnName: "Purchase History", onPressed: () {}),
             ],
           ).paddingAll(10),
         ),

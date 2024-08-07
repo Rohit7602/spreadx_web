@@ -206,7 +206,7 @@ class WebView implements ResponsiveValues {
 
   @override
   @override
-  double reportCardAspectRatio = 16 / 5;
+  double reportCardAspectRatio = 16 / 4;
 
   @override
   bool drawerTabView = false;
@@ -246,7 +246,7 @@ class DesktopView implements ResponsiveValues {
   double tableLargeWidth = 400;
 
   @override
-  var textFontNormal = styleSheet.TEXT_THEME.fs14Normal;
+  var textFontNormal = styleSheet.TEXT_THEME.fs16Normal;
 
   @override
   var textFontMedium = styleSheet.TEXT_THEME.fs12Medium;
@@ -268,7 +268,7 @@ class DesktopView implements ResponsiveValues {
       .copyWith(color: styleSheet.COLOR.primaryColor);
 
   @override
-  double iconSize = 20;
+  double iconSize = 25;
 
   @override
   var textFontBold_Medium = styleSheet.TEXT_THEME.fs18Bold;

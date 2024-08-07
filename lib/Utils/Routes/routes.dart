@@ -11,4 +11,5 @@ class MyRoute {
   static String reportView = "/reportView";
   static String drawerReportView = "/drawerReport";
   static String mainMenuDrawer = "/mainMenuDrawer";
+  static String addNewSupplier = "/addNewSupplier";
 }
