@@ -10,7 +10,6 @@ import 'package:spreadx_web/View/Onboarding/onboarding.dart';
 import 'package:spreadx_web/View/Reports/reports_view.dart';
 import 'package:spreadx_web/View/Sales/product_wise_report.dart';
 import 'package:spreadx_web/View/Sales/sales_report.dart';
-import 'package:spreadx_web/View/Supppliers/add_new_supplier.dart';
 import 'package:spreadx_web/View/Transactions/transaction_list.dart';
 import 'package:spreadx_web/View/Transactions/transactions_invoice.dart';
 import 'package:spreadx_web/View/main_setup/Business_Setup/business_profile_setup_view.dart';
@@ -99,11 +98,11 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: MyRoute.security,
-      builder: (context, state) => const SecurityView(),
+      builder: (context, state) => SecurityView(),
     ),
     GoRoute(
       path: MyRoute.storeSettings,
-      builder: (context, state) => const StoreSettingsView(),
+      builder: (context, state) => StoreSettingsView(),
     ),
   ],
 );

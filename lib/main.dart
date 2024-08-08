@@ -5,6 +5,7 @@ import 'package:spreadx_web/Components/Controller/initial_binding.dart';
 import 'package:spreadx_web/Responsive/responsive_abstract.dart';
 import 'package:spreadx_web/Utils/Routes/route_config.dart';
 import 'package:spreadx_web/Utils/constant_sheet.dart';
+import 'package:timezone/data/latest.dart' as tz;
 import 'package:window_manager/window_manager.dart';
 
 late ConstantSheet styleSheet;
@@ -12,6 +13,7 @@ late ResponsiveValues responsive;
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   styleSheet = ConstantSheet.instance;
+  tz.initializeTimeZones();
 
   WindowManager.instance.setMinimumSize(const Size(1024, 810));
   // WindowManager.instance.setMinimumSize(const Size(1380, 720));
