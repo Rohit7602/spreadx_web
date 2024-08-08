@@ -97,11 +97,11 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: MyRoute.security,
-      builder: (context, state) => const SecurityView(),
+      builder: (context, state) => SecurityView(),
     ),
     GoRoute(
       path: MyRoute.storeSettings,
-      builder: (context, state) => const StoreSettingsView(),
+      builder: (context, state) => StoreSettingsView(),
     ),
     GoRoute(
       path: MyRoute.supplier,

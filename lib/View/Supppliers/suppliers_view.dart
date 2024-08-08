@@ -23,48 +23,51 @@ class _SuppliersViewState extends State<SuppliersView> {
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ListView.separated(
-                itemCount: controller.suppliers.length,
-                shrinkWrap: true,
-                separatorBuilder: (context, i) =>
-                    styleSheet.appConfig.addHeight(10),
-                itemBuilder: (context, i) {
-                  return Container(
-                    padding: styleSheet.DECORATION.PADDING_10,
-                    decoration: BoxDecoration(
-                        borderRadius: styleSheet.DECORATION.RADIUS_5,
-                        color: styleSheet.COLOR.bgColor),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
+            controller.suppliers.isEmpty
+                ? const Center(child: Text("Supplier list is empty"))
+                    .paddingOnly(top: 50)
+                : ListView.separated(
+                    itemCount: controller.suppliers.length,
+                    shrinkWrap: true,
+                    separatorBuilder: (context, i) =>
+                        styleSheet.appConfig.addHeight(10),
+                    itemBuilder: (context, i) {
+                      return Container(
+                        padding: styleSheet.DECORATION.PADDING_10,
+                        decoration: BoxDecoration(
+                            borderRadius: styleSheet.DECORATION.RADIUS_5,
+                            color: styleSheet.COLOR.bgColor),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Image.asset(
-                              styleSheet.icons.supplierIcon,
-                              color: styleSheet.COLOR.primaryColor,
+                            Row(
+                              children: [
+                                Image.asset(
+                                  styleSheet.icons.supplierIcon,
+                                  color: styleSheet.COLOR.primaryColor,
+                                ),
+                                styleSheet.appConfig.addWidth(20),
+                                Text(
+                                  controller.suppliers[i].name,
+                                  style: styleSheet.TEXT_THEME.fs14Bold,
+                                ),
+                              ],
                             ),
-                            styleSheet.appConfig.addWidth(20),
-                            Text(
-                              controller.suppliers[i].name,
-                              style: styleSheet.TEXT_THEME.fs14Bold,
-                            ),
+                            Container(
+                              padding: styleSheet.DECORATION.PADDING_10,
+                              decoration: BoxDecoration(
+                                color: styleSheet.COLOR.bgLightBlueColor2,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.edit,
+                                color: styleSheet.COLOR.blackColor,
+                              ),
+                            )
                           ],
                         ),
-                        Container(
-                          padding: styleSheet.DECORATION.PADDING_10,
-                          decoration: BoxDecoration(
-                            color: styleSheet.COLOR.bgLightBlueColor2,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.edit,
-                            color: styleSheet.COLOR.blackColor,
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-                }).paddingAll(20),
+                      );
+                    }).paddingAll(20),
           ],
         ),
         DrawerButtonView(

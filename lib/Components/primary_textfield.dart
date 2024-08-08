@@ -128,7 +128,7 @@ class SecondaryTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
     return Container(
-      color: styleSheet.COLOR.fieldGreyColor,
+      color: fieldColor ? styleSheet.COLOR.fieldGreyColor : null,
       child: TextFormField(
         onTap: () {
           onTap != null ? onTap!() : null;
@@ -144,7 +144,7 @@ class SecondaryTextFormField extends StatelessWidget {
         obscureText: obscureText,
 
         decoration: InputDecoration(
-          filled: true,
+          filled: fieldColor,
           fillColor: fieldColor
               ? styleSheet.COLOR.whiteColor
               : styleSheet.COLOR.fieldGreyColor,

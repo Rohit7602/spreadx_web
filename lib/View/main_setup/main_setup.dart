@@ -83,7 +83,7 @@ class _MainSetupViewState extends State<MainSetupView> {
         return MainSetUpState.Users;
       case "Security":
         return MainSetUpState.Security;
-      case "Store Settings":
+      case "s":
         return MainSetUpState.Store;
 
       default:
