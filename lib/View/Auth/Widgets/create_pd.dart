@@ -7,6 +7,7 @@ import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/Utils/Routes/routes.dart';
+import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 class CreatePDComponentView extends StatefulWidget {
@@ -42,6 +43,7 @@ class _CreatePDComponentViewState extends State<CreatePDComponentView> {
         ),
         styleSheet.appConfig.addHeight(40),
         PrimaryTextFormField(
+          onTap: () => openVirtualKeyboard(),
           controller: passwordController,
           suffixicon: GestureDetector(
               onTap: () {
@@ -54,6 +56,7 @@ class _CreatePDComponentViewState extends State<CreatePDComponentView> {
         ),
         styleSheet.appConfig.addHeight(20),
         PrimaryTextFormField(
+          onTap: () => openVirtualKeyboard(),
           controller: passwordController,
           suffixicon: GestureDetector(
               onTap: () {
@@ -67,7 +70,10 @@ class _CreatePDComponentViewState extends State<CreatePDComponentView> {
         styleSheet.appConfig.addHeight(20),
         PrimaryBtnView(
           btnName: "Create Password",
-          onPressed: () => context.go(MyRoute.homeScreen),
+          onPressed: () {
+            widget.onCreatePassword();
+            // context.go(MyRoute.homeScreen)
+          },
         ),
       ],
     );

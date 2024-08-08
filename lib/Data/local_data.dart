@@ -117,6 +117,19 @@ class LocalData {
     ExistingCustomer("pXM5", "TEST MASTER2", "Credit Customer"),
     ExistingCustomer("nsIR", "KDM Cash", "Cash Customer")
   ];
+
+// *************** Business Type List ********************
+  static List<String> businessTypeList = [
+    "FMCG",
+    "Health",
+    "Villa",
+    "Dtyuu",
+    "Ggh",
+    "Restaurant",
+    "Saloon",
+    "Delivery Patner",
+    "New"
+  ];
 }
 
 // ******** Class Start From Here ******************
@@ -187,4 +200,38 @@ class UserModel {
     required this.role,
     required this.status,
   });
+}
+
+// class for suppliers
+
+class SuppliersModel {
+  String name;
+  String number;
+  String type;
+
+  SuppliersModel(
+      {required this.name, required this.number, required this.type});
+}
+
+// class for customer
+
+class CustomerModel {
+  String barcode,
+      code,
+      firstName,
+      lastName,
+      number,
+      email,
+      address,
+      accountType;
+
+  CustomerModel(
+      {required this.barcode,
+      required this.code,
+      required this.firstName,
+      required this.lastName,
+      required this.number,
+      required this.email,
+      required this.accountType,
+      required this.address});
 }

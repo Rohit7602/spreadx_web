@@ -8,16 +8,19 @@ import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Button/text_btn.dart';
 import 'package:spreadx_web/Data/enum.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
+import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 class OTPComponentView extends StatelessWidget {
   final AuthState state;
   void Function(AuthState) onVerify;
   void Function() onPop;
+  bool isForgot;
   OTPComponentView(
       {required this.onVerify,
       required this.onPop,
       this.state = AuthState.isSignUp,
+      this.isForgot = false,
       super.key});
 
   final otpController = TextEditingController();
@@ -42,6 +45,7 @@ class OTPComponentView extends StatelessWidget {
         ),
         styleSheet.appConfig.addHeight(40),
         Pinput(
+          onTap: () => openVirtualKeyboard(),
           length: 6,
           controller: otpController,
         ),
@@ -59,10 +63,9 @@ class OTPComponentView extends StatelessWidget {
         ),
         styleSheet.appConfig.addHeight(20),
         PrimaryBtnView(
-            btnName: "Verify OTP",
-            onPressed: () => onVerify(state == AuthState.isOTPViewFromSignUp
-                ? AuthState.createPD
-                : AuthState.isLOGIN)).paddingSymmetric(horizontal: 100)
+                btnName: "Verify OTP",
+                onPressed: () => onVerify(AuthState.createPD))
+            .paddingSymmetric(horizontal: 100)
       ],
     );
   }

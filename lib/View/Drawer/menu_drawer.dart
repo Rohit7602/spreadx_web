@@ -22,7 +22,7 @@ class MainMenuDrawerView extends StatefulWidget {
 }
 
 class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
-  DrawerState drawerState = DrawerState.Products;
+  DrawerState drawerState = DrawerState.Dashboard;
 
   @override
   Widget build(BuildContext context) {

@@ -12,6 +12,7 @@ enum AuthState {
 enum ScreenView { Tablet, Web, Desktop }
 
 enum DrawerState {
+  Dashboard,
   Products,
   Inventory,
   Transactions,

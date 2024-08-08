@@ -5,6 +5,7 @@ class MyRoute {
   static String drawerView = "/drawer";
   static String transactionInvoice = "/transactionInvoice";
   static String transactionList = "/transactionList";
+  static String transactionView = "/transactionView";
   static String producWiseReport = "/productWise";
   static String addDrawer = "/addDrawer";
   static String homeScreen = "/dashboard";
@@ -23,4 +24,5 @@ class MyRoute {
       "/mainMenuDrawer/usersManagement/userProfileView";
   static String security = "/mainMenuDrawer/security";
   static String storeSettings = "/mainMenuDrawer/storeSettings";
+  static String supplier = "/mainMenuDrawer/supplier";
 }

@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
+import 'package:spreadx_web/Components/keyboard_component.dart';
 import 'package:spreadx_web/Data/local_data.dart';
+import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
 
-class CustomItemDialog extends StatelessWidget {
-  CustomItemDialog({super.key});
+class CustomItemDialog extends StatefulWidget {
+  const CustomItemDialog({super.key});
 
+  @override
+  State<CustomItemDialog> createState() => _CustomItemDialogState();
+}
+
+class _CustomItemDialogState extends State<CustomItemDialog> {
+  final priceController = TextEditingController();
   final customItemController = TextEditingController();
 
   @override
@@ -18,6 +26,7 @@ class CustomItemDialog extends StatelessWidget {
         shrinkWrap: true,
         children: [
           TextFormField(
+            controller: priceController,
             textAlign: TextAlign.center,
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
@@ -27,6 +36,7 @@ class CustomItemDialog extends StatelessWidget {
                 hintText: "AED 0.00"),
           ).paddingSymmetric(horizontal: 20),
           TextFormField(
+            onTap: () => openVirtualKeyboard(),
             controller: customItemController,
             style: styleSheet.TEXT_THEME.fs12Medium,
             textAlign: TextAlign.center,
@@ -36,28 +46,40 @@ class CustomItemDialog extends StatelessWidget {
                     .copyWith(color: styleSheet.COLOR.primaryColor),
                 border: InputBorder.none),
           ),
-          GridView.builder(
-            padding: styleSheet.DECORATION.PADDING_20,
-            itemCount: LocalData.keyboardBtnList.length,
-            shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                childAspectRatio: 10 / 3),
-            itemBuilder: (context, i) {
-              var btn = LocalData.keyboardBtnList[i];
-              return KeyboardButtonView(
-                widget: Icon(
-                  Icons.backspace,
-                  color: styleSheet.COLOR.redColor,
-                ),
-                index: i,
-                btnName: btn.btnName,
-                onPressed: () {},
-              );
+          KeyboardComponentView(
+            onInput: (value) {
+              setState(() => priceController.text += value);
             },
-          ),
+            onValueRemove: () {
+              if (priceController.text.isNotEmpty) {
+                priceController.text = priceController.text
+                    .substring(0, priceController.text.length - 1);
+              }
+              setState(() {});
+            },
+          ).paddingAll(20),
+          // GridView.builder(
+          //   padding: styleSheet.DECORATION.PADDING_20,
+          //   itemCount: LocalData.keyboardBtnList.length,
+          //   shrinkWrap: true,
+          //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          //       crossAxisCount: 3,
+          //       mainAxisSpacing: 10,
+          //       crossAxisSpacing: 10,
+          //       childAspectRatio: 10 / 3),
+          //   itemBuilder: (context, i) {
+          //     var btn = LocalData.keyboardBtnList[i];
+          //     return KeyboardButtonView(
+          //       widget: Icon(
+          //         Icons.backspace,
+          //         color: styleSheet.COLOR.redColor,
+          //       ),
+          //       index: i,
+          //       btnName: btn.btnName,
+          //       onPressed: () {},
+          //     );
+          //   },
+          // ),
           styleSheet.appConfig.addHeight(10),
           Row(
             children: [

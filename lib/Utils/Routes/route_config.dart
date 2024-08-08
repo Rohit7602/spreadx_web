@@ -11,7 +11,9 @@ import 'package:spreadx_web/View/Reports/reports_view.dart';
 import 'package:spreadx_web/View/Sales/product_wise_report.dart';
 import 'package:spreadx_web/View/Sales/sales_report.dart';
 import 'package:spreadx_web/View/Supppliers/add_new_supplier.dart';
+import 'package:spreadx_web/View/Supppliers/suppliers_view.dart';
 import 'package:spreadx_web/View/Transactions/transaction_list.dart';
+import 'package:spreadx_web/View/Transactions/transaction_view.dart';
 import 'package:spreadx_web/View/Transactions/transactions_invoice.dart';
 import 'package:spreadx_web/View/main_setup/Business_Setup/business_profile_setup_view.dart';
 import 'package:spreadx_web/View/main_setup/Business_Setup/business_setup_view.dart';
@@ -40,10 +42,6 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: MyRoute.transactionInvoice,
       builder: (context, state) => const TransactionsInvoiceView(),
-    ),
-    GoRoute(
-      path: MyRoute.transactionList,
-      builder: (context, state) => const TransactionListView(),
     ),
     GoRoute(
       path: MyRoute.drawerView,
@@ -104,6 +102,14 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: MyRoute.storeSettings,
       builder: (context, state) => const StoreSettingsView(),
+    ),
+    GoRoute(
+      path: MyRoute.supplier,
+      builder: (context, state) => const SuppliersView(),
+    ),
+    GoRoute(
+      path: MyRoute.transactionInvoice,
+      builder: (context, state) => const TransactionView(),
     ),
   ],
 );
