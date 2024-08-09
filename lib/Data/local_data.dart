@@ -130,6 +130,23 @@ class LocalData {
     "Delivery Patner",
     "New"
   ];
+
+  // ************* Product Details > Transactions Tab Bar List *****************
+  static List<String> productDetailsTransactionsTabList = [
+    "All",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
 }
 
 // ******** Class Start From Here ******************

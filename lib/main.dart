@@ -16,7 +16,6 @@ void main() {
   tz.initializeTimeZones();
 
   WindowManager.instance.setMinimumSize(const Size(1024, 810));
-  // WindowManager.instance.setMinimumSize(const Size(1380, 720));
 
   runApp(const MyApp());
 }

@@ -32,6 +32,7 @@ class AppColors {
   Color bgLightBlueColor = const Color(0xffF6FEFF);
   Color bgLightBlueColor2 = const Color(0xffDFEEF5);
   Color cardColor = const Color(0xffEFEFEF);
+  Color orange = Colors.orange;
 }
 
 class AppTextTheme {
