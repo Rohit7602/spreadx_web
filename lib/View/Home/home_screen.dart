@@ -478,7 +478,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                     .withOpacity(0.7)),
                                       ),
                                       const SecondaryTextFormField(
-                                        fieldColor: true,
+                                        fillColor: true,
                                         hinttext: "0.0",
                                       ),
                                       styleSheet.appConfig.addHeight(20),
