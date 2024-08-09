@@ -5,12 +5,11 @@ import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 class ReportDashboardCard extends StatelessWidget {
-  final String title, icon, description;
+  final String title, description;
   Function onPressed;
   ReportDashboardCard(
       {required this.title,
       required this.description,
-      required this.icon,
       required this.onPressed,
       super.key});
 

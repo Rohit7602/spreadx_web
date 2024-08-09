@@ -2,6 +2,7 @@ class MyRoute {
   static String onboarding = "/";
   static String login = "/login";
   static String salesReport = "/salesReport";
+  static String salesSummary = "/salesSummary";
   static String drawerView = "/drawer";
   static String transactionInvoice = "/transactionInvoice";
   static String transactionList = "/transactionList";

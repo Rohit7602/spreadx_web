@@ -17,28 +17,33 @@ class LocalData {
 // *************** Reports Data List ********************
 
   static List<ReportDataListClass> reportList = [
-    ReportDataListClass(styleSheet.icons.salesIcon, "Sales",
+    ReportDataListClass("Sales",
         "Show SALES reports for today, last week/month/year, or choose a custom periosd of time to report."),
-    ReportDataListClass(styleSheet.icons.salesIcon, "Drawers",
+    ReportDataListClass("Drawers",
         "Show DRAWERS history and entries, or open/close current drawer."),
-    ReportDataListClass(styleSheet.icons.salesIcon, "Sales Summary",
+    ReportDataListClass("Sales Summary",
         "Show Sales summary and statistics of the current day and more date ranges."),
-    ReportDataListClass(styleSheet.icons.salesIcon, "Vat report",
-        "Show VAT reports history including VAT IN/OUT summary."),
+    ReportDataListClass(
+        "Vat report", "Show VAT reports history including VAT IN/OUT summary."),
   ];
 
 // *************** Sales Reports Data List ********************
 
   static List<ReportDataListClass> salesReportList = [
-    ReportDataListClass(
-        styleSheet.icons.salesIcon, "Today's Sale", "AED 1,447.70"),
-    ReportDataListClass(
-        styleSheet.icons.salesIcon, "Week's Sale", "AED 1,447.70"),
-    ReportDataListClass(
-        styleSheet.icons.salesIcon, "Month's Sale", "AED 1,447.70"),
-    ReportDataListClass(
-        styleSheet.icons.salesIcon, "Year's Sale", "AED 1,447.70"),
-    ReportDataListClass(styleSheet.icons.salesIcon, "Custom", "AED 1,447.70"),
+    ReportDataListClass("Today", "AED 1,447.70"),
+    ReportDataListClass("This Week", "AED 1,447.70"),
+    ReportDataListClass("This Month", "AED 1,447.70"),
+    ReportDataListClass("This Year", "AED 1,447.70"),
+    ReportDataListClass("Custom", "AED 1,447.70"),
+  ];
+
+// *************** Sales Reports Data List ********************
+
+  static List<ReportDataListClass> salesReportViewList = [
+    ReportDataListClass("Today", "Duration"),
+    ReportDataListClass("AED 0.00", "Total"),
+    ReportDataListClass("AED 0.00", "Total Excluding VAT:"),
+    ReportDataListClass("AED 0.00", "Total VAT amount"),
   ];
 
 // *************** Dashboard Btn List ********************
@@ -130,8 +135,17 @@ class LocalData {
     "Delivery Patner",
     "New"
   ];
-}
 
+// *************** Business Type List ********************
+  static List<String> salesSummaryDayWise = [
+    "Today",
+    "Week",
+    "Month",
+    "6 Months",
+    "Year",
+    "Custom",
+  ];
+}
 // ******** Class Start From Here ******************
 
 // class For Onboarding List
@@ -145,9 +159,9 @@ class OnboardingListClass {
 // class For ReportData List
 
 class ReportDataListClass {
-  String icon, title, description;
+  String title, description;
 
-  ReportDataListClass(this.icon, this.title, this.description);
+  ReportDataListClass(this.title, this.description);
 }
 
 // class For Dashboard Button List

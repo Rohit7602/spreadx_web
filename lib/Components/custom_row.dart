@@ -17,7 +17,7 @@ class CustomRow extends StatelessWidget {
       children: [
         Text(title,
             style: styleSheet.TEXT_THEME.fs12Bold
-                .copyWith(color: txtColor ?? styleSheet.COLOR.greyColor)),
+                .copyWith(color: txtColor ?? styleSheet.COLOR.blackColor)),
         Text(trailing,
             style: styleSheet.TEXT_THEME.fs12Bold
                 .copyWith(color: txtColor ?? styleSheet.COLOR.blackColor))

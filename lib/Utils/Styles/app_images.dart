@@ -23,6 +23,7 @@ class AppImage {
   String onboarding2Img = "assets/Image/onboarding_2.png";
   String onboarding3Img = "assets/Image/onboarding_3.png";
   String empty_cart = "assets/Image/empty_cart.png";
+  String salesReport = "assets/Image/sales_report.png";
 }
 
 // SVG Images

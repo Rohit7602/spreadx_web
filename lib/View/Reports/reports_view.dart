@@ -29,7 +29,6 @@ class ReportsView extends StatelessWidget {
         return ReportDashboardCard(
           title: report.title,
           description: report.description,
-          icon: report.icon,
           onPressed: () {
             // context.go(MyRoute.drawerView);
           },

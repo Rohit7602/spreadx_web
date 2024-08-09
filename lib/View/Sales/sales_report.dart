@@ -2,99 +2,102 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spreadx_web/Components/Appbar/custom_appbar.dart';
 import 'package:spreadx_web/Data/local_data.dart';
-import 'package:spreadx_web/View/Sales/Widget/sales_component.dart';
+import 'package:spreadx_web/View/Sales/day_wise_report.dart';
 import 'package:spreadx_web/main.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
-class SalesReportView extends StatelessWidget {
-  SalesReportView({super.key});
+class SalesReportView extends StatefulWidget {
+  const SalesReportView({super.key});
 
-  List<SaleData> data = [
-    SaleData('Jan', "35"),
-    SaleData('Feb', "28"),
-    SaleData('Mar', "34"),
-    SaleData('Apr', "32"),
-    SaleData('May', "40")
-  ];
+  @override
+  State<SalesReportView> createState() => _SalesReportViewState();
+}
+
+class _SalesReportViewState extends State<SalesReportView> {
+  bool salesReportView = false;
+  String salesType = "";
 
   @override
   Widget build(BuildContext context) {
-    return
-
-        //  Scaffold(
-        //   appBar: CustomAppbarView(title: "Sales Reports"),
-        //   backgroundColor: styleSheet.colors.bgColor,
-        //   body:
-
-        SingleChildScrollView(
-            child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Wrap(
-          spacing: 20,
-          runSpacing: 20,
-          children: [
-            ...List.generate(LocalData.salesReportList.length, (i) {
-              var report = LocalData.salesReportList[i];
-              return SalesComponentCard(
-                  title: report.title,
-                  description: report.description,
-                  icon: report.icon,
-                  onPressed: () {});
-            })
-          ],
-        ),
-        styleSheet.appConfig.addHeight(30),
-        Container(
-          padding: styleSheet.DECORATION.PADDING_20,
-          decoration: BoxDecoration(
-            borderRadius: styleSheet.DECORATION.RADIUS_10,
-            color: styleSheet.COLOR.whiteColor,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Report Graph",
-                style: styleSheet.TEXT_THEME.fs18Bold,
-              ),
-              styleSheet.appConfig.addHeight(10),
-              Text(
-                "Manage and view sales report, monitor products sales progress in the report graph",
-                style: styleSheet.TEXT_THEME.fs16Medium,
-              ),
-              styleSheet.appConfig.addHeight(10),
-              SfCartesianChart(
-                  primaryXAxis: const CategoryAxis(),
-                  // Chart title
-                  title: const ChartTitle(text: 'Half yearly sales analysis'),
-                  // Enable legend
-                  legend: const Legend(isVisible: true),
-                  // Enable tooltip
-                  tooltipBehavior: TooltipBehavior(enable: true),
-                  series: <CartesianSeries<SaleData, String>>[
-                    LineSeries<SaleData, String>(
-                        dataSource: data,
-                        xValueMapper: (SaleData sales, _) => sales.month,
-                        yValueMapper: (SaleData sales, _) =>
-                            int.parse(sales.amount),
-                        name: 'Sales',
-                        // Enable data label
-                        dataLabelSettings:
-                            const DataLabelSettings(isVisible: true))
-                  ]),
-            ],
-          ),
-        )
-      ],
-    ).paddingAll(25));
-    // );
+    return Scaffold(
+        appBar: CustomAppbarView(title: "Sales Reports"),
+        backgroundColor: styleSheet.COLOR.bgColor,
+        body: LayoutBuilder(builder: (context, constraints) {
+          if (salesReportView) {
+            return DayWiseReportView(
+              title: salesType,
+            );
+          } else {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        styleSheet.images.salesReport,
+                        width:
+                            styleSheet.appConfig.getScreenWidth(context) * 0.4,
+                      ),
+                      Text(
+                        "Manage and view sales reports, monitor products sales progress",
+                        style: styleSheet.TEXT_THEME.fs12Medium,
+                      )
+                    ],
+                  ),
+                ),
+                styleSheet.appConfig.addWidth(20),
+                Flexible(
+                    flex: 1,
+                    child: GridView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        itemCount: LocalData.salesReportList.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 10,
+                                childAspectRatio: 16 / 9),
+                        itemBuilder: (context, i) {
+                          return InkWell(
+                            onTap: () {
+                              salesType = LocalData.salesReportList[i].title;
+                              salesReportView = true;
+                              setState(() {});
+                            },
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      styleSheet.DECORATION.RADIUS_10),
+                              color: styleSheet.COLOR.bgColor,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(LocalData.salesReportList[i].title),
+                                  styleSheet.appConfig.addHeight(5),
+                                  Text(
+                                    "AED 0.00",
+                                    style: styleSheet.TEXT_THEME.fs14Bold,
+                                  ),
+                                  styleSheet.appConfig.addHeight(10),
+                                  Icon(
+                                    Icons.arrow_forward_ios_rounded,
+                                    size: 15,
+                                    color: styleSheet.COLOR.greyColor,
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        }))
+              ],
+            ).paddingSymmetric(horizontal: 15, vertical: 20);
+          }
+        }));
   }
-}
-
-class SaleData {
-  String month, amount;
-
-  SaleData(this.month, this.amount);
 }

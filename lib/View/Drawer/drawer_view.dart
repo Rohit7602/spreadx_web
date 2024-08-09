@@ -14,15 +14,10 @@ class DrawerView extends StatelessWidget {
     final view = ResponsiveHandler().getResponsiveness(context);
     return Scaffold(
       appBar: CustomAppbarView(title: "Drawers"),
-      body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: view.drawerCardAspectRatio,
-            crossAxisCount: 2,
-            mainAxisSpacing: 15,
-            crossAxisSpacing: 15),
+      body: ListView.builder(
         padding: styleSheet.DECORATION.PADDING_20,
         shrinkWrap: true,
-        itemCount: 2,
+        itemCount: 1,
         itemBuilder: (context, i) {
           return Container(
             padding: styleSheet.DECORATION.PADDING_20,
@@ -39,26 +34,25 @@ class DrawerView extends StatelessWidget {
                   style: view.textFontBold_Medium,
                 ),
                 styleSheet.appConfig.addHeight(10),
-                Flexible(
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.watch_later_rounded,
-                        color: styleSheet.COLOR.greenColor,
-                      ),
-                      styleSheet.appConfig.addWidth(10),
-                      Text(
-                        "Opened with AED 0.00 on 28 May 2024 01:57 PM",
-                        overflow: TextOverflow.fade,
-                        style: view.textFontBold,
-                      ),
-                    ],
-                  ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.watch_later_rounded,
+                      color: styleSheet.COLOR.greenColor,
+                    ),
+                    styleSheet.appConfig.addWidth(10),
+                    Text(
+                      "Opened with AED 0.00 on 28 May 2024 01:57 PM",
+                      overflow: TextOverflow.fade,
+                      style: view.textFontBold,
+                    ),
+                  ],
                 ),
                 styleSheet.appConfig.addHeight(15),
                 Row(
                   children: [
                     PrimaryBtnWithIcon(
+                        isExpanded: true,
                         btnName: "Add Entry",
                         onPressed: () {
                           context.go(MyRoute.addDrawer);
@@ -66,8 +60,9 @@ class DrawerView extends StatelessWidget {
                         icon: Icons.add),
                     styleSheet.appConfig.addWidth(20),
                     PrimaryBtnWithIcon(
+                        isExpanded: true,
                         btnColor: styleSheet.COLOR.redColor,
-                        btnName: "Close Drawer",
+                        btnName: "Close Navigation Menu",
                         onPressed: () {},
                         icon: Icons.close)
                   ],

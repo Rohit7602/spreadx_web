@@ -29,7 +29,7 @@ class PrimaryBtnView extends StatelessWidget {
         shape: WidgetStateProperty.all(RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius ?? 2))),
         minimumSize: WidgetStateProperty.all(
-            Size(MediaQuery.of(context).size.width * 0.2, 40)),
+            Size(MediaQuery.of(context).size.width * 0.2, 45)),
         backgroundColor: WidgetStateProperty.all<Color>(
             btnColor ?? styleSheet.COLOR.primaryColor),
       ),
@@ -54,39 +54,52 @@ class PrimaryBtnWithIcon extends StatelessWidget {
   Function onPressed;
   Color? btnColor;
   IconData icon;
+  bool isExpanded;
 
   PrimaryBtnWithIcon(
       {required this.btnName,
       required this.onPressed,
       this.btnColor,
       required this.icon,
+      this.isExpanded = false,
       super.key});
 
   @override
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
-    return ElevatedButton(
+    var btn = ElevatedButton(
       style: ButtonStyle(
         shape: WidgetStateProperty.all(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(4))),
         minimumSize: WidgetStateProperty.all(
-            Size(MediaQuery.of(context).size.width * 0.2, 40)),
+            Size(MediaQuery.of(context).size.width * 0.2, 45)),
         backgroundColor: WidgetStateProperty.all<Color>(
             btnColor ?? styleSheet.COLOR.primaryColor),
       ),
       onPressed: () => onPressed(),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(icon),
-          styleSheet.appConfig.addWidth(10),
-          Text(
-            btnName,
-            style: view.textFontMedium
-                .copyWith(color: styleSheet.COLOR.whiteColor),
+          Icon(
+            icon,
+            size: 20,
           ),
+          Row(
+            children: [
+              styleSheet.appConfig.addWidth(10),
+              Text(
+                btnName,
+                style: view.textFontMedium
+                    .copyWith(color: styleSheet.COLOR.whiteColor),
+              ),
+            ],
+          ),
+          const SizedBox()
         ],
       ),
     );
+
+    return isExpanded ? Expanded(child: btn) : btn;
   }
 }
 
