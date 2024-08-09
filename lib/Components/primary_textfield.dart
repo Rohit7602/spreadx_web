@@ -105,8 +105,10 @@ class SecondaryTextFormField extends StatelessWidget {
   final bool obscureText;
   final bool isDense;
   final bool label;
+  final bool fillColor;
   final bool fieldColor;
   final Function? onTap;
+  final bool readOnly;
   const SecondaryTextFormField({
     super.key,
     this.hinttext,
@@ -120,16 +122,19 @@ class SecondaryTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.label = false,
     this.isDense = true,
+    this.fillColor = true,
     this.fieldColor = false,
     this.onTap,
+    this.readOnly = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
     return Container(
-      color: fieldColor ? styleSheet.COLOR.fieldGreyColor : null,
+      color: fillColor ? styleSheet.COLOR.fieldGreyColor : null,
       child: TextFormField(
+        readOnly: readOnly,
         onTap: () {
           onTap != null ? onTap!() : null;
         },
@@ -144,7 +149,7 @@ class SecondaryTextFormField extends StatelessWidget {
         obscureText: obscureText,
 
         decoration: InputDecoration(
-          filled: fieldColor,
+          filled: true,
           fillColor: fieldColor
               ? styleSheet.COLOR.whiteColor
               : styleSheet.COLOR.fieldGreyColor,

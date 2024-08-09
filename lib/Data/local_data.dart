@@ -162,6 +162,15 @@ class LocalData {
     "Year",
     "Custom",
   ];
+
+  // ****************** Packing Data List ******************
+  static List<PackingDataModel> packingData = [
+    PackingDataModel(
+        id: "3456098",
+        unitCode: "Pieces",
+        unitName: "PCS",
+        unitEquivalent: "data")
+  ];
 }
 // ******** Class Start From Here ******************
 
@@ -265,4 +274,27 @@ class CustomerModel {
       required this.email,
       required this.accountType,
       required this.address});
+}
+
+// class for Product Details > Packing data
+class PackingDataModel {
+  // final String factor;
+  // final String barcode;
+  // final String sellingPrice;
+  final String id;
+  final String unitCode;
+  final String unitName;
+  final String unitEquivalent;
+  bool isBase;
+
+  PackingDataModel({
+    // required this.factor,
+    // required this.barcode,
+    // required this.sellingPrice,
+    required this.id,
+    required this.unitCode,
+    required this.unitName,
+    required this.unitEquivalent,
+    this.isBase = false,
+  });
 }

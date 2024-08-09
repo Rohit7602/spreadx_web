@@ -24,7 +24,7 @@ import 'package:spreadx_web/View/main_setup/security/security_view.dart';
 import 'package:spreadx_web/View/main_setup/store_settings/store_settings_view.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: MyRoute.drawerView,
+  initialLocation: MyRoute.onboarding,
   routes: [
     GoRoute(
       path: MyRoute.onboarding,

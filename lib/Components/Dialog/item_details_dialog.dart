@@ -40,7 +40,7 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                         color: styleSheet.COLOR.blackColor.withOpacity(0.7)),
                   ),
                   const SecondaryTextFormField(
-                    fieldColor: true,
+                    fillColor: true,
                     hinttext: "Enter Barcode",
                   ),
                   styleSheet.appConfig.addHeight(20),
@@ -50,7 +50,7 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                         color: styleSheet.COLOR.blackColor.withOpacity(0.7)),
                   ),
                   const SecondaryTextFormField(
-                    fieldColor: true,
+                    fillColor: true,
                     hinttext: "Enter Product",
                   ),
                   styleSheet.appConfig.addHeight(20),
@@ -68,7 +68,7 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                                         .withOpacity(0.7)),
                               ),
                               const SecondaryTextFormField(
-                                fieldColor: true,
+                                fillColor: true,
                                 hinttext: "Enter Price",
                               ),
                               // styleSheet.appConfig.addHeight(6),
@@ -98,7 +98,7 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                                         .withOpacity(0.7)),
                               ),
                               const SecondaryTextFormField(
-                                fieldColor: true,
+                                fillColor: true,
                                 hinttext: "0.0",
                               ),
                             ]),
@@ -172,7 +172,7 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                                 children: [
                                   const Expanded(
                                     child: SecondaryTextFormField(
-                                      fieldColor: true,
+                                      fillColor: true,
                                       hinttext: "0.0",
                                     ),
                                   ),
@@ -202,7 +202,7 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                                       style: styleSheet.TEXT_THEME.fs18Bold),
                                   const Expanded(
                                     child: SecondaryTextFormField(
-                                      fieldColor: true,
+                                      fillColor: true,
                                       hinttext: "0.0",
                                     ),
                                   ),
@@ -226,7 +226,7 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                   ),
                   styleSheet.appConfig.addHeight(10),
                   const SecondaryTextFormField(
-                    fieldColor: true,
+                    fillColor: true,
                     hinttext: "Enter Product",
                   ),
                 ],

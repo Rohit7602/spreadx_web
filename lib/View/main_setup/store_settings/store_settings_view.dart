@@ -272,7 +272,7 @@ class _EnterTextDialog extends StatelessWidget {
               SecondaryTextFormField(
                   onTap: () => openVirtualKeyboard(),
                   hinttext: "Your Value",
-                  fieldColor: false),
+                  fillColor: false),
               styleSheet.appConfig.addHeight(20),
               PrimaryBtnView(
                   btnName: "Submit",
