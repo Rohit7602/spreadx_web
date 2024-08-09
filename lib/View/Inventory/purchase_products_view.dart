@@ -28,6 +28,13 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
   RxString selectedView = RxString("default");
 
   @override
+  void initState() {
+    product.addProducts(LocalData.productList.first);
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var defaultView = Stack(
       alignment: Alignment.bottomLeft,
@@ -36,7 +43,7 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            styleSheet.appConfig.addHeight(10),
+            styleSheet.appConfig.addHeight(30),
             GestureDetector(
               onTap: () {
                 selectedView("checkout");
@@ -305,7 +312,7 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
           },
         );
       } else if (selectedView.value == "invoice") {
-        return InvoiceView();
+        return const InvoiceView();
       } else {
         return defaultView;
       }

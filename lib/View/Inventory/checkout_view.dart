@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Button/text_btn.dart';
 import 'package:spreadx_web/Components/Controller/product_controller.dart';
+import 'package:spreadx_web/Components/Dialog/apply_discount.dart';
+import 'package:spreadx_web/Components/Dialog/assign_customer_dialog.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -28,7 +30,16 @@ class _CheckoutViewState extends State<CheckoutView> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextButtonView(btnName: "Add Supplier", onPressed: () {}),
+            styleSheet.appConfig.addHeight(20),
+            TextButtonView(
+                btnName: "Add Supplier",
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const AssignCustomerDialog();
+                      });
+                }),
             styleSheet.appConfig.addHeight(10),
             ListView.separated(
                 shrinkWrap: true,
@@ -147,7 +158,13 @@ class _CheckoutViewState extends State<CheckoutView> {
           mainAxisSize: MainAxisSize.min,
           children: [
             TextButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const ApplyDiscountDialog();
+                    });
+              },
               label: Text(
                 "Add Discount",
                 style: view.textFontMedium,

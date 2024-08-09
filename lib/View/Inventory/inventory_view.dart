@@ -50,12 +50,15 @@ class _InventoryViewState extends State<InventoryView> {
                   btnName: "Purchase Products",
                   onPressed: () {
                     selectedView("products");
+                    setState(() {});
                   }),
               styleSheet.appConfig.addHeight(10),
               DrawerButtonView(
                   btnName: "Purchase History",
                   onPressed: () {
                     selectedView("history");
+
+                    setState(() {});
                   }),
             ],
           ).paddingAll(10),
@@ -63,14 +66,30 @@ class _InventoryViewState extends State<InventoryView> {
       ],
     );
 
-    return Obx(() {
-      if (selectedView.value == "history") {
-        return const TransactionView();
-      } else if (selectedView.value == "products") {
-        return const PurchaseProductsView();
-      } else {
-        return defaultView;
-      }
-    });
+    return Stack(
+      children: [
+        Obx(() {
+          if (selectedView.value == "history") {
+            return const TransactionView();
+          } else if (selectedView.value == "products") {
+            return const PurchaseProductsView();
+          } else {
+            return defaultView;
+          }
+        }),
+        selectedView.value.toLowerCase() == "default"
+            ? const SizedBox()
+            : IconButton(
+                onPressed: () {
+                  selectedView("default");
+                  setState(() {});
+                },
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: styleSheet.COLOR.blackColor,
+                ),
+              )
+      ],
+    );
   }
 }
