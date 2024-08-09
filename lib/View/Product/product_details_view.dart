@@ -191,15 +191,15 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                 children: [
                                   Container(
                                     alignment: Alignment.center,
-                                    width: 75,
-                                    height: 75,
+                                    width: 50,
+                                    height: 50,
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: styleSheet
                                             .COLOR.productCardGreyColor),
                                     child: Text(
-                                      "640 x 360",
-                                      style: styleSheet.TEXT_THEME.fs12Medium
+                                      "64 x 36",
+                                      style: styleSheet.TEXT_THEME.fs10Medium
                                           .copyWith(
                                               color:
                                                   styleSheet.COLOR.greyColor),
@@ -223,7 +223,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                                     selected("edit");
                                                   },
                                                   padding:
-                                                      const EdgeInsets.all(15),
+                                                      const EdgeInsets.all(10),
                                                   icon: const Icon(
                                                       Icons.edit_outlined)),
                                             ),
@@ -240,7 +240,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                                     expandEditButton(false);
                                                   },
                                                   padding:
-                                                      const EdgeInsets.all(15),
+                                                      const EdgeInsets.all(10),
                                                   icon: const Icon(
                                                       Icons.restore)),
                                             ),
@@ -258,7 +258,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                                     expandEditButton(false);
                                                   },
                                                   padding:
-                                                      const EdgeInsets.all(15),
+                                                      const EdgeInsets.all(10),
                                                   icon:
                                                       const Icon(Icons.delete)),
                                             ),
@@ -282,7 +282,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       ),
                       styleSheet.appConfig.addHeight(20),
                       Text("Transactions",
-                          style: styleSheet.TEXT_THEME.fs24Bold
+                          style: styleSheet.TEXT_THEME.fs20Bold
                               .copyWith(color: styleSheet.COLOR.greyColor)),
                       styleSheet.appConfig.addHeight(20),
                       Container(
@@ -353,14 +353,13 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                     child: ListTile(
                                       leading: Image.asset(
                                           styleSheet.icons.saleIcon,
-                                          height: 24,
                                           color: styleSheet.COLOR.greyColor,
                                           width: 24),
                                       title: Text("Sales",
                                           style:
-                                              styleSheet.TEXT_THEME.fs18Bold),
+                                              styleSheet.TEXT_THEME.fs14Bold),
                                       subtitle: Text("IN4290003",
-                                          style: styleSheet.TEXT_THEME.fs14Bold
+                                          style: styleSheet.TEXT_THEME.fs12Bold
                                               .copyWith(
                                                   color: styleSheet
                                                       .COLOR.greyColor)),
@@ -370,7 +369,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                         children: [
                                           Text("+1.00",
                                               style: styleSheet
-                                                  .TEXT_THEME.fs16Bold
+                                                  .TEXT_THEME.fs14Bold
                                                   .copyWith(
                                                       color: styleSheet
                                                           .COLOR.greenColor)),
@@ -378,7 +377,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                               DateFormat("yyyy-MM-dd hh:mm:ss")
                                                   .format(DateTime.now()),
                                               style: styleSheet
-                                                  .TEXT_THEME.fs14Bold),
+                                                  .TEXT_THEME.fs12Bold),
                                         ],
                                       ),
                                     ),
