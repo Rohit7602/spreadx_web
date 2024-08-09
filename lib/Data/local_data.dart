@@ -136,6 +136,23 @@ class LocalData {
     "New"
   ];
 
+  // ************* Product Details > Transactions Tab Bar List *****************
+  static List<String> productDetailsTransactionsTabList = [
+    "All",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+
 // *************** Business Type List ********************
   static List<String> salesSummaryDayWise = [
     "Today",
