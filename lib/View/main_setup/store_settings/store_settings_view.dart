@@ -4,6 +4,7 @@ import 'package:country_currency_pickers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/View/main_setup/security/security_view.dart';
 import 'package:spreadx_web/keyboard_handler.dart';
@@ -259,31 +260,25 @@ class _EnterTextDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 450),
-      child: Dialog(
-        child: Padding(
-          padding: styleSheet.DECORATION.PADDING_20,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text("Enter Text", style: styleSheet.TEXT_THEME.fs16Bold),
-              styleSheet.appConfig.addHeight(20),
-              SecondaryTextFormField(
-                  onTap: () => openVirtualKeyboard(),
-                  hinttext: "Your Value",
-                  fieldColor: false),
-              styleSheet.appConfig.addHeight(20),
-              PrimaryBtnView(
-                  btnName: "Submit",
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  isExpanded: true)
-            ],
-          ),
-        ),
-      ),
-    );
+    return CustomHeaderDialog(
+        title: "",
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("Enter Text", style: styleSheet.TEXT_THEME.fs16Bold),
+            styleSheet.appConfig.addHeight(20),
+            SecondaryTextFormField(
+                onTap: () => openVirtualKeyboard(),
+                hinttext: "Your Value",
+                fieldColor: false),
+            styleSheet.appConfig.addHeight(20),
+            PrimaryBtnView(
+                btnName: "Submit",
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                isExpanded: true)
+          ],
+        ));
   }
 }

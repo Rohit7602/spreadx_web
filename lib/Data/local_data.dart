@@ -23,8 +23,6 @@ class LocalData {
         "Show DRAWERS history and entries, or open/close current drawer."),
     ReportDataListClass("Sales Summary",
         "Show Sales summary and statistics of the current day and more date ranges."),
-    ReportDataListClass(
-        "Vat report", "Show VAT reports history including VAT IN/OUT summary."),
   ];
 
 // *************** Sales Reports Data List ********************
@@ -265,4 +263,13 @@ class CustomerModel {
       required this.email,
       required this.accountType,
       required this.address});
+}
+// class for drawer
+
+class DrawerModel {
+  String amount;
+  String openTime;
+  String closeTime;
+  String type;
+  DrawerModel(this.amount, this.openTime, this.closeTime, this.type);
 }

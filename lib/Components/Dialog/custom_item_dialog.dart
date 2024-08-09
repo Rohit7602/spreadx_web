@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
 import 'package:spreadx_web/Components/keyboard_component.dart';
-import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 class CustomItemDialog extends StatefulWidget {
-  const CustomItemDialog({super.key});
+  bool isHeaderShow;
+  CustomItemDialog({this.isHeaderShow = true, super.key});
 
   @override
   State<CustomItemDialog> createState() => _CustomItemDialogState();
@@ -21,7 +21,7 @@ class _CustomItemDialogState extends State<CustomItemDialog> {
   @override
   Widget build(BuildContext context) {
     return CustomHeaderDialog(
-      title: "Custom Item",
+      title: widget.isHeaderShow ? "Custom Item" : "",
       child: ListView(
         shrinkWrap: true,
         children: [
@@ -84,8 +84,11 @@ class _CustomItemDialogState extends State<CustomItemDialog> {
           Row(
             children: [
               Expanded(
-                  child:
-                      PrimaryBtnView(btnName: "Add To Cart", onPressed: () {})),
+                  child: PrimaryBtnView(
+                      btnName: "Add To Cart",
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      })),
             ],
           ).paddingSymmetric(horizontal: 20),
           styleSheet.appConfig.addHeight(10),

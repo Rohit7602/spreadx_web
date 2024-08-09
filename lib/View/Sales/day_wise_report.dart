@@ -61,6 +61,6 @@ class DayWiseReportView extends StatelessWidget {
         ),
         styleSheet.appConfig.addWidth(20),
       ],
-    ).paddingSymmetric(horizontal: 15, vertical: 20);
+    ).paddingOnly(right: 15, left: 15, bottom: 20, top: 40);
   }
 }

@@ -462,7 +462,6 @@ class _HomeScreenViewState extends State<HomeScreenView>
                             builder: (context) {
                               return CustomHeaderDialog(
                                 title: "Open New Drawer",
-                                maxheight: 150,
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child: Column(

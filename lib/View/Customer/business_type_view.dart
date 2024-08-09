@@ -32,7 +32,7 @@ class BusinessTypeView extends StatelessWidget {
                 itemCount: LocalData.businessTypeList.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
-                    childAspectRatio: 7,
+                    childAspectRatio: 6,
                     crossAxisSpacing: 15,
                     mainAxisSpacing: 15),
                 itemBuilder: (context, i) {

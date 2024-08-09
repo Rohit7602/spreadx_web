@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Utils/Routes/routes.dart';
 import 'package:spreadx_web/View/Auth/login_view.dart';
 import 'package:spreadx_web/View/Drawer/add_drawer.dart';
+import 'package:spreadx_web/View/Drawer/close_drawer_navigation.dart';
 import 'package:spreadx_web/View/Drawer/drawer_report.dart';
 import 'package:spreadx_web/View/Drawer/drawer_view.dart';
 import 'package:spreadx_web/View/Drawer/menu_drawer.dart';
@@ -24,7 +25,7 @@ import 'package:spreadx_web/View/main_setup/security/security_view.dart';
 import 'package:spreadx_web/View/main_setup/store_settings/store_settings_view.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: MyRoute.drawerView,
+  initialLocation: MyRoute.onboarding,
   routes: [
     GoRoute(
       path: MyRoute.onboarding,
@@ -51,24 +52,12 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const DrawerView(),
     ),
     GoRoute(
-      path: MyRoute.producWiseReport,
-      builder: (context, state) => const ProductWiseReportView(),
-    ),
-    GoRoute(
-      path: MyRoute.addDrawer,
-      builder: (context, state) => const AddDrawerView(),
-    ),
-    GoRoute(
       path: MyRoute.homeScreen,
       builder: (context, state) => const HomeScreenView(),
     ),
     GoRoute(
       path: MyRoute.reportView,
       builder: (context, state) => const ReportsView(),
-    ),
-    GoRoute(
-      path: MyRoute.drawerReportView,
-      builder: (context, state) => const DrawerReportView(),
     ),
     GoRoute(
       path: MyRoute.mainMenuDrawer,

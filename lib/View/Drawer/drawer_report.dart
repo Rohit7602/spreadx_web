@@ -7,14 +7,16 @@ import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 class DrawerReportView extends StatelessWidget {
-  const DrawerReportView({super.key});
+  void Function() onPressedBack;
+  DrawerReportView({required this.onPressedBack, super.key});
 
   @override
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
-    return Scaffold(
-        appBar: CustomAppbarView(title: "Drawer Report"),
-        body: Column(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
           children: [
             Container(
               padding: styleSheet.DECORATION.PADDING_20,
@@ -27,27 +29,28 @@ class DrawerReportView extends StatelessWidget {
                 children: [
                   Text(
                     "ENTERIES IN/OUT",
-                    style: view.textFontLargeMedium
+                    style: styleSheet.TEXT_THEME.fs12Medium
                         .copyWith(color: styleSheet.COLOR.greyColor),
                   ),
                   Row(
                     children: [
                       Text(
-                        "3",
+                        "0",
                         style: view.textFontMedium
                             .copyWith(color: styleSheet.COLOR.greyColor),
                       ),
                       styleSheet.appConfig.addWidth(10),
-                      const Icon(
+                      Icon(
                         Icons.arrow_forward_ios_rounded,
                         size: 15,
+                        color: styleSheet.COLOR.greyColor,
                       )
                     ],
                   ),
                 ],
               ),
             ),
-            styleSheet.appConfig.addHeight(20),
+            styleSheet.appConfig.addHeight(10),
             Container(
               padding: styleSheet.DECORATION.PADDING_20,
               decoration: BoxDecoration(
@@ -55,35 +58,47 @@ class DrawerReportView extends StatelessWidget {
                 color: styleSheet.COLOR.whiteColor,
               ),
               child: Wrap(
-                runSpacing: 15,
+                runSpacing: 20,
                 children: [
-                  CustomRow2(
+                  CustomRow(
                       title: "Start of Drawer",
                       trailing: "28 May 2024 01:57 PM"),
-                  CustomRow2(title: "Starting Cash", trailing: "AED 89.0"),
-                  CustomRow2(title: "Cash Sales", trailing: "AED 89.0"),
-                  CustomRow2(title: "Cash Refunds", trailing: "AED 89.0"),
-                  CustomRow2(title: "Supplier Payments", trailing: "AED 89.0"),
-                  CustomRow2(title: "Supplier Refunds", trailing: "AED 89.0"),
-                  CustomRow2(title: "Paid In", trailing: "AED 89.0"),
-                  CustomRow2(title: "Paid Out", trailing: "AED 89.0"),
-                  CustomRow2(title: "Expected in Drawer", trailing: "AED 89.0"),
-                  styleSheet.appConfig.addHeight(40),
-                  Row(
-                    children: [
-                      PrimaryBtnWithIcon(
-                          btnName: "Share",
-                          onPressed: () {},
-                          icon: Icons.share),
-                      styleSheet.appConfig.addWidth(20),
-                      PrimaryBtnWithIcon(
-                          btnName: "Print", onPressed: () {}, icon: Icons.print)
-                    ],
-                  )
+                  CustomRow(title: "Starting Cash", trailing: "AED 0.0"),
+                  CustomRow(title: "Cash Sales", trailing: "AED 0.0"),
+                  CustomRow(title: "Cash Refunds", trailing: "AED 0.0"),
+                  CustomRow(title: "Supplier Payments", trailing: "AED 0.0"),
+                  CustomRow(title: "Supplier Refunds", trailing: "AED 0.0"),
+                  CustomRow(title: "Paid In", trailing: "AED 0.0"),
+                  CustomRow(title: "Paid Out", trailing: "AED 0.0"),
+                  CustomRow(title: "Expected in Drawer", trailing: "AED 0.0"),
+                  CustomRow(title: "Actual in Drawer", trailing: "AED 0.0"),
+                  CustomRow(title: "Difference", trailing: "AED 0.0"),
+                  CustomRow(title: "Denominations", trailing: "AED 0.0"),
                 ],
               ),
-            )
+            ),
           ],
-        ).paddingAll(20));
+        ),
+        Row(
+          children: [
+            PrimaryBtnWithIcon(
+                isExpanded: true,
+                btnName: "Print",
+                onPressed: () {
+                  onPressedBack();
+                },
+                icon: Icons.print),
+            styleSheet.appConfig.addWidth(20),
+            PrimaryBtnWithIcon(
+                isExpanded: true,
+                btnName: "Share",
+                onPressed: () {
+                  onPressedBack();
+                },
+                icon: Icons.share),
+          ],
+        )
+      ],
+    ).paddingOnly(right: 20, left: 20, bottom: 20, top: 40);
   }
 }

@@ -2,8 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Components/Controller/add_customer_controller.dart';
+import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/View/Customer/add_new_customer.dart';
+import 'package:spreadx_web/View/Customer/customer_details_view.dart';
 import 'package:spreadx_web/main.dart';
 
 class CustomerListView extends StatefulWidget {
@@ -14,10 +17,11 @@ class CustomerListView extends StatefulWidget {
 }
 
 class _CustomerListViewState extends State<CustomerListView> {
-  bool showAddCustomerForm = false;
-
   var controller = Get.find<AddCustomerController>();
+  RxString selectedView = RxString("default");
+  bool isCustomerEdit = false;
 
+  Rx<CustomerModel?> customer = Rx<CustomerModel?>(null);
   @override
   Widget build(BuildContext context) {
     final defaultView = Stack(
@@ -42,89 +46,102 @@ class _CustomerListViewState extends State<CustomerListView> {
                       alignment: WrapAlignment.start,
                       children: [
                         ...List.generate(controller.customer.length, (i) {
-                          return Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: styleSheet.DECORATION.RADIUS_10,
-                            ),
-                            child: Container(
-                              padding: styleSheet.DECORATION.PADDING_10,
-                              width: 300,
-                              decoration: BoxDecoration(
-                                color: styleSheet.COLOR.cardColor,
+                          return GestureDetector(
+                            onTap: () {
+                              customer(controller.customer[i]);
+                              selectedView("details");
+                              isCustomerEdit = true;
+                            },
+                            child: Card(
+                              shape: RoundedRectangleBorder(
                                 borderRadius: styleSheet.DECORATION.RADIUS_10,
                               ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(right: 10),
-                                    alignment: Alignment.center,
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color:
-                                          styleSheet.COLOR.productCardGreyColor,
-                                    ),
-                                    child: Text(
-                                      "6 X 6",
-                                      style: styleSheet.TEXT_THEME.fs12Medium
-                                          .copyWith(
-                                              color:
-                                                  styleSheet.COLOR.greyColor),
-                                    ),
-                                  ),
-                                  styleSheet.appConfig.addWidth(15),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        controller.customer[i].firstName,
-                                        style: styleSheet.TEXT_THEME.fs12Bold,
+                              child: Container(
+                                padding: styleSheet.DECORATION.PADDING_10,
+                                width: 300,
+                                decoration: BoxDecoration(
+                                  color: styleSheet.COLOR.cardColor,
+                                  borderRadius: styleSheet.DECORATION.RADIUS_10,
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(right: 10),
+                                      alignment: Alignment.center,
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: styleSheet
+                                            .COLOR.productCardGreyColor,
                                       ),
-                                      styleSheet.appConfig.addHeight(6),
-                                      Row(
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8, vertical: 3),
-                                            decoration: BoxDecoration(
+                                      child: Text(
+                                        "6 X 6",
+                                        style: styleSheet.TEXT_THEME.fs12Medium
+                                            .copyWith(
                                                 color:
-                                                    styleSheet.COLOR.blueColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(15)),
-                                            child: Text(
-                                              "unknown",
-                                              style: styleSheet
-                                                  .TEXT_THEME.fs10Medium
-                                                  .copyWith(
-                                                      color: styleSheet
-                                                          .COLOR.whiteColor),
+                                                    styleSheet.COLOR.greyColor),
+                                      ),
+                                    ),
+                                    styleSheet.appConfig.addWidth(15),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          controller.customer[i].firstName,
+                                          style: styleSheet.TEXT_THEME.fs12Bold,
+                                        ),
+                                        styleSheet.appConfig.addHeight(6),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 3),
+                                              decoration: BoxDecoration(
+                                                  color: styleSheet
+                                                      .COLOR.blueColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15)),
+                                              child: Text(
+                                                "unknown",
+                                                style: styleSheet
+                                                    .TEXT_THEME.fs10Medium
+                                                    .copyWith(
+                                                        color: styleSheet
+                                                            .COLOR.whiteColor),
+                                              ),
                                             ),
-                                          ),
-                                          styleSheet.appConfig.addWidth(5),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8, vertical: 3),
-                                            decoration: BoxDecoration(
-                                                color:
-                                                    styleSheet.COLOR.blueColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(15)),
-                                            child: Text(
-                                              "cash",
-                                              style: styleSheet
-                                                  .TEXT_THEME.fs10Medium
-                                                  .copyWith(
-                                                      color: styleSheet
-                                                          .COLOR.whiteColor),
-                                            ),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  )
-                                ],
+                                            styleSheet.appConfig.addWidth(5),
+                                            Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 3),
+                                              decoration: BoxDecoration(
+                                                  color: styleSheet
+                                                      .COLOR.blueColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15)),
+                                              child: Text(
+                                                "cash",
+                                                style: styleSheet
+                                                    .TEXT_THEME.fs10Medium
+                                                    .copyWith(
+                                                        color: styleSheet
+                                                            .COLOR.whiteColor),
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           );
@@ -137,7 +154,8 @@ class _CustomerListViewState extends State<CustomerListView> {
         InkWell(
           borderRadius: BorderRadius.circular(20),
           onTap: () {
-            setState(() => showAddCustomerForm = true);
+            isCustomerEdit = false;
+            selectedView("addCustomer");
           },
           child: Container(
             height: 50,
@@ -155,10 +173,28 @@ class _CustomerListViewState extends State<CustomerListView> {
       ],
     );
 
-    return showAddCustomerForm
-        ? AddNewCustomerView(
-            onPressedBack: () => setState(() => showAddCustomerForm = false),
-          )
-        : defaultView;
+    return Obx(() {
+      if (selectedView.value == "default") {
+        return defaultView;
+      } else if (selectedView.value == "addCustomer") {
+        return AddNewCustomerView(
+          isEdit: isCustomerEdit,
+          onPressedBack: () {
+            selectedView("default");
+
+            setState(() {});
+          },
+        );
+      } else {
+        return CustomerDetailsView(
+            onEdit: () {
+              selectedView("addCustomer");
+            },
+            customer: customer.value!,
+            onPressedBack: () {
+              selectedView("default");
+            });
+      }
+    });
   }
 }

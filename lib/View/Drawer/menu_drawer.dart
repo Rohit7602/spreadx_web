@@ -54,7 +54,7 @@ class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
         builder: (context, constraints) {
           switch (drawerState) {
             case DrawerState.Products:
-              return ProductView();
+              return const ProductView();
             case DrawerState.Inventory:
               return const InventoryView();
             case DrawerState.Transactions:

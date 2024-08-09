@@ -37,7 +37,7 @@ class PrimaryDropDown extends StatelessWidget {
                 ? null
                 : Text(
                     hint,
-                    style: view.textFontMedium,
+                    style: styleSheet.TEXT_THEME.fs12Medium,
                   ),
             focusColor: Colors.transparent,
             padding: const EdgeInsets.only(right: 15, left: 20),
@@ -47,7 +47,7 @@ class PrimaryDropDown extends StatelessWidget {
                     value: e,
                     child: Text(
                       e,
-                      style: view.textFontNormal,
+                      style: styleSheet.TEXT_THEME.fs12Medium,
                     ).paddingOnly(right: 15)))
                 .toList(),
             onChanged: (val) {

@@ -9,13 +9,13 @@ class CustomHeaderDialog extends StatelessWidget {
   String title;
   Widget child;
   double? maxwidth;
-  double? maxheight;
+  double? minheight;
 
   CustomHeaderDialog(
       {required this.title,
       required this.child,
       this.maxwidth,
-      this.maxheight,
+      this.minheight,
       super.key});
 
   @override
@@ -24,7 +24,7 @@ class CustomHeaderDialog extends StatelessWidget {
     return Dialog(
       child: Container(
         constraints: BoxConstraints(
-            minHeight: maxheight ?? 350,
+            minHeight: minheight ?? 150,
             maxHeight: styleSheet.appConfig.getScreenHeight(context) * 0.9),
         width: maxwidth ??
             styleSheet.appConfig.getScreenWidth(context) * view.dialogWidth,

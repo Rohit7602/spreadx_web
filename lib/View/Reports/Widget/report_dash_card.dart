@@ -36,6 +36,7 @@ class ReportDashboardCard extends StatelessWidget {
               description,
               style: view.textFontNormal
                   .copyWith(color: styleSheet.COLOR.greyColor),
+              maxLines: 2,
               textAlign: TextAlign.center,
             ),
             Icon(

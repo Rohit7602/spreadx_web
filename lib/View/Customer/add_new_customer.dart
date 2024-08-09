@@ -11,8 +11,9 @@ import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 class AddNewCustomerView extends StatefulWidget {
+  bool isEdit;
   final void Function()? onPressedBack;
-  const AddNewCustomerView({this.onPressedBack, super.key});
+  AddNewCustomerView({required this.isEdit, this.onPressedBack, super.key});
 
   @override
   State<AddNewCustomerView> createState() => _AddNewCustomerViewState();
@@ -81,7 +82,9 @@ class _AddNewCustomerViewState extends State<AddNewCustomerView> {
                       styleSheet.appConfig.addHeight(25),
                       const Spacer(),
                       DrawerButtonView(
-                        btnName: "Add New Customer",
+                        btnName: widget.isEdit
+                            ? "Save Customer"
+                            : "Add New Customer",
                         onPressed: () {
                           controller.onSave(context);
                           widget.onPressedBack!();
