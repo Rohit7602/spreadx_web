@@ -27,3 +27,11 @@ enum DrawerState {
 enum MainSetUpState { Default, Business, Printer, Users, Security, Store }
 
 enum EditProductDetailStates { Default, Brand, Category, Packing }
+
+enum AddProductState {
+  Default,
+  Scan,
+  Import_Export,
+  Single_Product,
+  Multiple_Product
+}
