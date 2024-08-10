@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/main.dart';
 
 class EnterManuallyMultipleProductsView extends StatefulWidget {
@@ -30,7 +32,44 @@ class _EnterManuallyMultipleProductsViewState
                             onPressed: widget.onPressedBack,
                             icon: const Icon(Icons.arrow_back_outlined)),
                       ),
-                      const Expanded(child: Column())
+                      Expanded(
+                          child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                  child: PrimaryTextFormField(
+                                      hinttext: "Barcode")),
+                              styleSheet.appConfig.addWidth(20),
+                              PrimaryBtnView(btnName: "Add", onPressed: () {}),
+                              styleSheet.appConfig.addWidth(40),
+                              IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.qr_code_scanner,
+                                      size: 25,
+                                      color: styleSheet.COLOR.primaryColor)),
+                              styleSheet.appConfig.addWidth(40),
+                            ],
+                          ),
+                          Expanded(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("{ }",
+                                  style: TextStyle(
+                                      fontSize: 150,
+                                      fontWeight: FontWeight.bold,
+                                      color: styleSheet.COLOR.greyColor)),
+                              styleSheet.appConfig.addHeight(30),
+                              Text(
+                                  "Products list is empty. Scan or Add to show.",
+                                  style: styleSheet.TEXT_THEME.fs12Bold
+                                      .copyWith(
+                                          color: styleSheet.COLOR.greyColor))
+                            ],
+                          ))
+                        ],
+                      ))
                     ],
                   )))),
     );

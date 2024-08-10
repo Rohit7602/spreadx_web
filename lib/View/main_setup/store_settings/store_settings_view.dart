@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
+import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/View/main_setup/security/security_view.dart';
 import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
@@ -185,22 +186,22 @@ class _CurrencyPickerDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 400),
-      child: Theme(
-          data: Theme.of(context)
-              .copyWith(primaryColor: styleSheet.COLOR.primaryColor),
-          child: CurrencyPickerDialog(
-              titlePadding: const EdgeInsets.all(8.0),
-              searchCursorColor: styleSheet.COLOR.primaryColor,
-              searchInputDecoration:
-                  const InputDecoration(hintText: 'Search...'),
-              isSearchable: true,
-              title: const Text('Select your Currency'),
-              onValuePicked: (Country country) {
-                onSelect(country);
-              },
-              itemBuilder: _buildCurrencyDialogItem)),
+    return Center(
+      child: Container(
+        constraints: BoxConstraints(
+            maxWidth: styleSheet.appConfig.getScreenWidth(context) *
+                ResponsiveHandler().getResponsiveness(context).dialogWidth),
+        child: CurrencyPickerDialog(
+            titlePadding: const EdgeInsets.all(8.0),
+            searchCursorColor: styleSheet.COLOR.primaryColor,
+            searchInputDecoration: const InputDecoration(hintText: 'Search...'),
+            isSearchable: true,
+            title: const Text('Select your Currency'),
+            onValuePicked: (Country country) {
+              onSelect(country);
+            },
+            itemBuilder: _buildCurrencyDialogItem),
+      ),
     );
   }
 
@@ -222,34 +223,32 @@ class _TimeZoneDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var locations = tz.timeZoneDatabase.locations;
-    return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 400),
-        child: Dialog(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15)
-                      .copyWith(bottom: 10),
-                  child: Text("Select Time Zone",
-                      style: styleSheet.TEXT_THEME.fs20Bold),
-                ),
-                Expanded(
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: locations.keys.length,
-                        itemBuilder: (context, i) {
-                          return ListTile(
-                              onTap: () {
-                                onSelect((locations.values.toList())[i]);
-                                Navigator.of(context).pop();
-                              },
-                              title: Text((locations.keys.toList())[i]));
-                        }))
-              ],
-            ),
+    return CustomHeaderDialog(
+        title: "",
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15)
+                    .copyWith(bottom: 10),
+                child: Text("Select Time Zone",
+                    style: styleSheet.TEXT_THEME.fs20Bold),
+              ),
+              Expanded(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: locations.keys.length,
+                      itemBuilder: (context, i) {
+                        return ListTile(
+                            onTap: () {
+                              onSelect((locations.values.toList())[i]);
+                              Navigator.of(context).pop();
+                            },
+                            title: Text((locations.keys.toList())[i]));
+                      }))
+            ],
           ),
         ));
   }

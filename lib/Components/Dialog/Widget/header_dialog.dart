@@ -23,7 +23,7 @@ class CustomHeaderDialog extends StatelessWidget {
     final view = ResponsiveHandler().getResponsiveness(context);
     return Dialog(
       child: Container(
-        constraints: BoxConstraints(
+        constraints: BoxConstraints(  
             minHeight: minheight ?? 150,
             maxHeight: styleSheet.appConfig.getScreenHeight(context) * 0.9),
         width: maxwidth ??

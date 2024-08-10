@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
@@ -17,9 +18,8 @@ class _AddBrandDialogState extends State<AddBrandDialog> {
   final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 450),
-      child: Dialog(
+    return CustomHeaderDialog(
+        title: "",
         child: Padding(
           padding: styleSheet.DECORATION.PADDING_20,
           child: Column(
@@ -49,8 +49,6 @@ class _AddBrandDialogState extends State<AddBrandDialog> {
                   isExpanded: true)
             ],
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

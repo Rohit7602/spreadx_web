@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Models/product_model.dart';
+import 'package:spreadx_web/Components/check_stock_availability_tile.dart';
 import 'package:spreadx_web/Components/dashed_rect.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Data/enum.dart';
@@ -24,7 +25,6 @@ class EditProductsDetailsFormView extends StatefulWidget {
 
 class _EditProductsDetailsFormViewState
     extends State<EditProductsDetailsFormView> {
-  final RxBool enableCheckStockAvailability = RxBool(false);
   final Rx<EditProductDetailStates> selected =
       Rx<EditProductDetailStates>(EditProductDetailStates.Default);
   @override
@@ -152,26 +152,7 @@ class _EditProductsDetailsFormViewState
                           onTap: () => openVirtualKeyboard(),
                         ),
                         styleSheet.appConfig.addHeight(20),
-                        ListTile(
-                            dense: true,
-                            contentPadding: EdgeInsets.zero,
-                            visualDensity: VisualDensity.compact,
-                            title: Text("Check Stock Availability",
-                                style: styleSheet.TEXT_THEME.fs14Bold.copyWith(
-                                    color: styleSheet.COLOR.blackColor
-                                        .withOpacity(0.6))),
-                            trailing: Obx(() => Switch.adaptive(
-                                value: enableCheckStockAvailability.value,
-                                onChanged: (v) {
-                                  enableCheckStockAvailability(v);
-                                }))),
-                        Obx(() => enableCheckStockAvailability.value
-                            ? SecondaryTextFormField(
-                                label: true,
-                                hinttext: "Initial Stock",
-                                onTap: () => openVirtualKeyboard(),
-                              )
-                            : const SizedBox())
+                        CheckStockAvailabilityTile()
                       ],
                     )),
                     styleSheet.appConfig.addWidth(10),
