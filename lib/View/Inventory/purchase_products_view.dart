@@ -22,6 +22,7 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
   var product = Get.find<ProductController>();
 
   bool gridTile = false;
+  bool isStock = true;
   bool isCategory = true;
   int itemCount = 1;
 
@@ -44,7 +45,8 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             styleSheet.appConfig.addHeight(30),
-            GestureDetector(
+            InkWell(
+              borderRadius: styleSheet.DECORATION.RADIUS_20,
               onTap: () {
                 selectedView("checkout");
               },
@@ -100,70 +102,223 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
                 ),
               ),
             ),
-            styleSheet.appConfig.addHeight(10),
+            styleSheet.appConfig.addHeight(30),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                InkWell(
-                  onTap: () {
-                    if (gridTile) {
-                      gridTile = false;
-                      setState(() {});
-                    }
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 60,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: styleSheet.COLOR.greyColor.withOpacity(0.3)),
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          bottomLeft: Radius.circular(20)),
-                      color: gridTile
-                          ? styleSheet.COLOR.whiteColor
-                          : styleSheet.COLOR.keyboardBtnColor,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      borderRadius: styleSheet.DECORATION.RADIUS_20,
+                      onTap: () {
+                        if (gridTile) {
+                          gridTile = false;
+                          setState(() {});
+                        }
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 60,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color:
+                                  styleSheet.COLOR.greyColor.withOpacity(0.3)),
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              bottomLeft: Radius.circular(20)),
+                          color: gridTile
+                              ? styleSheet.COLOR.whiteColor
+                              : styleSheet.COLOR.keyboardBtnColor,
+                        ),
+                        child: Icon(
+                          Icons.dashboard,
+                          size: 20,
+                          color: styleSheet.COLOR.blackColor,
+                        ),
+                      ),
                     ),
-                    child: Icon(
-                      Icons.dashboard,
-                      size: 20,
-                      color: styleSheet.COLOR.blackColor,
+                    InkWell(
+                      borderRadius: styleSheet.DECORATION.RADIUS_20,
+                      onTap: () {
+                        if (gridTile == false) {
+                          setState(() {
+                            gridTile = true;
+                          });
+                        }
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 60,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color:
+                                  styleSheet.COLOR.greyColor.withOpacity(0.3)),
+                          borderRadius: const BorderRadius.only(
+                              bottomRight: Radius.circular(20),
+                              topRight: Radius.circular(20)),
+                          color: gridTile
+                              ? styleSheet.COLOR.keyboardBtnColor
+                              : styleSheet.COLOR.whiteColor,
+                        ),
+                        child: Icon(
+                          Icons.list,
+                          size: 20,
+                          color: styleSheet.COLOR.blackColor,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-                InkWell(
-                  onTap: () {
-                    if (gridTile == false) {
-                      setState(() {
-                        gridTile = true;
-                      });
-                    }
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 60,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: styleSheet.COLOR.greyColor.withOpacity(0.3)),
-                      borderRadius: const BorderRadius.only(
-                          bottomRight: Radius.circular(20),
-                          topRight: Radius.circular(20)),
-                      color: gridTile
-                          ? styleSheet.COLOR.keyboardBtnColor
-                          : styleSheet.COLOR.whiteColor,
+                styleSheet.appConfig.addWidth(20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      borderRadius: styleSheet.DECORATION.RADIUS_20,
+                      onTap: () {
+                        if (isStock == false) {
+                          isStock = true;
+                          setState(() {});
+                        }
+                      },
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          alignment: Alignment.center,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: styleSheet.COLOR.greyColor
+                                    .withOpacity(0.3)),
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                bottomLeft: Radius.circular(20)),
+                            color: isStock
+                                ? styleSheet.COLOR.primaryColor
+                                : styleSheet.COLOR.whiteColor,
+                          ),
+                          child: Text(
+                            "All",
+                            style: styleSheet.TEXT_THEME.fs12Medium.copyWith(
+                              color: isStock
+                                  ? styleSheet.COLOR.whiteColor
+                                  : styleSheet.COLOR.blackColor,
+                            ),
+                          )),
                     ),
-                    child: Icon(
-                      Icons.list,
-                      size: 20,
-                      color: styleSheet.COLOR.blackColor,
+                    InkWell(
+                      borderRadius: styleSheet.DECORATION.RADIUS_20,
+                      onTap: () {
+                        if (isStock) {
+                          setState(() {
+                            isStock = false;
+                          });
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        alignment: Alignment.center,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color:
+                                  styleSheet.COLOR.greyColor.withOpacity(0.3)),
+                          borderRadius: const BorderRadius.only(
+                              bottomRight: Radius.circular(20),
+                              topRight: Radius.circular(20)),
+                          color: isStock
+                              ? styleSheet.COLOR.whiteColor
+                              : styleSheet.COLOR.primaryColor,
+                        ),
+                        child: Text(
+                          "Stock",
+                          style: styleSheet.TEXT_THEME.fs12Medium.copyWith(
+                            color: isStock
+                                ? styleSheet.COLOR.blackColor
+                                : styleSheet.COLOR.whiteColor,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
+                ),
+                styleSheet.appConfig.addWidth(20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      borderRadius: styleSheet.DECORATION.RADIUS_20,
+                      onTap: () {
+                        if (isCategory == false) {
+                          isCategory = true;
+                          setState(() {});
+                        }
+                      },
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          alignment: Alignment.center,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: styleSheet.COLOR.greyColor
+                                    .withOpacity(0.3)),
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                bottomLeft: Radius.circular(20)),
+                            color: isCategory
+                                ? styleSheet.COLOR.primaryColor
+                                : styleSheet.COLOR.whiteColor,
+                          ),
+                          child: Text(
+                            "Categories",
+                            style: styleSheet.TEXT_THEME.fs12Medium.copyWith(
+                              color: isCategory
+                                  ? styleSheet.COLOR.whiteColor
+                                  : styleSheet.COLOR.blackColor,
+                            ),
+                          )),
+                    ),
+                    InkWell(
+                      borderRadius: styleSheet.DECORATION.RADIUS_20,
+                      onTap: () {
+                        if (isCategory) {
+                          setState(() {
+                            isCategory = false;
+                          });
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        alignment: Alignment.center,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color:
+                                  styleSheet.COLOR.greyColor.withOpacity(0.3)),
+                          borderRadius: const BorderRadius.only(
+                              bottomRight: Radius.circular(20),
+                              topRight: Radius.circular(20)),
+                          color: isCategory
+                              ? styleSheet.COLOR.whiteColor
+                              : styleSheet.COLOR.primaryColor,
+                        ),
+                        child: Text(
+                          "Products",
+                          style: styleSheet.TEXT_THEME.fs12Medium.copyWith(
+                            color: isCategory
+                                ? styleSheet.COLOR.blackColor
+                                : styleSheet.COLOR.whiteColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            styleSheet.appConfig.addHeight(20),
+            styleSheet.appConfig.addHeight(30),
             Expanded(
                 child: !gridTile
                     ? GridView.builder(

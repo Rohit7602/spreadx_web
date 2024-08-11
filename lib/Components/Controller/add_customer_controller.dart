@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/Utils/Routes/routes.dart';
 
-class AddCustomerController extends GetxController {
+class CustomerController extends GetxController {
   final RxList<CustomerModel> _addCustomer = RxList<CustomerModel>([]);
   List<CustomerModel> get customer => _addCustomer;
 
@@ -14,6 +14,11 @@ class AddCustomerController extends GetxController {
 
   addCustomer(CustomerModel data) {
     _addCustomer.add(data);
+  }
+
+  deleteCustomer(CustomerModel customer) {
+    _addCustomer.remove(customer);
+    update();
   }
 
   final TextEditingController _barcode = TextEditingController();

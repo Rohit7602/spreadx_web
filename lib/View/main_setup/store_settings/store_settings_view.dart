@@ -66,7 +66,7 @@ class StoreSettingsView extends StatelessWidget {
                 ),
               ),
               Expanded(
-                  child: Column(
+                  child: ListView(
                 children: [
                   SecurityListTile(
                       title: "Currency",

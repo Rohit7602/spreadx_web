@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
+import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 import '../Button/primary_btn.dart';
@@ -39,7 +40,8 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                     style: styleSheet.TEXT_THEME.fs12Bold.copyWith(
                         color: styleSheet.COLOR.blackColor.withOpacity(0.7)),
                   ),
-                  const SecondaryTextFormField(
+                  SecondaryTextFormField(
+                    onTap: () => openVirtualKeyboard(),
                     fillColor: true,
                     hinttext: "Enter Barcode",
                   ),
@@ -49,7 +51,8 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                     style: styleSheet.TEXT_THEME.fs12Bold.copyWith(
                         color: styleSheet.COLOR.blackColor.withOpacity(0.7)),
                   ),
-                  const SecondaryTextFormField(
+                  SecondaryTextFormField(
+                    onTap: () => openVirtualKeyboard(),
                     fillColor: true,
                     hinttext: "Enter Product",
                   ),
@@ -67,7 +70,8 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                                     color: styleSheet.COLOR.blackColor
                                         .withOpacity(0.7)),
                               ),
-                              const SecondaryTextFormField(
+                              SecondaryTextFormField(
+                                onTap: () => openVirtualKeyboard(),
                                 fillColor: true,
                                 hinttext: "Enter Price",
                               ),
@@ -97,7 +101,8 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                                     color: styleSheet.COLOR.blackColor
                                         .withOpacity(0.7)),
                               ),
-                              const SecondaryTextFormField(
+                              SecondaryTextFormField(
+                                onTap: () => openVirtualKeyboard(),
                                 fillColor: true,
                                 hinttext: "0.0",
                               ),
@@ -170,8 +175,9 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  const Expanded(
+                                  Expanded(
                                     child: SecondaryTextFormField(
+                                      onTap: () => openVirtualKeyboard(),
                                       fillColor: true,
                                       hinttext: "0.0",
                                     ),
@@ -200,8 +206,9 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                                 children: [
                                   Text("AED",
                                       style: styleSheet.TEXT_THEME.fs18Bold),
-                                  const Expanded(
+                                  Expanded(
                                     child: SecondaryTextFormField(
+                                      onTap: () => openVirtualKeyboard(),
                                       fillColor: true,
                                       hinttext: "0.0",
                                     ),
@@ -225,7 +232,8 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                         color: styleSheet.COLOR.blackColor.withOpacity(0.7)),
                   ),
                   styleSheet.appConfig.addHeight(10),
-                  const SecondaryTextFormField(
+                  SecondaryTextFormField(
+                    onTap: () => openVirtualKeyboard(),
                     fillColor: true,
                     hinttext: "Enter Product",
                   ),

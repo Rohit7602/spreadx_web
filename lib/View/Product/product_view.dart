@@ -173,6 +173,7 @@ class _ProductViewState extends State<ProductView> {
             product: product.value!,
             onPressedBack: () {
               selectedView("default");
+              setState(() {});
             });
       }
     });

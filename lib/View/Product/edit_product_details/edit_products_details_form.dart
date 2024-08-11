@@ -35,7 +35,7 @@ class _EditProductsDetailsFormViewState
         height: styleSheet.appConfig.getScreenHeight(context),
         width: styleSheet.appConfig.getScreenWidth(context),
         child: Padding(
-            padding: styleSheet.DECORATION.PADDING_20,
+            padding: styleSheet.DECORATION.PADDING_20.copyWith(bottom: 5),
             child: Column(
               children: [
                 Align(
@@ -88,7 +88,7 @@ class _EditProductsDetailsFormViewState
                                 /** *********************** [Image Picker] Container *********************** */
                                 Container(
                                   alignment: Alignment.center,
-                                  height: 300,
+                                  height: 250,
                                   decoration: BoxDecoration(
                                       color: styleSheet
                                           .COLOR.productCardGreyColor),
@@ -98,10 +98,10 @@ class _EditProductsDetailsFormViewState
                                               color:
                                                   styleSheet.COLOR.greyColor)),
                                 ),
-                                styleSheet.appConfig.addHeight(60)
                               ],
                             )),
-                        styleSheet.appConfig.addHeight(10),
+                        styleSheet.appConfig.addHeight(20),
+
                         /** ************************** [Save Product] Button ******************* */
                         PrimaryBtnView(
                             btnName: "Save Product",

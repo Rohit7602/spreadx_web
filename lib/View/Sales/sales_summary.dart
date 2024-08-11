@@ -149,34 +149,44 @@ class _SalesSummaryViewState extends State<SalesSummaryView>
                         )
                       ],
                     )
-                  : SingleChildScrollView(
-                      child: Wrap(
-                        runSpacing: 15,
-                        children: [
-                          CustomRow(title: "No. of Invoices", trailing: "0"),
-                          CustomRow(title: "No. of   Refunds", trailing: "0"),
-                          const Divider(),
-                          CustomRow(
-                              title: "Cash Transactions", trailing: "AED 0.00"),
-                          CustomRow(
-                              title: "Credit Transactions",
-                              trailing: "AED 0.00"),
-                          CustomRow(
-                              title: "Refund Transactions",
-                              trailing: "AED 0.00"),
-                          CustomRow(title: "Total Sales", trailing: "AED 0.00"),
-                          const Divider(),
-                          CustomRow(title: "Gross Sales", trailing: "AED 0.00"),
-                          CustomRow(
-                              title: "Total Discount", trailing: "AED 0.00"),
-                          CustomRow(title: "Net Total", trailing: "AED 0.00"),
-                          CustomRow(title: "Grand Total", trailing: "AED 0.00"),
-                          const Divider(),
-                          CustomRow(
-                              title: "Cash Received", trailing: "AED 0.00"),
-                          CustomRow(
-                              title: "Card Received", trailing: "AED 0.00"),
-                        ],
+                  : Container(
+                      constraints: BoxConstraints(
+                          maxHeight:
+                              styleSheet.appConfig.getScreenHeight(context) *
+                                  0.63),
+                      child: SingleChildScrollView(
+                        child: Wrap(
+                          runSpacing: 15,
+                          children: [
+                            CustomRow(title: "No. of Invoices", trailing: "0"),
+                            CustomRow(title: "No. of   Refunds", trailing: "0"),
+                            const Divider(),
+                            CustomRow(
+                                title: "Cash Transactions",
+                                trailing: "AED 0.00"),
+                            CustomRow(
+                                title: "Credit Transactions",
+                                trailing: "AED 0.00"),
+                            CustomRow(
+                                title: "Refund Transactions",
+                                trailing: "AED 0.00"),
+                            CustomRow(
+                                title: "Total Sales", trailing: "AED 0.00"),
+                            const Divider(),
+                            CustomRow(
+                                title: "Gross Sales", trailing: "AED 0.00"),
+                            CustomRow(
+                                title: "Total Discount", trailing: "AED 0.00"),
+                            CustomRow(title: "Net Total", trailing: "AED 0.00"),
+                            CustomRow(
+                                title: "Grand Total", trailing: "AED 0.00"),
+                            const Divider(),
+                            CustomRow(
+                                title: "Cash Received", trailing: "AED 0.00"),
+                            CustomRow(
+                                title: "Card Received", trailing: "AED 0.00"),
+                          ],
+                        ),
                       ),
                     ),
             ),
@@ -196,7 +206,7 @@ class _SalesSummaryViewState extends State<SalesSummaryView>
                 onPressed: () {},
                 icon: Icons.share),
           ],
-        ).paddingAll(20)
+        ).paddingOnly(left: 20, bottom: 20, right: 20, top: 10)
       ],
     ));
   }

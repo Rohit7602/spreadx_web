@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/View/Inventory/purchase_products_view.dart';
+import 'package:spreadx_web/View/Inventory/stock_details_view.dart';
+import 'package:spreadx_web/View/Inventory/view_stock.dart';
 import 'package:spreadx_web/View/Transactions/transaction_view.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -44,7 +46,12 @@ class _InventoryViewState extends State<InventoryView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              DrawerButtonView(btnName: "View Stock", onPressed: () {}),
+              DrawerButtonView(
+                  btnName: "View Stock",
+                  onPressed: () {
+                    selectedView("stock");
+                    setState(() {});
+                  }),
               styleSheet.appConfig.addHeight(10),
               DrawerButtonView(
                   btnName: "Purchase Products",
@@ -73,6 +80,14 @@ class _InventoryViewState extends State<InventoryView> {
             return const TransactionView();
           } else if (selectedView.value == "products") {
             return const PurchaseProductsView();
+          } else if (selectedView.value == "stock") {
+            return ViewStockView(
+              onPressedBack: () {
+                selectedView("stockDetails");
+              },
+            );
+          } else if (selectedView.value == "stockDetails") {
+            return const StockDetailsView();
           } else {
             return defaultView;
           }

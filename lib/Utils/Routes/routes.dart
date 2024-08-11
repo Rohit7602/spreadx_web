@@ -19,8 +19,7 @@ class MyRoute {
       "/mainMenuDrawer/businessSetup/businessProfileSetupview";
   static String printerSetting = "/mainMenuDrawer/printerSetting";
   static String usersManagement = "/mainMenuDrawer/usersManagement";
-  static String userProfileView =
-      "/mainMenuDrawer/usersManagement/userProfileView";
+
   static String security = "/mainMenuDrawer/security";
   static String storeSettings = "/mainMenuDrawer/storeSettings";
   static String supplier = "/mainMenuDrawer/supplier";

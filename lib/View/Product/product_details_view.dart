@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:spreadx_web/Components/Controller/product_controller.dart';
 import 'package:spreadx_web/Components/Models/product_model.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/View/Product/edit_product_details_view.dart';
@@ -17,6 +18,8 @@ class ProductDetailsView extends StatefulWidget {
 }
 
 class _ProductDetailsViewState extends State<ProductDetailsView> {
+  var productController = Get.find<ProductController>();
+
   final RxString selectedTransactionTab = RxString("All");
 
   final RxBool expandEditButton = RxBool(false);
@@ -256,6 +259,11 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                                       styleSheet.COLOR.redColor,
                                                   onPressed: () {
                                                     expandEditButton(false);
+
+                                                    productController
+                                                        .removeProduct(
+                                                            widget.product.id);
+                                                    widget.onPressedBack!();
                                                   },
                                                   padding:
                                                       const EdgeInsets.all(10),

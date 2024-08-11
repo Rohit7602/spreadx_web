@@ -11,7 +11,7 @@ class InitialBinding extends Bindings {
     Get.put(ProductController());
     Get.put(UsersController());
     Get.put(SupplierController());
-    Get.put(AddCustomerController());
+    Get.put(CustomerController());
     Get.put(DrawersController());
   }
 }

@@ -17,7 +17,7 @@ class CustomerListView extends StatefulWidget {
 }
 
 class _CustomerListViewState extends State<CustomerListView> {
-  var controller = Get.find<AddCustomerController>();
+  var controller = Get.find<CustomerController>();
   RxString selectedView = RxString("default");
   bool isCustomerEdit = false;
 
@@ -193,6 +193,7 @@ class _CustomerListViewState extends State<CustomerListView> {
             customer: customer.value!,
             onPressedBack: () {
               selectedView("default");
+              setState(() {});
             });
       }
     });

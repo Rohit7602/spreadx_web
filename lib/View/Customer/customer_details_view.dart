@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:spreadx_web/Components/Controller/add_customer_controller.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -20,6 +21,8 @@ class CustomerDetailsView extends StatefulWidget {
 }
 
 class _CustomerDetailsViewState extends State<CustomerDetailsView> {
+  var customerController = Get.find<CustomerController>();
+
   final RxString selectedTransactionTab = RxString("All");
 
   final RxBool expandEditButton = RxBool(false);
@@ -260,6 +263,10 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                                                       styleSheet.COLOR.redColor,
                                                   onPressed: () {
                                                     expandEditButton(false);
+                                                    customerController
+                                                        .deleteCustomer(
+                                                            widget.customer);
+                                                    widget.onPressedBack!();
                                                   },
                                                   padding:
                                                       const EdgeInsets.all(10),

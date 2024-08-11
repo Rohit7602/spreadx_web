@@ -20,6 +20,7 @@ class AppColors {
   Color greyColor = Colors.grey;
   Color greenColor = Colors.green;
   Color darkGreenColor = const Color(0xff37913A);
+  Color darkGreenColor2 = const Color(0xff155B50);
   Color discountCardGrenColor = const Color(0xffC8E6CA);
   Color productCardGreyColor = const Color(0xffCCCCCC);
   Color lightGreyColor = Colors.black.withOpacity(0.04);

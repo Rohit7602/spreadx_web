@@ -81,11 +81,7 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: MyRoute.usersManagement,
-      builder: (context, state) => const UserManagementView(),
-    ),
-    GoRoute(
-      path: MyRoute.userProfileView,
-      builder: (context, state) => const UserProfileView(),
+      builder: (context, state) => UserManagementView(),
     ),
     GoRoute(
       path: MyRoute.security,

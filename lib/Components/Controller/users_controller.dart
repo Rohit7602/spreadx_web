@@ -62,7 +62,6 @@ class UsersController extends GetxController {
       setStatus("");
       password.clear();
       confirmPassword.clear();
-      context.go(MyRoute.usersManagement);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Password and Confirm Password doesn't match")));

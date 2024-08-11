@@ -24,7 +24,7 @@ class _AddNewCustomerViewState extends State<AddNewCustomerView> {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<AddCustomerController>();
+    var controller = Get.find<CustomerController>();
     return Scaffold(
       body: isBusinessType
           ? BusinessTypeView(

@@ -12,7 +12,7 @@ class BusinessTypeView extends StatelessWidget {
   void Function(String) onTap;
   BusinessTypeView({required this.onTap, super.key});
 
-  var controller = Get.find<AddCustomerController>();
+  var controller = Get.find<CustomerController>();
 
   @override
   Widget build(BuildContext context) {

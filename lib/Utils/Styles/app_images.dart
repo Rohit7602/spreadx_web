@@ -68,5 +68,7 @@ class AppIcons {
   String printer = "assets/Icons/printer.png";
 
   String user = "assets/Icons/user.png";
+
+  String arrowIcon = "assets/Icons/arrow_icon.png";
   //
 }

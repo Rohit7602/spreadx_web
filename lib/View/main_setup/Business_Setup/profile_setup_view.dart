@@ -4,6 +4,8 @@ import 'package:country_pickers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Button/text_btn.dart';
+import 'package:spreadx_web/Components/Dialog/update_email_dialog.dart';
+import 'package:spreadx_web/Components/Dialog/update_phone_dialog.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
@@ -125,7 +127,14 @@ class ProfileSetupView extends StatelessWidget {
                               ),
                               styleSheet.appConfig.addHeight(10),
                               TextButtonView(
-                                  btnName: "Update Phone", onPressed: () {})
+                                  btnName: "Update Phone",
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return UpdatePhoneDialog();
+                                        });
+                                  })
                             ],
                           ),
                           styleSheet.appConfig.addHeight(10),
@@ -141,7 +150,14 @@ class ProfileSetupView extends StatelessWidget {
                               ),
                               styleSheet.appConfig.addHeight(10),
                               TextButtonView(
-                                  btnName: "Update Email", onPressed: () {})
+                                  btnName: "Update Email",
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return UpdateEmailDialog();
+                                        });
+                                  })
                             ],
                           ),
                           styleSheet.appConfig.addHeight(10),
