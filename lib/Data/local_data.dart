@@ -169,6 +169,25 @@ class LocalData {
         unitName: "PCS",
         unitEquivalent: "data")
   ];
+
+  /// *********************** Issue Refund Data List *****************
+  static List<IssueRefundModel> issueRefundData = [
+    const IssueRefundModel(
+        quantity: 1.00,
+        amount: 2.00,
+        item: IssueRefundItemModel(
+            title: "default - PCS", description: "default")),
+    const IssueRefundModel(
+        quantity: 2.00,
+        amount: 4.00,
+        item: IssueRefundItemModel(
+            title: "default - PCS - 2", description: "default-2")),
+    const IssueRefundModel(
+        quantity: 1.00,
+        amount: 1.00,
+        item: IssueRefundItemModel(
+            title: "default - PCS - 3", description: "default-3")),
+  ];
 }
 // ******** Class Start From Here ******************
 
@@ -304,4 +323,57 @@ class PackingDataModel {
     required this.unitEquivalent,
     this.isBase = false,
   });
+}
+
+/// Class for Transactions > Transaction Details > Issue Refund
+class IssueRefundModel {
+  final double quantity;
+  final double amount;
+  final IssueRefundItemModel item;
+
+  const IssueRefundModel({
+    required this.quantity,
+    required this.amount,
+    required this.item,
+  });
+
+  @override
+  bool operator ==(covariant IssueRefundModel other) {
+    if (identical(this, other)) return true;
+
+    return other.quantity == quantity &&
+        other.amount == amount &&
+        other.item == item;
+  }
+
+  @override
+  int get hashCode => quantity.hashCode ^ amount.hashCode ^ item.hashCode;
+
+  @override
+  String toString() =>
+      'IssueRefundModel(quantity: $quantity, amount: $amount, item: $item)';
+}
+
+class IssueRefundItemModel {
+  final String title;
+  final String description;
+
+  const IssueRefundItemModel( {
+    required this.title,
+    required this.description,
+  });
+
+  @override
+  bool operator ==(covariant IssueRefundItemModel other) {
+    if (identical(this, other)) return true;
+
+    return other.title == title && other.description == description;
+  }
+
+  @override
+  int get hashCode => title.hashCode ^ description.hashCode;
+
+  @override
+  String toString() =>
+      'IssueRefundItemModel(title: $title, description: $description)';
 }
