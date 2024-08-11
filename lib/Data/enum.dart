@@ -35,3 +35,5 @@ enum AddProductState {
   Single_Product,
   Multiple_Product
 }
+
+enum EditSupplierViewState { Default, Purchase_History }

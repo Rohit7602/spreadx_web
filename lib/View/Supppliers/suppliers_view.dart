@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Controller/supplier_controller.dart';
 import 'package:spreadx_web/View/Supppliers/add_new_supplier.dart';
+import 'package:spreadx_web/View/Supppliers/suppliers_detail_view.dart';
 import 'package:spreadx_web/main.dart';
 
 class SuppliersView extends StatefulWidget {
@@ -13,7 +14,7 @@ class SuppliersView extends StatefulWidget {
 }
 
 class _SuppliersViewState extends State<SuppliersView> {
-  bool showSupplierForm = false;
+  RxString selected = RxString("default");
   var controller = Get.find<SupplierController>();
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class _SuppliersViewState extends State<SuppliersView> {
                       return InkWell(
                         onTap: () {
                           setState(() {
-                            showSupplierForm = true;
+                            selected("details");
                           });
                         },
                         child: Container(
@@ -80,15 +81,21 @@ class _SuppliersViewState extends State<SuppliersView> {
         DrawerButtonView(
             btnName: "Add New Supplier",
             onPressed: () {
-              setState(() => showSupplierForm = true);
+              selected("add");
             }).paddingAll(15)
       ],
     );
 
-    return showSupplierForm
-        ? AddNewSupplierView(
-            onPressedBack: () => setState(() => showSupplierForm = false),
-          )
-        : defaultView;
+    return Obx(() {
+      if (selected.value == "default") {
+        return defaultView;
+      } else if (selected.value == "add") {
+        return AddNewSupplierView(
+          onPressedBack: () => selected("default"),
+        );
+      } else {
+        return SupplierDetailsView(onPressedBack: () => selected("default"));
+      }
+    });
   }
 }

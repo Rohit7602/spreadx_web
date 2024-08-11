@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/View/Transactions/Transaction_details/transaction_details_view.dart';
 import 'package:spreadx_web/main.dart';
 
 class TransactionView extends StatefulWidget {
@@ -15,9 +16,11 @@ class _TransactionViewState extends State<TransactionView> {
 
   int btnIndex = 0;
 
+  RxString selected = RxString("default");
+
   @override
   Widget build(BuildContext context) {
-    return Row(
+    final defaultView = Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Flexible(
@@ -53,6 +56,9 @@ class _TransactionViewState extends State<TransactionView> {
               itemCount: 3,
               itemBuilder: (context, i) {
                 return ListTile(
+                  onTap: () {
+                    selected("details");
+                  },
                   minLeadingWidth: 20,
                   visualDensity: const VisualDensity(vertical: -4),
                   tileColor: styleSheet.COLOR.fieldGreyColor,
@@ -81,5 +87,15 @@ class _TransactionViewState extends State<TransactionView> {
             ))
       ],
     ).paddingSymmetric(horizontal: 15, vertical: 10);
+
+    return Obx(() {
+      if (selected.value == "default") {
+        return defaultView;
+      } else {
+        return TransactionDetailsView(onPressedBack: () {
+          selected("default");
+        });
+      }
+    });
   }
 }

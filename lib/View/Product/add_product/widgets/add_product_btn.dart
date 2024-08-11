@@ -6,12 +6,14 @@ class AddProductBtn extends StatelessWidget {
   final String title;
   final IconData icon;
   final bool disable;
+  final bool trailing;
   const AddProductBtn(
       {super.key,
       required this.ontap,
       required this.title,
       required this.icon,
-      this.disable = false});
+      this.disable = false,
+      this.trailing = false});
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +37,12 @@ class AddProductBtn extends StatelessWidget {
         child: Row(
           children: [
             styleSheet.appConfig.addWidth(10),
-            Icon(icon,
-                color: disable
-                    ? styleSheet.COLOR.greyColor
-                    : styleSheet.COLOR.whiteColor),
+            trailing
+                ? const SizedBox(width: 20)
+                : Icon(icon,
+                    color: disable
+                        ? styleSheet.COLOR.greyColor
+                        : styleSheet.COLOR.whiteColor),
             Expanded(
               child: Text(
                 title,
@@ -49,7 +53,13 @@ class AddProductBtn extends StatelessWidget {
                         : styleSheet.COLOR.whiteColor),
               ),
             ),
-            const SizedBox(width: 20)
+            trailing
+                ? Icon(icon,
+                    color: disable
+                        ? styleSheet.COLOR.greyColor
+                        : styleSheet.COLOR.whiteColor)
+                : const SizedBox(width: 20),
+            styleSheet.appConfig.addWidth(10),
           ],
         ),
       ),
