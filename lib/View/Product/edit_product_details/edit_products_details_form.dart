@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/Image_Picker/image_picker.dart';
 import 'package:spreadx_web/Components/Models/product_model.dart';
 import 'package:spreadx_web/Components/check_stock_availability_tile.dart';
 import 'package:spreadx_web/Components/dashed_rect.dart';
@@ -27,6 +30,9 @@ class _EditProductsDetailsFormViewState
     extends State<EditProductsDetailsFormView> {
   final Rx<EditProductDetailStates> selected =
       Rx<EditProductDetailStates>(EditProductDetailStates.Default);
+
+  File? pickedFile;
+
   @override
   Widget build(BuildContext context) {
     final defaultView = Scaffold(
@@ -68,7 +74,11 @@ class _EditProductsDetailsFormViewState
                                             color: styleSheet
                                                 .COLOR.productCardGreyColor),
                                         child: IconButton(
-                                            onPressed: () {},
+                                            onPressed: () async {
+                                              pickedFile = await ImageController
+                                                  .pickImageByGallery();
+                                              setState(() {});
+                                            },
                                             color:
                                                 styleSheet.COLOR.primaryColor,
                                             icon: const Icon(Icons.edit)),
@@ -92,11 +102,16 @@ class _EditProductsDetailsFormViewState
                                   decoration: BoxDecoration(
                                       color: styleSheet
                                           .COLOR.productCardGreyColor),
-                                  child: Text("640 x 360",
-                                      style: styleSheet.TEXT_THEME.fs28Bold
-                                          .copyWith(
-                                              color:
-                                                  styleSheet.COLOR.greyColor)),
+                                  child: pickedFile != null
+                                      ? Image.file(
+                                          File(pickedFile!.path),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Text("640 x 360",
+                                          style: styleSheet.TEXT_THEME.fs28Bold
+                                              .copyWith(
+                                                  color: styleSheet
+                                                      .COLOR.greyColor)),
                                 ),
                               ],
                             )),

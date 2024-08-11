@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/Image_Picker/image_picker.dart';
 import 'package:spreadx_web/main.dart';
 
 class ImportExportProducts extends StatefulWidget {
@@ -187,7 +188,11 @@ class _ImportExportProductsState extends State<ImportExportProducts> {
                                     PrimaryBtnView(
                                         btnName: "Upload Files",
                                         isExpanded: true,
-                                        onPressed: () {})
+                                        onPressed: () async {
+                                          await ImageController
+                                              .pickImageByGallery();
+                                          setState(() {});
+                                        })
                                   ],
                                 ),
                               )

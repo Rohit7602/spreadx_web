@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_picker_dropdown.dart';
 import 'package:country_pickers/utils/utils.dart';
@@ -6,18 +8,29 @@ import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Button/text_btn.dart';
 import 'package:spreadx_web/Components/Dialog/update_email_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/update_phone_dialog.dart';
+import 'package:spreadx_web/Components/Image_Picker/image_picker.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
 
-class ProfileSetupView extends StatelessWidget {
+class ProfileSetupView extends StatefulWidget {
   final void Function()? onPressedBack;
-  ProfileSetupView({super.key, this.onPressedBack});
+  const ProfileSetupView({super.key, this.onPressedBack});
 
+  @override
+  State<ProfileSetupView> createState() => _ProfileSetupViewState();
+}
+
+class _ProfileSetupViewState extends State<ProfileSetupView> {
   final phoneController = TextEditingController();
+
   final emailController = TextEditingController();
+
   final firstName = TextEditingController();
+
   final lastName = TextEditingController();
+
+  File? pickedFile;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +43,7 @@ class ProfileSetupView extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: IconButton(
-                  onPressed: onPressedBack,
+                  onPressed: widget.onPressedBack,
                   icon: const Icon(Icons.arrow_back_outlined)),
             ),
             Expanded(
@@ -46,6 +59,7 @@ class ProfileSetupView extends StatelessWidget {
                             alignment: Alignment.bottomRight,
                             children: [
                               Container(
+                                  clipBehavior: Clip.antiAlias,
                                   alignment: Alignment.center,
                                   height: 200,
                                   width: 200,
@@ -53,19 +67,31 @@ class ProfileSetupView extends StatelessWidget {
                                       color:
                                           styleSheet.COLOR.productCardGreyColor,
                                       shape: BoxShape.circle),
-                                  child: Text("150 X 150",
-                                      style: styleSheet.TEXT_THEME.fs18Bold
-                                          .copyWith(
-                                              color:
-                                                  styleSheet.COLOR.greyColor))),
-                              Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      color: styleSheet.COLOR.primaryColor,
-                                      shape: BoxShape.circle),
-                                  child: Icon(Icons.edit,
-                                      size: 30,
-                                      color: styleSheet.COLOR.whiteColor))
+                                  child: pickedFile != null
+                                      ? Image.file(
+                                          File(pickedFile!.path),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Text("150 X 150",
+                                          style: styleSheet.TEXT_THEME.fs18Bold
+                                              .copyWith(
+                                                  color: styleSheet
+                                                      .COLOR.greyColor))),
+                              InkWell(
+                                onTap: () async {
+                                  pickedFile = await ImageController
+                                      .pickImageByGallery();
+                                  setState(() {});
+                                },
+                                child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        color: styleSheet.COLOR.primaryColor,
+                                        shape: BoxShape.circle),
+                                    child: Icon(Icons.edit,
+                                        size: 30,
+                                        color: styleSheet.COLOR.whiteColor)),
+                              )
                             ],
                           ),
                           styleSheet.appConfig.addHeight(10),

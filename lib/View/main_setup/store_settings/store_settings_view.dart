@@ -50,9 +50,28 @@ class StoreSettingsView extends StatelessWidget {
                     Text("Business name",
                         style: styleSheet.TEXT_THEME.fs16Bold),
                     Text("Store name", style: styleSheet.TEXT_THEME.fs14Bold),
+                    Obx(() {
+                      return isVATEnabled.value
+                          ? Text("TRN:", style: styleSheet.TEXT_THEME.fs14Bold)
+                          : const SizedBox();
+                    }),
                     styleSheet.appConfig.addHeight(30),
                     Text("Tax Invoice", style: styleSheet.TEXT_THEME.fs14Bold),
                     Text("세금계산서", style: styleSheet.TEXT_THEME.fs14Bold),
+                    styleSheet.appConfig.addHeight(20),
+                    Obx(() {
+                      return isVATEnabled.value
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Total VAT",
+                                    style: styleSheet.TEXT_THEME.fs14Bold),
+                                Text("AED 100.00",
+                                    style: styleSheet.TEXT_THEME.fs14Bold),
+                              ],
+                            )
+                          : const SizedBox();
+                    }),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -103,7 +122,7 @@ class StoreSettingsView extends StatelessWidget {
                       onTap: () {
                         showDialog(
                             context: context,
-                            builder: (context) => const _EnterTextDialog());
+                            builder: (context) => _EnterTextDialog());
                       },
                       trailing: Text("",
                           style: styleSheet.TEXT_THEME.fs16Bold
@@ -113,7 +132,7 @@ class StoreSettingsView extends StatelessWidget {
                       onTap: () {
                         showDialog(
                             context: context,
-                            builder: (context) => const _EnterTextDialog());
+                            builder: (context) => _EnterTextDialog());
                       },
                       subtitle: "Preferred title for tax invoices.",
                       divider: false,
@@ -125,7 +144,7 @@ class StoreSettingsView extends StatelessWidget {
                       onTap: () {
                         showDialog(
                             context: context,
-                            builder: (context) => const _EnterTextDialog());
+                            builder: (context) => _EnterTextDialog());
                       },
                       subtitle:
                           "Preferred title in the other language for tax invoices.",
@@ -139,7 +158,7 @@ class StoreSettingsView extends StatelessWidget {
                       onTap: () {
                         showDialog(
                             context: context,
-                            builder: (context) => const _EnterTextDialog());
+                            builder: (context) => _EnterTextDialog());
                       },
                       divider: false,
                       trailing: Text("Tax Credit Note",
@@ -150,7 +169,7 @@ class StoreSettingsView extends StatelessWidget {
                       onTap: () {
                         showDialog(
                             context: context,
-                            builder: (context) => const _EnterTextDialog());
+                            builder: (context) => _EnterTextDialog());
                       },
                       subtitle:
                           "Preferred title in other language for tax credit notes.",
@@ -158,18 +177,64 @@ class StoreSettingsView extends StatelessWidget {
                           style: styleSheet.TEXT_THEME.fs16Bold
                               .copyWith(color: styleSheet.COLOR.primaryColor))),
                   SecurityListTile(
-                      title: "VAT",
-                      subtitle:
-                          "Enable or disable VAT management in invoices and summaries.",
-                      divider: false,
-                      onTap: () {
-                        isVATEnabled(!(isVATEnabled.value));
-                      },
-                      trailing: Obx(() => Switch.adaptive(
-                          value: isVATEnabled.value,
-                          onChanged: (v) {
-                            isVATEnabled(v);
-                          }))),
+                    title: "VAT",
+                    subtitle:
+                        "Enable or disable VAT management in invoices and summaries.",
+                    divider: false,
+                    onTap: () {
+                      isVATEnabled(!(isVATEnabled.value));
+                    },
+                    trailing: Obx(
+                      () => Switch.adaptive(
+                        value: isVATEnabled.value,
+                        onChanged: (v) {
+                          isVATEnabled(v);
+                        },
+                      ),
+                    ),
+                  ),
+                  Obx(() {
+                    return isVATEnabled.value
+                        ? Column(
+                            children: [
+                              SecurityListTile(
+                                divider: false,
+                                title: "TRN",
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => _EnterTextDialog(
+                                            title: "TRN",
+                                            hintText: "Enter TRN",
+                                          ));
+                                },
+                                subtitle:
+                                    "The Tax Registration Number assigned to the store",
+                                trailing: const SizedBox(),
+                              ),
+                              SecurityListTile(
+                                divider: false,
+                                title: "Default VAT",
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => _EnterTextDialog(
+                                            title: "Enter VAT",
+                                            hintText: "0.0",
+                                          ));
+                                },
+                                subtitle: "Default VAT value to show and use.",
+                                trailing: Text(
+                                  "0.0",
+                                  style: styleSheet.TEXT_THEME.fs14Medium
+                                      .copyWith(
+                                          color: styleSheet.COLOR.primaryColor),
+                                ),
+                              ),
+                            ],
+                          )
+                        : const SizedBox();
+                  })
                 ],
               ))
             ],
@@ -255,7 +320,10 @@ class _TimeZoneDialog extends StatelessWidget {
 }
 
 class _EnterTextDialog extends StatelessWidget {
-  const _EnterTextDialog({super.key});
+  String title;
+  String hintText;
+
+  _EnterTextDialog({this.title = "", this.hintText = "", super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -264,11 +332,12 @@ class _EnterTextDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("Enter Text", style: styleSheet.TEXT_THEME.fs16Bold),
+            Text("Enter ${title.isNotEmpty ? title : "Text"}",
+                style: styleSheet.TEXT_THEME.fs16Bold),
             styleSheet.appConfig.addHeight(20),
             SecondaryTextFormField(
                 onTap: () => openVirtualKeyboard(),
-                hinttext: "Your Value",
+                hinttext: hintText.isNotEmpty ? hintText : "Your Value",
                 fieldColor: false),
             styleSheet.appConfig.addHeight(20),
             PrimaryBtnView(

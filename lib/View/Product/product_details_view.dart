@@ -366,7 +366,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                       title: Text("Sales",
                                           style:
                                               styleSheet.TEXT_THEME.fs14Bold),
-                                      subtitle: Text("IN4290003",
+                                      subtitle: Text("PIN46B0007",
                                           style: styleSheet.TEXT_THEME.fs12Bold
                                               .copyWith(
                                                   color: styleSheet

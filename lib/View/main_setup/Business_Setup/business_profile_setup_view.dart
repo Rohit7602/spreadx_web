@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_picker_dropdown.dart';
 import 'package:country_pickers/utils/utils.dart';
@@ -5,17 +7,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Dropdown/primary_drop_down.dart';
+import 'package:spreadx_web/Components/Image_Picker/image_picker.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/main.dart';
 
 import '../../../keyboard_handler.dart';
 
-class BusinessProfileSetupView extends StatelessWidget {
+class BusinessProfileSetupView extends StatefulWidget {
   final void Function()? onPressedBack;
-  BusinessProfileSetupView({super.key, this.onPressedBack});
+  const BusinessProfileSetupView({super.key, this.onPressedBack});
 
+  @override
+  State<BusinessProfileSetupView> createState() =>
+      _BusinessProfileSetupViewState();
+}
+
+class _BusinessProfileSetupViewState extends State<BusinessProfileSetupView> {
   final RxString _fmcg = RxString("FMCG");
+
   final phoneController = TextEditingController();
+
+  File? pickedFile;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +40,7 @@ class BusinessProfileSetupView extends StatelessWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: IconButton(
-                onPressed: onPressedBack,
+                onPressed: widget.onPressedBack,
                 icon: const Icon(Icons.arrow_back_outlined)),
           ),
           Expanded(
@@ -51,17 +63,29 @@ class BusinessProfileSetupView extends StatelessWidget {
                                       color:
                                           styleSheet.COLOR.productCardGreyColor,
                                       shape: BoxShape.circle),
-                                  child: Icon(Icons.person,
-                                      size: 80,
-                                      color: styleSheet.COLOR.greyColor)),
-                              Container(
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                      color: styleSheet.COLOR.primaryColor,
-                                      shape: BoxShape.circle),
-                                  child: Icon(Icons.edit,
-                                      size: 20,
-                                      color: styleSheet.COLOR.whiteColor))
+                                  child: pickedFile != null
+                                      ? Image.file(
+                                          File(pickedFile!.path),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Icon(Icons.person,
+                                          size: 80,
+                                          color: styleSheet.COLOR.greyColor)),
+                              InkWell(
+                                onTap: () async {
+                                  pickedFile = await ImageController
+                                      .pickImageByGallery();
+                                  setState(() {});
+                                },
+                                child: Container(
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                        color: styleSheet.COLOR.primaryColor,
+                                        shape: BoxShape.circle),
+                                    child: Icon(Icons.edit,
+                                        size: 20,
+                                        color: styleSheet.COLOR.whiteColor)),
+                              )
                             ],
                           ),
                           styleSheet.appConfig.addHeight(40),
