@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:spreadx_web/Components/transaction_tile.dart';
 import 'package:spreadx_web/Data/local_data.dart';
+import 'package:spreadx_web/View/Customer/cust_transaction.dart';
 import 'package:spreadx_web/View/Supppliers/edit_supplier_view.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -375,6 +376,7 @@ class _SupplierDetailsViewState extends State<SupplierDetailsView> {
                                                         styleSheet.COLOR.orange,
                                                     onPressed: () {
                                                       expandEditButton(false);
+                                                      selected("transactions");
                                                     },
                                                     padding:
                                                         const EdgeInsets.all(
@@ -434,6 +436,10 @@ class _SupplierDetailsViewState extends State<SupplierDetailsView> {
     return Obx(() {
       if (selected.value == "default") {
         return defaultValue;
+      } else if (selected.value == "transactions") {
+        return CustomerTransactionView(
+          onPressedBack: setDefaultView,
+        );
       } else {
         return EditSupplierView(onPressedBack: () {
           selected("default");
@@ -441,4 +447,6 @@ class _SupplierDetailsViewState extends State<SupplierDetailsView> {
       }
     });
   }
+
+  setDefaultView() => selected("default");
 }

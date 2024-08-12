@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Data/enum.dart';
 import 'package:spreadx_web/View/Inventory/purchase_products_view.dart';
 import 'package:spreadx_web/View/Inventory/stock_details_view.dart';
 import 'package:spreadx_web/View/Inventory/view_stock.dart';
@@ -15,7 +16,7 @@ class InventoryView extends StatefulWidget {
 }
 
 class _InventoryViewState extends State<InventoryView> {
-  RxString selectedView = RxString("default");
+  Rx<InventoryState> selectedView = Rx<InventoryState>(InventoryState.Default);
   @override
   Widget build(BuildContext context) {
     var defaultView = Row(
@@ -49,21 +50,21 @@ class _InventoryViewState extends State<InventoryView> {
               DrawerButtonView(
                   btnName: "View Stock",
                   onPressed: () {
-                    selectedView("stock");
+                    selectedView(InventoryState.Stock);
                     setState(() {});
                   }),
               styleSheet.appConfig.addHeight(10),
               DrawerButtonView(
                   btnName: "Purchase Products",
                   onPressed: () {
-                    selectedView("products");
+                    selectedView(InventoryState.Purchase_Product);
                     setState(() {});
                   }),
               styleSheet.appConfig.addHeight(10),
               DrawerButtonView(
                   btnName: "Purchase History",
                   onPressed: () {
-                    selectedView("history");
+                    selectedView(InventoryState.Purchase_History);
 
                     setState(() {});
                   }),
@@ -73,38 +74,31 @@ class _InventoryViewState extends State<InventoryView> {
       ],
     );
 
-    return Stack(
-      children: [
-        Obx(() {
-          if (selectedView.value == "history") {
-            return const TransactionView();
-          } else if (selectedView.value == "products") {
-            return const PurchaseProductsView();
-          } else if (selectedView.value == "stock") {
-            return ViewStockView(
-              onPressedBack: () {
-                selectedView("stockDetails");
-              },
-            );
-          } else if (selectedView.value == "stockDetails") {
-            return const StockDetailsView();
-          } else {
-            return defaultView;
-          }
-        }),
-        selectedView.value.toLowerCase() == "default"
-            ? const SizedBox()
-            : IconButton(
-                onPressed: () {
-                  selectedView("default");
-                  setState(() {});
-                },
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: styleSheet.COLOR.blackColor,
-                ),
-              )
-      ],
-    );
+    return Obx(() => getView(selectedView.value, defaultView));
+  }
+
+  getView(state, defaultView) {
+    switch (state) {
+      case InventoryState.Stock:
+        return ViewStockView(
+          onPressedBack: () {
+            selectedView(InventoryState.Default);
+          },
+        );
+      case InventoryState.Purchase_Product:
+        return PurchaseProductsView(
+          onPressedBack: () {
+            selectedView(InventoryState.Default);
+          },
+        );
+      case InventoryState.Purchase_History:
+        return TransactionView(
+          onPressedBack: () {
+            selectedView(InventoryState.Default);
+          },
+        );
+      default:
+        return defaultView;
+    }
   }
 }

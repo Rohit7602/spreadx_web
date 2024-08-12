@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/custom_grid.dart';
+import 'package:spreadx_web/Data/enum.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/View/Drawer/drawer_view.dart';
 import 'package:spreadx_web/View/Reports/Widget/report_dash_card.dart';
+import 'package:spreadx_web/View/Reports/vat_report_view.dart';
 import 'package:spreadx_web/View/Sales/sales_report.dart';
 import 'package:spreadx_web/View/Sales/sales_summary.dart';
 
@@ -15,7 +17,7 @@ class ReportsView extends StatefulWidget {
 }
 
 class _ReportsViewState extends State<ReportsView> {
-  RxString selectedView = RxString("default");
+  Rx<ReportState> selectedView = Rx<ReportState>(ReportState.Default);
 
   @override
   Widget build(BuildContext context) {
@@ -33,36 +35,44 @@ class _ReportsViewState extends State<ReportsView> {
           title: report.title,
           description: report.description,
           onPressed: () {
-            selectedView.value = report.title;
-            setState(() {});
+            if (i == 0) {
+              selectedView(ReportState.Sales);
+            } else if (i == 1) {
+              selectedView(ReportState.Drawers);
+            } else if (i == 2) {
+              selectedView(ReportState.Sales_Summary);
+            } else if (i == 3) {
+              selectedView(ReportState.VAT_Report);
+            }
           },
         );
       },
     );
 
-    return Stack(
-      children: [
-        Obx(() {
-          if (selectedView.value.toLowerCase() == "sales") {
-            return const SalesReportView();
-          } else if (selectedView.value.toLowerCase() == "sales summary") {
-            return const SalesSummaryView();
-          } else if (selectedView.value.toLowerCase() == "drawers") {
-            return const DrawerView();
-          } else {
-            return defaultView;
-          }
-        }),
-        selectedView.value.toLowerCase() == "default"
-            ? const SizedBox()
-            : IconButton(
-                onPressed: () {
-                  selectedView("default");
-                  setState(() {});
-                },
-                icon: const Icon(Icons.arrow_back),
-              )
-      ],
-    );
+    return Obx(() => getView(selectedView.value, defaultView));
   }
+
+  getView(state, defaultView) {
+    switch (state) {
+      case ReportState.Sales:
+        return SalesReportView(
+          onPressedBack: setDefaultView,
+        );
+      case ReportState.Sales_Summary:
+        return SalesSummaryView(
+          onPressedBack: setDefaultView,
+        );
+      case ReportState.Drawers:
+        return DrawerView(
+          onPressedBack: setDefaultView,
+        );
+      case ReportState.VAT_Report:
+        return VatReportView();
+
+      default:
+        return defaultView;
+    }
+  }
+
+  setDefaultView() => selectedView(ReportState.Default);
 }

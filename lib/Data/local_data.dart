@@ -23,6 +23,8 @@ class LocalData {
         "Show DRAWERS history and entries, or open/close current drawer."),
     ReportDataListClass("Sales Summary",
         "Show Sales summary and statistics of the current day and more date ranges."),
+    ReportDataListClass("VAT REEPORT",
+        "Show VAT reports history including VAT IN/OUT summary."),
   ];
 
 // *************** Sales Reports Data List ********************
@@ -107,9 +109,9 @@ class LocalData {
 // *************** Product List ********************
 
   static List<ProductModel> productList = [
-    ProductModel("1", "default - PCS", "1", "0", "0"),
-    ProductModel("2", "default - PCS", "1", "0", "4"),
-    ProductModel("3", "default - PCS", "1", "0", "2"),
+    ProductModel("1", "default - PCS", "1", "0", "0", ""),
+    ProductModel("2", "default - PCS", "1", "0", "4", ""),
+    ProductModel("3", "default - PCS", "1", "0", "2", ""),
   ];
 
 // *************** Existing Customer List ********************
@@ -358,7 +360,7 @@ class IssueRefundItemModel {
   final String title;
   final String description;
 
-  const IssueRefundItemModel( {
+  const IssueRefundItemModel({
     required this.title,
     required this.description,
   });

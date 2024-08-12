@@ -6,8 +6,15 @@ class DrawersController extends GetxController {
   final RxList<DrawerModel> _drawer = RxList<DrawerModel>([]);
   List<DrawerModel> get drawer => _drawer;
 
+  final RxList<DrawerModel> _vatReport = RxList<DrawerModel>([]);
+  List<DrawerModel> get vatReport => _vatReport;
+
   addDrawer(DrawerModel data) {
     _drawer.add(data);
+  }
+
+  addVATReport(DrawerModel data) {
+    _vatReport.add(data);
   }
 
   clearDrawer() {

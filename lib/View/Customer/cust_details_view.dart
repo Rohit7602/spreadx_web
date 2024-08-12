@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:spreadx_web/Components/Controller/add_customer_controller.dart';
 import 'package:spreadx_web/Data/local_data.dart';
+import 'package:spreadx_web/View/Customer/cust_transaction.dart';
 import 'package:spreadx_web/main.dart';
 
 class CustomerDetailsView extends StatefulWidget {
@@ -245,6 +246,8 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                                                       styleSheet.COLOR.orange,
                                                   onPressed: () {
                                                     expandEditButton(false);
+
+                                                    selected("transactions");
                                                   },
                                                   padding:
                                                       const EdgeInsets.all(10),
@@ -425,16 +428,15 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
     );
 
     return Obx(() {
-      if (selected.value == "default") {
-        return defaultValue;
+      if (selected.value == "transactions") {
+        return CustomerTransactionView(
+          onPressedBack: setDefaultView,
+        );
       } else {
-        return const SizedBox();
-        // EditCustomerDetailsView(
-        //     product: widget.product,
-        //     onPressedBack: () {
-        //       selected("default");
-        //     });
+        return defaultValue;
       }
     });
   }
+
+  setDefaultView() => selected("default");
 }

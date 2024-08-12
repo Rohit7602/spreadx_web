@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Components/Controller/add_customer_controller.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/View/Customer/add_new_customer.dart';
-import 'package:spreadx_web/View/Customer/customer_details_view.dart';
+import 'package:spreadx_web/View/Customer/cust_details_view.dart';
 import 'package:spreadx_web/main.dart';
 
 class CustomerListView extends StatefulWidget {

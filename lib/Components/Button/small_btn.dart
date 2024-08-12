@@ -4,7 +4,9 @@ import 'package:spreadx_web/main.dart';
 class SmallButtonView extends StatelessWidget {
   String btnName;
   Function onPressed;
-  SmallButtonView({required this.btnName, required this.onPressed, super.key});
+  double? width;
+  SmallButtonView(
+      {required this.btnName, required this.onPressed, this.width, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class SmallButtonView extends StatelessWidget {
           shape: WidgetStateProperty.all(RoundedRectangleBorder(
             borderRadius: styleSheet.DECORATION.RADIUS_20,
           )),
-          fixedSize: WidgetStateProperty.all(const Size(160, 40))),
+          fixedSize: WidgetStateProperty.all(Size(width ?? 160, 40))),
       onPressed: () => onPressed(),
       child: Text(btnName),
     );

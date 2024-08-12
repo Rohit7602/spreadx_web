@@ -28,9 +28,7 @@ class _EditSupplierViewState extends State<EditSupplierView> {
   Widget build(BuildContext context) {
     final defaultView = Scaffold(
       body: SafeArea(
-          child: SizedBox(
-        width: styleSheet.appConfig.getScreenWidth(context),
-        height: styleSheet.appConfig.getScreenHeight(context),
+          child: SingleChildScrollView(
         child: Padding(
           padding: styleSheet.DECORATION.PADDING_20,
           child: Column(
@@ -42,8 +40,7 @@ class _EditSupplierViewState extends State<EditSupplierView> {
                     icon: const Icon(Icons.arrow_back_outlined)),
               ),
               styleSheet.appConfig.addHeight(20),
-              Expanded(
-                  child: Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SecondaryTextFormField(
@@ -109,7 +106,7 @@ class _EditSupplierViewState extends State<EditSupplierView> {
                       },
                       isExpanded: true),
                 ],
-              ))
+              )
             ],
           ),
         ),

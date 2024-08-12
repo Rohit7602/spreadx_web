@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Data/local_data.dart';
-import 'package:spreadx_web/Utils/Routes/routes.dart';
 
 class SupplierController extends GetxController {
   final RxList<SuppliersModel> _suppliers = RxList<SuppliersModel>([]);
@@ -10,10 +8,12 @@ class SupplierController extends GetxController {
 
   setSuppliers(List<SuppliersModel> data) {
     _suppliers(data);
+    update();
   }
 
   addSuppliers(SuppliersModel data) {
     _suppliers.add(data);
+    update();
   }
 
   final TextEditingController _supplierName = TextEditingController();

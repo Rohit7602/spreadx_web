@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, unused_element
+
 part of '../enter_manually_single.dart';
 
 class _QuickAddView extends StatelessWidget {
@@ -13,6 +15,13 @@ class _QuickAddView extends StatelessWidget {
         unitEquivalent: "data")
   ]);
 
+  var productController = Get.find<ProductController>();
+
+  final productNameController = TextEditingController();
+  final productCodeController = TextEditingController();
+  final sellingPriceController = TextEditingController();
+  final productShortNameController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,6 +36,7 @@ class _QuickAddView extends StatelessWidget {
           children: [
             Expanded(
               child: SecondaryTextFormField(
+                controller: productNameController,
                 hinttext: "Product Name",
                 label: true,
                 onTap: () => openVirtualKeyboard(),
@@ -35,6 +45,7 @@ class _QuickAddView extends StatelessWidget {
             styleSheet.appConfig.addWidth(20),
             Expanded(
               child: SecondaryTextFormField(
+                controller: productShortNameController,
                 hinttext: "Product Short Name",
                 label: true,
                 onTap: () => openVirtualKeyboard(),
@@ -47,6 +58,7 @@ class _QuickAddView extends StatelessWidget {
           children: [
             Expanded(
               child: SecondaryTextFormField(
+                controller: sellingPriceController,
                 hinttext: "Selling Price",
                 label: true,
                 onTap: () => openVirtualKeyboard(),
@@ -87,7 +99,13 @@ class _QuickAddView extends StatelessWidget {
         CheckStockAvailabilityTile(),
         styleSheet.appConfig.addHeight(40),
         PrimaryBtnView(
-            btnName: "Add New Product", onPressed: () {}, isExpanded: true)
+            btnName: "Add New Product",
+            onPressed: () {
+              productController.addProducts(
+                ProductModel("1", productNameController.text, "", "", "", ""),
+              );
+            },
+            isExpanded: true),
       ],
     );
   }

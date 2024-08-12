@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/main.dart';
 
 class StockDetailsView extends StatelessWidget {
-  const StockDetailsView({super.key});
+  void Function() onPressedBack;
+  StockDetailsView({required this.onPressedBack, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        IconButton(
+            onPressed: () {
+              onPressedBack();
+            },
+            icon: const Icon(Icons.arrow_back)),
+        styleSheet.appConfig.addHeight(10),
         Text(
           "default",
           style: styleSheet.TEXT_THEME.fs16Bold
@@ -108,6 +114,6 @@ class StockDetailsView extends StatelessWidget {
           },
         )
       ],
-    ).paddingSymmetric(horizontal: 20, vertical: 30);
+    ).paddingAll(20);
   }
 }

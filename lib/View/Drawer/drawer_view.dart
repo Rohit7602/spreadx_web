@@ -12,7 +12,8 @@ import 'package:spreadx_web/View/Drawer/open_new_drawer.dart';
 import 'package:spreadx_web/main.dart';
 
 class DrawerView extends StatefulWidget {
-  const DrawerView({super.key});
+  void Function() onPressedBack;
+  DrawerView({required this.onPressedBack, super.key});
 
   @override
   State<DrawerView> createState() => _DrawerViewState();
@@ -28,6 +29,12 @@ class _DrawerViewState extends State<DrawerView> {
     final view = ResponsiveHandler().getResponsiveness(context);
     var defaultView = Column(
       children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: IconButton(
+              onPressed: widget.onPressedBack,
+              icon: const Icon(Icons.arrow_back)),
+        ),
         drawerController.drawer.isEmpty
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

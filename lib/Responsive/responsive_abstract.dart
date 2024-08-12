@@ -87,7 +87,7 @@ class TabView implements ResponsiveValues {
   var textFontNormal = styleSheet.TEXT_THEME.fs12Normal;
 
   @override
-  var textFontMedium = styleSheet.TEXT_THEME.fs12Medium;
+  var textFontMedium = styleSheet.TEXT_THEME.fs14Medium;
 
   @override
   var textFontBold = styleSheet.TEXT_THEME.fs12Bold;
@@ -168,7 +168,7 @@ class WebView implements ResponsiveValues {
   var textFontNormal = styleSheet.TEXT_THEME.fs14Normal;
 
   @override
-  var textFontMedium = styleSheet.TEXT_THEME.fs12Medium;
+  var textFontMedium = styleSheet.TEXT_THEME.fs14Medium;
 
   @override
   var textFontLargeMedium = styleSheet.TEXT_THEME.fs14Medium;
@@ -249,7 +249,7 @@ class DesktopView implements ResponsiveValues {
   var textFontNormal = styleSheet.TEXT_THEME.fs16Normal;
 
   @override
-  var textFontMedium = styleSheet.TEXT_THEME.fs12Medium;
+  var textFontMedium = styleSheet.TEXT_THEME.fs14Medium;
 
   @override
   var textFontLargeMedium = styleSheet.TEXT_THEME.fs16Medium;

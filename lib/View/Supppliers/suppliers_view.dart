@@ -91,7 +91,10 @@ class _SuppliersViewState extends State<SuppliersView> {
         return defaultView;
       } else if (selected.value == "add") {
         return AddNewSupplierView(
-          onPressedBack: () => selected("default"),
+          onPressedBack: () {
+            selected("default");
+            setState(() {});
+          },
         );
       } else {
         return SupplierDetailsView(onPressedBack: () => selected("default"));

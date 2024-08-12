@@ -49,6 +49,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
 
   bool isProductCheck = false;
   bool isQueueList = false;
+  bool isShowAssignedCustomer = false;
   dynamic isPaymentCash;
   int selectedValue = 0;
 
@@ -286,24 +287,79 @@ class _HomeScreenViewState extends State<HomeScreenView>
                     ),
                   ),
                   SizedBox(
-                    child: GridView.builder(
-                        shrinkWrap: true,
-                        itemCount: btnList.length,
-                        gridDelegate: CustomSliverGridDelegate(
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            crossAxisCount: width <= 1140
-                                ? 3
-                                : width > 1140 && width <= 1480
-                                    ? 4
-                                    : 6,
-                            itemHeight: 50),
-                        itemBuilder: (context, i) => SecondaryButtonView(
-                              btnColor: styleSheet.COLOR.primarybuttonColor,
-                              btnName: btnList[i].title.toUpperCase(),
-                              onPressed: () =>
-                                  getButtonRoute(btnList[i].title, context),
-                            )),
+                    child: Column(
+                      children: [
+                        isShowAssignedCustomer
+                            ? Container(
+                                padding: styleSheet.DECORATION.PADDING_10,
+                                decoration: BoxDecoration(
+                                  borderRadius: styleSheet.DECORATION.RADIUS_5,
+                                  color: styleSheet.COLOR.ribbonColor,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          height: 40,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: styleSheet
+                                                  .COLOR.productCardGreyColor),
+                                          child: Icon(
+                                            Icons.person,
+                                            color: styleSheet.COLOR.greyColor,
+                                          ),
+                                        ),
+                                        styleSheet.appConfig.addWidth(10),
+                                        Text(
+                                          "Name",
+                                          style: styleSheet.TEXT_THEME.fs12Bold,
+                                        ),
+                                        styleSheet.appConfig.addWidth(10),
+                                        const Icon(Icons.mobile_friendly),
+                                        styleSheet.appConfig.addWidth(10),
+                                        Text(
+                                          "7987987",
+                                          style: styleSheet.TEXT_THEME.fs12Bold,
+                                        ),
+                                      ],
+                                    ),
+                                    IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            isShowAssignedCustomer = false;
+                                          });
+                                        },
+                                        icon: const Icon(Icons.close))
+                                  ],
+                                ),
+                              )
+                            : const SizedBox(),
+                        styleSheet.appConfig.addHeight(10),
+                        GridView.builder(
+                            shrinkWrap: true,
+                            itemCount: btnList.length,
+                            gridDelegate: CustomSliverGridDelegate(
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                crossAxisCount: width <= 1140
+                                    ? 3
+                                    : width > 1140 && width <= 1480
+                                        ? 4
+                                        : 6,
+                                itemHeight: 50),
+                            itemBuilder: (context, i) => SecondaryButtonView(
+                                  btnColor: styleSheet.COLOR.primarybuttonColor,
+                                  btnName: btnList[i].title.toUpperCase(),
+                                  onPressed: () =>
+                                      getButtonRoute(btnList[i].title, context),
+                                )),
+                      ],
+                    ),
                   )
                 ],
               ),

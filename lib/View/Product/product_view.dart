@@ -33,7 +33,7 @@ class _ProductViewState extends State<ProductView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Product List (${LocalData.productList.length})",
+                Text("Product List (${productList.productList.length})",
                     style: styleSheet.TEXT_THEME.fs14Bold
                         .copyWith(color: styleSheet.COLOR.primaryColor)),
                 Row(
@@ -63,10 +63,10 @@ class _ProductViewState extends State<ProductView> {
               spacing: 10,
               alignment: WrapAlignment.start,
               children: [
-                ...List.generate(LocalData.productList.length, (i) {
+                ...List.generate(productList.productList.length, (i) {
                   return GestureDetector(
                     onTap: () {
-                      product(LocalData.productList[i]);
+                      product(productList.productList[i]);
                       selectedView("details");
                     },
                     child: Card(
@@ -107,12 +107,12 @@ class _ProductViewState extends State<ProductView> {
                               children: [
                                 styleSheet.appConfig.addHeight(10),
                                 Text(
-                                  LocalData.productList[i].description,
+                                  productList.productList[i].description,
                                   style: styleSheet.TEXT_THEME.fs14Bold,
                                 ),
                                 styleSheet.appConfig.addHeight(3),
                                 Text(
-                                  LocalData.productList[i].description,
+                                  productList.productList[i].description,
                                   style: styleSheet.TEXT_THEME.fs12Normal,
                                 ),
                                 styleSheet.appConfig.addHeight(8),

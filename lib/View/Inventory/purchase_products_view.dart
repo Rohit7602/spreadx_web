@@ -12,7 +12,8 @@ import 'package:spreadx_web/View/Inventory/invoice_view.dart';
 import 'package:spreadx_web/main.dart';
 
 class PurchaseProductsView extends StatefulWidget {
-  const PurchaseProductsView({super.key});
+  void Function() onPressedBack;
+  PurchaseProductsView({required this.onPressedBack, super.key});
 
   @override
   State<PurchaseProductsView> createState() => _PurchaseProductsViewState();
@@ -38,7 +39,6 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
   @override
   Widget build(BuildContext context) {
     var defaultView = Stack(
-      alignment: Alignment.bottomLeft,
       children: [
         Column(
           mainAxisSize: MainAxisSize.min,
@@ -244,77 +244,75 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
                     ),
                   ],
                 ),
-                styleSheet.appConfig.addWidth(20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      borderRadius: styleSheet.DECORATION.RADIUS_20,
-                      onTap: () {
-                        if (isCategory == false) {
-                          isCategory = true;
-                          setState(() {});
-                        }
-                      },
-                      child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          alignment: Alignment.center,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: styleSheet.COLOR.greyColor
-                                    .withOpacity(0.3)),
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                bottomLeft: Radius.circular(20)),
-                            color: isCategory
-                                ? styleSheet.COLOR.primaryColor
-                                : styleSheet.COLOR.whiteColor,
-                          ),
-                          child: Text(
-                            "Categories",
-                            style: styleSheet.TEXT_THEME.fs12Medium.copyWith(
-                              color: isCategory
-                                  ? styleSheet.COLOR.whiteColor
-                                  : styleSheet.COLOR.blackColor,
-                            ),
-                          )),
-                    ),
-                    InkWell(
-                      borderRadius: styleSheet.DECORATION.RADIUS_20,
-                      onTap: () {
-                        if (isCategory) {
-                          setState(() {
-                            isCategory = false;
-                          });
-                        }
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        alignment: Alignment.center,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color:
-                                  styleSheet.COLOR.greyColor.withOpacity(0.3)),
-                          borderRadius: const BorderRadius.only(
-                              bottomRight: Radius.circular(20),
-                              topRight: Radius.circular(20)),
+              ],
+            ),
+            styleSheet.appConfig.addHeight(20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  borderRadius: styleSheet.DECORATION.RADIUS_20,
+                  onTap: () {
+                    if (isCategory == false) {
+                      isCategory = true;
+                      setState(() {});
+                    }
+                  },
+                  child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      alignment: Alignment.center,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: styleSheet.COLOR.greyColor.withOpacity(0.3)),
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            bottomLeft: Radius.circular(20)),
+                        color: isCategory
+                            ? styleSheet.COLOR.primaryColor
+                            : styleSheet.COLOR.whiteColor,
+                      ),
+                      child: Text(
+                        "Categories",
+                        style: styleSheet.TEXT_THEME.fs12Medium.copyWith(
                           color: isCategory
                               ? styleSheet.COLOR.whiteColor
-                              : styleSheet.COLOR.primaryColor,
+                              : styleSheet.COLOR.blackColor,
                         ),
-                        child: Text(
-                          "Products",
-                          style: styleSheet.TEXT_THEME.fs12Medium.copyWith(
-                            color: isCategory
-                                ? styleSheet.COLOR.blackColor
-                                : styleSheet.COLOR.whiteColor,
-                          ),
-                        ),
+                      )),
+                ),
+                InkWell(
+                  borderRadius: styleSheet.DECORATION.RADIUS_20,
+                  onTap: () {
+                    if (isCategory) {
+                      setState(() {
+                        isCategory = false;
+                      });
+                    }
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    alignment: Alignment.center,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: styleSheet.COLOR.greyColor.withOpacity(0.3)),
+                      borderRadius: const BorderRadius.only(
+                          bottomRight: Radius.circular(20),
+                          topRight: Radius.circular(20)),
+                      color: isCategory
+                          ? styleSheet.COLOR.whiteColor
+                          : styleSheet.COLOR.primaryColor,
+                    ),
+                    child: Text(
+                      "Products",
+                      style: styleSheet.TEXT_THEME.fs12Medium.copyWith(
+                        color: isCategory
+                            ? styleSheet.COLOR.blackColor
+                            : styleSheet.COLOR.whiteColor,
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
@@ -444,17 +442,29 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
                       ))
           ],
         ).paddingAll(20),
-        TextButtonView(
-            btnName: "+ Add Custom Item",
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return CustomItemDialog(
-                      isHeaderShow: false,
-                    );
-                  });
-            }).paddingAll(20)
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+                    onPressed: () {
+                      widget.onPressedBack();
+                    },
+                    icon: const Icon(Icons.arrow_back))
+                .paddingSymmetric(horizontal: 10),
+            TextButtonView(
+                btnName: "+ Add Custom Item",
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return CustomItemDialog(
+                          isHeaderShow: false,
+                        );
+                      });
+                }).paddingAll(20),
+          ],
+        )
       ],
     );
 

@@ -235,7 +235,7 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                   SecondaryTextFormField(
                     onTap: () => openVirtualKeyboard(),
                     fillColor: true,
-                    hinttext: "Enter Product",
+                    hinttext: "Add a Note",
                   ),
                 ],
               )),

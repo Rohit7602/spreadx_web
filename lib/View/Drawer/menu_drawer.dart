@@ -58,7 +58,9 @@ class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
             case DrawerState.Inventory:
               return const InventoryView();
             case DrawerState.Transactions:
-              return const TransactionView();
+              return TransactionView(
+                onPressedBack: () {},
+              );
             case DrawerState.Suppliers:
               return const SuppliersView();
             case DrawerState.Customers:

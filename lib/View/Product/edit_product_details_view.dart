@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spreadx_web/Components/Controller/product_controller.dart';
 import 'package:spreadx_web/Components/Models/product_model.dart';
 import 'package:spreadx_web/View/Product/edit_product_details/edit_products_details_form.dart';
 import 'package:spreadx_web/View/Product/edit_product_details/widgets/delete_product_dialog.dart';
@@ -17,6 +18,8 @@ class EditProductDetailsView extends StatefulWidget {
 
 class _EditProductDetailsViewState extends State<EditProductDetailsView> {
   RxString selected = RxString("default");
+
+  var productController = Get.find<ProductController>();
 
   @override
   Widget build(BuildContext context) {
@@ -180,12 +183,18 @@ class _EditProductDetailsViewState extends State<EditProductDetailsView> {
                               styleSheet.appConfig.addWidth(10),
                               Expanded(
                                 child: TextButton.icon(
-                                    onPressed: () {
-                                      showDialog(
+                                    onPressed: () async {
+                                      await showDialog(
                                           context: context,
                                           builder: (context) {
                                             return const DeleteProductDialog();
-                                          });
+                                          }).then((val) {
+                                        if (val != null) {
+                                          productController
+                                              .removeProduct(widget.product.id);
+                                          widget.onPressedBack!();
+                                        }
+                                      });
                                     },
                                     style: TextButton.styleFrom(
                                         padding: const EdgeInsets.symmetric(
