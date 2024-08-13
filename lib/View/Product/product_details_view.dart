@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:spreadx_web/Components/Controller/product_controller.dart';
 import 'package:spreadx_web/Components/Models/product_model.dart';
+import 'package:spreadx_web/Components/transaction_tile.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/View/Customer/cust_transaction.dart';
 import 'package:spreadx_web/View/Product/edit_product_details_view.dart';
@@ -26,6 +27,22 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   final RxBool expandEditButton = RxBool(false);
 
   final RxString selected = "default".obs;
+
+  final List<String> transactionType = [
+    "Sales",
+    "Return",
+    "Sales",
+    "Purchase",
+    "Sales",
+    "Return",
+    "Purchase",
+    "Sales",
+    "Purchase",
+    "Return",
+    "Sales",
+    "Return",
+    "Purchase"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -354,7 +371,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                     const EdgeInsets.symmetric(vertical: 5),
                                 separatorBuilder: (context, i) =>
                                     styleSheet.appConfig.addHeight(10),
-                                itemCount: 5,
+                                itemCount: transactionType.length,
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, i) {
@@ -368,7 +385,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                       title: Text("Sales",
                                           style:
                                               styleSheet.TEXT_THEME.fs14Bold),
-                                      subtitle: Text("PIN46B0007",
+                                      subtitle: Text("IN4290003",
                                           style: styleSheet.TEXT_THEME.fs12Bold
                                               .copyWith(
                                                   color: styleSheet
