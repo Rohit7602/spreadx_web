@@ -201,19 +201,19 @@ class _DetailedView extends StatelessWidget {
         case EditProductDetailStates.Brand:
           return Expanded(
             child: EditProductAddBrandView(
-                product: ProductModel("456789", "Default", "", "", "", ""),
+                product: ProductModel("456789", "Default", "", "", "", "", ""),
                 onPressedBack: onPressedBack),
           );
         case EditProductDetailStates.Category:
           return Expanded(
             child: EditProductAddCategoryView(
-                product: ProductModel("456789", "Default", "", "", "", ""),
+                product: ProductModel("456789", "Default", "", "", "", "", ""),
                 onPressedBack: onPressedBack),
           );
         case EditProductDetailStates.Packing:
           return Expanded(
             child: EditProductAddPackingView(
-                product: ProductModel("456789", "Default", "", "", "", ""),
+                product: ProductModel("456789", "Default", "", "", "", "", ""),
                 onPressedBack: onPressedBack),
           );
         default:

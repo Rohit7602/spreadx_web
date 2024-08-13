@@ -26,6 +26,28 @@ class ProductController extends GetxController {
     update();
   }
 
+  updateProductPrice(ProductModel product, String price) {
+    if (_productList.any((val) => val.id == product.id)) {
+      final i = _productList.indexOf(product);
+
+      _productList[i].price = "";
+
+      _productList[i].price = price;
+      _productList[i].totalPrice = price;
+    }
+
+    update();
+  }
+
+  calculateProductPrice(int i) {
+    _productList[i].totalPrice =
+        (double.parse(_productList[i].price.toString()) *
+                double.parse(_productList[i].qty.toString()))
+            .toString();
+
+    update();
+  }
+
   // Queue List Controller
 
   final List<ProductModel> _queueList = [];

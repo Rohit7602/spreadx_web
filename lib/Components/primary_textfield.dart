@@ -46,7 +46,7 @@ class PrimaryTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
     return TextFormField(
-      onChanged: (val) => onChanged!(val),
+      // onChanged: (val) => onChanged!(val),
       textAlign: textAlign ?? TextAlign.left,
       onTap: () {
         onTap != null ? onTap!() : null;

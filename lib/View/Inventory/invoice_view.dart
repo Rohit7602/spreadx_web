@@ -5,12 +5,19 @@ import 'package:spreadx_web/Components/custom_row.dart';
 import 'package:spreadx_web/main.dart';
 
 class InvoiceView extends StatelessWidget {
-  const InvoiceView({super.key});
+  void Function() onPressedBack;
+
+  InvoiceView({required this.onPressedBack, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: IconButton(
+              onPressed: onPressedBack, icon: const Icon(Icons.arrow_back)),
+        ),
         styleSheet.appConfig.addHeight(30),
         const Text("bot#werwrmwer"),
         styleSheet.appConfig.addHeight(10),

@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spreadx_web/Components/Controller/product_controller.dart';
 import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
+import 'package:spreadx_web/Components/Models/product_model.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
@@ -10,8 +12,9 @@ import 'package:spreadx_web/main.dart';
 import '../Button/primary_btn.dart';
 
 class ItemDetailsDialog extends StatefulWidget {
-  int itemCount;
-  ItemDetailsDialog({required this.itemCount, super.key});
+  ProductModel productModel;
+
+  ItemDetailsDialog({required this.productModel, super.key});
 
   @override
   State<ItemDetailsDialog> createState() => _ItemDetailsDialogState();
@@ -21,8 +24,26 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
   int itemCount = 1;
   bool _value = false;
 
-  increaseCount() => setState(() => itemCount++);
-  decreaseCount() => setState(() => itemCount > 0 ? itemCount-- : null);
+  final priceController = TextEditingController();
+
+  var product = Get.find<ProductController>();
+
+  incrementCounter() {
+    if (int.parse(widget.productModel!.qty) != 1) {
+      widget.productModel!.qty =
+          (int.parse(widget.productModel!.qty) - 1).toString();
+      setState(() {});
+    }
+  }
+
+  decrementCounter() {
+    if (int.parse(widget.productModel!.qty) > 0) {
+      widget.productModel!.qty =
+          (int.parse(widget.productModel!.qty) + 1).toString();
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomHeaderDialog(
@@ -71,6 +92,7 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                                         .withOpacity(0.7)),
                               ),
                               SecondaryTextFormField(
+                                controller: priceController,
                                 onTap: () => openVirtualKeyboard(),
                                 fillColor: true,
                                 hinttext: "Enter Price",
@@ -134,12 +156,12 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                          onPressed: () => decreaseCount(),
+                          onPressed: () => incrementCounter(),
                           icon: const Icon(Icons.remove),
                         ),
-                        Text(itemCount.toString()),
+                        Text(widget.productModel!.qty),
                         IconButton(
-                          onPressed: () => increaseCount(),
+                          onPressed: () => decrementCounter(),
                           icon: const Icon(Icons.add),
                         ),
                       ],
@@ -253,7 +275,7 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text("Total", style: styleSheet.TEXT_THEME.fs12Bold),
-                          Text("AED 35.00",
+                          Text("AED 0.00",
                               style: styleSheet.TEXT_THEME.fs20Bold),
                         ],
                       ),
@@ -285,6 +307,10 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                   SecondaryButtonView(
                       btnName: "UPDATE",
                       onPressed: () {
+                        if (widget.productModel != null) {
+                          product.updateProductPrice(
+                              widget.productModel!, priceController.text);
+                        }
                         Navigator.of(context).pop();
                       }),
                 ],

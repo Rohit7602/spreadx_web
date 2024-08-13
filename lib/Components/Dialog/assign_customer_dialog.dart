@@ -26,6 +26,7 @@ class _AssignCustomerDialogState extends State<AssignCustomerDialog> {
 
   final phoneController = TextEditingController();
   final searchController = TextEditingController();
+  final customerNameController = TextEditingController();
 
   List<String> listOfTypes = ["Individual", "Business"];
   List<ExistingCustomer> listOfsearch = [];
@@ -214,6 +215,7 @@ class _AssignCustomerDialogState extends State<AssignCustomerDialog> {
                     ),
                     styleSheet.appConfig.addHeight(10),
                     PrimaryTextFormField(
+                      controller: customerNameController,
                       hinttext: "Customer Name",
                       onTap: () => openVirtualKeyboard(),
                     ),
@@ -300,7 +302,18 @@ class _AssignCustomerDialogState extends State<AssignCustomerDialog> {
                       children: [
                         Expanded(
                           child: PrimaryBtnView(
-                              btnName: "Add Customer", onPressed: () {}),
+                              btnName: "Add Customer",
+                              onPressed: () {
+                                Navigator.of(context).pop(CustomerModel(
+                                    barcode: "",
+                                    code: "",
+                                    firstName: customerNameController.text,
+                                    lastName: "",
+                                    number: phoneController.text,
+                                    email: "",
+                                    accountType: "",
+                                    address: ""));
+                              }),
                         ),
                       ],
                     ),

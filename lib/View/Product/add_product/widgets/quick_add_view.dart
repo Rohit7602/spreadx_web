@@ -102,7 +102,8 @@ class _QuickAddView extends StatelessWidget {
             btnName: "Add New Product",
             onPressed: () {
               productController.addProducts(
-                ProductModel("1", productNameController.text, "", "", "", ""),
+                ProductModel(
+                    "1", productNameController.text, "", "", "", "", ""),
               );
             },
             isExpanded: true),

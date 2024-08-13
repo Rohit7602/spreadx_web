@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/Controller/product_controller.dart';
 import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
+import 'package:spreadx_web/Components/Models/product_model.dart';
 import 'package:spreadx_web/Components/keyboard_component.dart';
 import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
@@ -17,6 +19,7 @@ class CustomItemDialog extends StatefulWidget {
 class _CustomItemDialogState extends State<CustomItemDialog> {
   final priceController = TextEditingController();
   final customItemController = TextEditingController();
+  final productController = Get.find<ProductController>();
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +90,16 @@ class _CustomItemDialogState extends State<CustomItemDialog> {
                   child: PrimaryBtnView(
                       btnName: "Add To Cart",
                       onPressed: () {
+                        productController.addProducts(ProductModel(
+                            styleSheet.appConfig.generateId().toString(),
+                            "",
+                            customItemController.text.isNotEmpty
+                                ? customItemController.text
+                                : "Custom Item",
+                            priceController.text,
+                            "",
+                            "",
+                            ""));
                         Navigator.of(context).pop();
                       })),
             ],

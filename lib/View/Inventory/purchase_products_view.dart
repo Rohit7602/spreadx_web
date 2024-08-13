@@ -461,7 +461,9 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
                         return CustomItemDialog(
                           isHeaderShow: false,
                         );
-                      });
+                      }).then((val) {
+                    setState(() {});
+                  });
                 }).paddingAll(20),
           ],
         )
@@ -472,12 +474,16 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
       if (selectedView.value == "checkout") {
         return CheckoutView(
           onPressedBack: () {
-            selectedView("invoice");
+            selectedView("default");
             setState(() {});
           },
         );
       } else if (selectedView.value == "invoice") {
-        return const InvoiceView();
+        return InvoiceView(
+          onPressedBack: () {
+            selectedView("default");
+          },
+        );
       } else {
         return defaultView;
       }

@@ -17,6 +17,7 @@ import 'package:spreadx_web/Components/Dialog/queue_remove_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/split_pay.dart';
 import 'package:spreadx_web/Components/Dialog/update_item_quantity.dart';
 import 'package:spreadx_web/Components/Dialog/update_product_price.dart';
+import 'package:spreadx_web/Components/Models/product_model.dart';
 import 'package:spreadx_web/Components/custom_grid.dart';
 import 'package:spreadx_web/Components/custom_row.dart';
 import 'package:spreadx_web/Components/keyboard_component.dart';
@@ -53,14 +54,16 @@ class _HomeScreenViewState extends State<HomeScreenView>
   dynamic isPaymentCash;
   int selectedValue = 0;
 
+  CustomerModel? customer;
+
   double _keyboardHeight = 0.0;
 
-  void showDetails() {
+  void showDetails(ProductModel product) {
     showDialog(
         context: context,
         builder: (context) {
           return ItemDetailsDialog(
-            itemCount: 1,
+            productModel: product,
           );
         });
   }
@@ -234,23 +237,28 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                         (index) => DataRow(
                                           cells: [
                                             DataCell(
-                                                onTap: showDetails,
+                                                onTap: () => showDetails(
+                                                    data.productList[index]),
                                                 Text("${(index + 1)}."
                                                     .toString())),
                                             DataCell(
-                                                onTap: showDetails,
+                                                onTap: () => showDetails(
+                                                    data.productList[index]),
                                                 Text(data.productList[index]
                                                     .description)),
                                             DataCell(
-                                                onTap: showDetails,
+                                                onTap: () => showDetails(
+                                                    data.productList[index]),
                                                 Text(
                                                     "${data.productList[index].price}.0")),
                                             DataCell(
-                                                onTap: showDetails,
+                                                onTap: () => showDetails(
+                                                    data.productList[index]),
                                                 Text(
                                                     "${data.productList[index].qty}.0")),
                                             DataCell(
-                                                onTap: showDetails,
+                                                onTap: () => showDetails(
+                                                    data.productList[index]),
                                                 Text(
                                                     "${double.parse(data.productList[index].price.toString()) * double.parse(data.productList[index].qty.toString())}")),
                                             DataCell(
@@ -316,14 +324,14 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                         ),
                                         styleSheet.appConfig.addWidth(10),
                                         Text(
-                                          "Name",
+                                          customer!.firstName,
                                           style: styleSheet.TEXT_THEME.fs12Bold,
                                         ),
                                         styleSheet.appConfig.addWidth(10),
                                         const Icon(Icons.mobile_friendly),
                                         styleSheet.appConfig.addWidth(10),
                                         Text(
-                                          "7987987",
+                                          customer!.number,
                                           style: styleSheet.TEXT_THEME.fs12Bold,
                                         ),
                                       ],
@@ -601,16 +609,22 @@ class _HomeScreenViewState extends State<HomeScreenView>
     );
   }
 
-  getButtonRoute(String route, context) {
+  getButtonRoute(String route, context) async {
     switch (route.toLowerCase()) {
       case "discount":
         return showDialog(
             context: context,
             builder: (context) => const ApplyDiscountDialog());
       case "assign customer":
-        return showDialog(
+        return await showDialog(
             context: context,
-            builder: (context) => const AssignCustomerDialog());
+            builder: (context) => const AssignCustomerDialog()).then((val) {
+          if (val != null) {
+            isShowAssignedCustomer = true;
+            customer = val;
+            setState(() {});
+          }
+        });
       case "custom item":
         return showDialog(
             context: context, builder: (context) => CustomItemDialog());

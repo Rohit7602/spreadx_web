@@ -100,7 +100,7 @@ class ApplyDiscountDialog extends StatelessWidget {
               SecondaryButtonView(
                   btnName: "Apply",
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pop(true);
                   }),
             ],
           )

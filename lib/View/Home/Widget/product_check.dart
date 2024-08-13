@@ -369,7 +369,7 @@ class CustomGridForProducts extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Text(
-                    "In Stock ${int.parse(data.stock)}",
+                    "In Stock ${int.parse(data.stock.toString())}",
                     style: styleSheet.TEXT_THEME.fs12Medium
                         .copyWith(color: styleSheet.COLOR.whiteColor),
                   ),

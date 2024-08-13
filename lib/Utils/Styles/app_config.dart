@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class AppConfig {
@@ -28,5 +30,12 @@ class AppConfig {
 // get Full Screen Width
   getScreenWidth(context) {
     return MediaQuery.of(context).size.width;
+  }
+
+  // Random id Generator
+
+  generateId() {
+    return  Random().nextInt(1000);
+    
   }
 }

@@ -1,8 +1,12 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Components/Appbar/custom_appbar.dart';
+import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Data/enum.dart';
+import 'package:spreadx_web/Utils/Routes/routes.dart';
 import 'package:spreadx_web/View/Customer/customer_list.dart';
 import 'package:spreadx_web/View/Home/Widget/custom_drawer_view.dart';
 import 'package:spreadx_web/View/Inventory/inventory_view.dart';
@@ -12,6 +16,7 @@ import 'package:spreadx_web/View/Support/support_and_legal.dart';
 import 'package:spreadx_web/View/Supppliers/suppliers_view.dart';
 import 'package:spreadx_web/View/Transactions/transaction_view.dart';
 import 'package:spreadx_web/View/main_setup/main_setup.dart';
+import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 class MainMenuDrawerView extends StatefulWidget {
@@ -24,29 +29,43 @@ class MainMenuDrawerView extends StatefulWidget {
 class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
   DrawerState drawerState = DrawerState.Dashboard;
 
+  bool showSearchBar = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: DrawerAppBarView(
-          showLeading: false, title: getDrawerName(drawerState)),
-
-      // AppBar(
-      //   backgroundColor: styleSheet.COLOR.primaryColor,
-      //   title: Text(
-      //     getDrawerName(drawerState),
-      //     style: styleSheet.TEXT_THEME.fs16Medium.copyWith(
-      //       letterSpacing: 1.2,
-      //       color: styleSheet.COLOR.whiteColor,
-      //     ),
-      //   ),
-      //   actions: [
-      //     InkWell(
-      //         onTap: () {
-      //           context.go(MyRoute.homeScreen);
-      //         },
-      //         child: Image.asset(styleSheet.icons.screenIcon)),
-      //   ],
-      // ),
+        showLeading: false,
+        title: getDrawerName(drawerState),
+        actions: Row(
+          children: [
+            if (getSearchBar() && showSearchBar)
+              SizedBox(
+                width: 600,
+                child: PrimaryTextFormField(
+                  onTap: () => openVirtualKeyboard(),
+                  hinttext: "Search..",
+                ),
+              ),
+            if (getSearchBar())
+              IconButton(
+                  onPressed: () {
+                    showSearchBar = true;
+                    setState(() {});
+                  },
+                  icon: Icon(
+                    CupertinoIcons.search,
+                    color: styleSheet.COLOR.whiteColor,
+                  )),
+            styleSheet.appConfig.addWidth(10),
+            InkWell(
+                onTap: () {
+                  context.go(MyRoute.homeScreen);
+                },
+                child: Image.asset(styleSheet.icons.screenIcon))
+          ],
+        ),
+      ),
       drawer: CustomDrawerView(
         onTap: setDrawerState,
       ),
@@ -90,6 +109,7 @@ class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
 
   setDrawerState(DrawerState state) {
     drawerState = state;
+    showSearchBar = false;
 
     Navigator.of(context).pop();
     setState(() {});
@@ -118,6 +138,16 @@ class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
 
       default:
         return "Dashboard";
+    }
+  }
+
+  bool getSearchBar() {
+    if (drawerState == DrawerState.Products ||
+        drawerState == DrawerState.Customers ||
+        drawerState == DrawerState.Transactions) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

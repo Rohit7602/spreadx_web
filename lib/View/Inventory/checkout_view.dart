@@ -4,10 +4,12 @@ import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Button/text_btn.dart';
 import 'package:spreadx_web/Components/Controller/product_controller.dart';
 import 'package:spreadx_web/Components/Dialog/apply_discount.dart';
-import 'package:spreadx_web/Components/Dialog/assign_customer_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/assign_supplier_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/item_details_dialog.dart';
+import 'package:spreadx_web/Data/enum.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
+import 'package:spreadx_web/View/Inventory/invent_payment_view.dart';
+import 'package:spreadx_web/View/Inventory/invt_discount.dart';
 import 'package:spreadx_web/main.dart';
 
 class CheckoutView extends StatefulWidget {
@@ -23,15 +25,27 @@ class _CheckoutViewState extends State<CheckoutView> {
 
   int itemCount = 1;
   String addSupplier = "";
+  bool isDiscountAdded = false;
+
+  Rx<InventoryInvoiceState> selectedView =
+      Rx<InventoryInvoiceState>(InventoryInvoiceState.Default);
 
   @override
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
-    return Column(
+    var defaultView = Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
           children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                  onPressed: () {
+                    widget.onPressedBack!();
+                  },
+                  icon: const Icon(Icons.arrow_back)),
+            ),
             styleSheet.appConfig.addHeight(20),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -76,17 +90,23 @@ class _CheckoutViewState extends State<CheckoutView> {
                     itemCount: product.productList.length,
                     itemBuilder: (context, i) {
                       return GestureDetector(
-                        onTap: () {
-                          showDialog(
+                        onTap: () async {
+                          await showDialog(
                               context: context,
                               builder: (context) {
-                                return ItemDetailsDialog(itemCount: itemCount);
-                              });
+                                return ItemDetailsDialog(
+                                  productModel: product.productList[i],
+                                );
+                              }).then((val) {
+                            setState(() {});
+                          });
                         },
                         child: Stack(
                           alignment: Alignment.topRight,
                           children: [
                             Container(
+                              width:
+                                  styleSheet.appConfig.getScreenWidth(context),
                               margin: const EdgeInsets.only(top: 15),
                               padding: styleSheet.DECORATION.PADDING_10
                                   .copyWith(bottom: 10, top: 10),
@@ -95,82 +115,90 @@ class _CheckoutViewState extends State<CheckoutView> {
                                 color: styleSheet.COLOR.bgLightBlueColor2,
                               ),
                               child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Container(
-                                    alignment: Alignment.center,
-                                    height: 45,
-                                    width: 70,
-                                    decoration: BoxDecoration(
-                                        color: styleSheet
-                                            .COLOR.productCardGreyColor),
-                                    child: Text(
-                                      "60 x 10",
-                                      style: styleSheet.TEXT_THEME.fs12Medium,
-                                    ),
-                                  ),
-                                  styleSheet.appConfig.addWidth(10),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  Row(
                                     children: [
-                                      Text(
-                                        product.productList[i].productName,
-                                        style: styleSheet.TEXT_THEME.fs14Bold,
-                                      ),
-                                      styleSheet.appConfig.addHeight(5),
                                       Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 3),
-                                        color: styleSheet.COLOR.whiteColor,
-                                        child: Row(
-                                          children: [
-                                            InkWell(
-                                              onTap: () {
-                                                if (itemCount != 1) {
-                                                  itemCount--;
-                                                  setState(() {});
-                                                }
-                                              },
-                                              child: Container(
-                                                padding: styleSheet
-                                                    .DECORATION.PADDING_2,
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: styleSheet
-                                                        .COLOR.primaryColor),
-                                                child: Icon(Icons.remove,
-                                                    color: styleSheet
-                                                        .COLOR.whiteColor,
-                                                    size: 10),
-                                              ),
-                                            ),
-                                            Text(itemCount.toString())
-                                                .paddingSymmetric(
-                                                    horizontal: 10),
-                                            InkWell(
-                                              onTap: () {
-                                                if (itemCount > 0) {
-                                                  itemCount++;
-                                                  setState(() {});
-                                                }
-                                              },
-                                              child: Container(
-                                                padding: styleSheet
-                                                    .DECORATION.PADDING_2,
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: styleSheet
-                                                        .COLOR.primaryColor),
-                                                child: Icon(Icons.add,
-                                                    color: styleSheet
-                                                        .COLOR.whiteColor,
-                                                    size: 10),
-                                              ),
-                                            )
-                                          ],
+                                        alignment: Alignment.center,
+                                        height: 45,
+                                        width: 70,
+                                        decoration: BoxDecoration(
+                                            color: styleSheet
+                                                .COLOR.productCardGreyColor),
+                                        child: Text(
+                                          "60 x 10",
+                                          style:
+                                              styleSheet.TEXT_THEME.fs12Medium,
                                         ),
-                                      )
+                                      ),
+                                      styleSheet.appConfig.addWidth(10),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            product.productList[i].description,
+                                            style:
+                                                styleSheet.TEXT_THEME.fs14Bold,
+                                          ),
+                                          styleSheet.appConfig.addHeight(5),
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 3),
+                                            color: styleSheet.COLOR.whiteColor,
+                                            child: Row(
+                                              children: [
+                                                InkWell(
+                                                  onTap: () =>
+                                                      incrementCounter(i),
+                                                  child: Container(
+                                                    padding: styleSheet
+                                                        .DECORATION.PADDING_2,
+                                                    decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        color: styleSheet.COLOR
+                                                            .primaryColor),
+                                                    child: Icon(Icons.remove,
+                                                        color: styleSheet
+                                                            .COLOR.whiteColor,
+                                                        size: 10),
+                                                  ),
+                                                ),
+                                                Text(product.productList[i].qty
+                                                        .toString())
+                                                    .paddingSymmetric(
+                                                        horizontal: 10),
+                                                InkWell(
+                                                  onTap: () =>
+                                                      decrementCounter(i),
+                                                  child: Container(
+                                                    padding: styleSheet
+                                                        .DECORATION.PADDING_2,
+                                                    decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        color: styleSheet.COLOR
+                                                            .primaryColor),
+                                                    child: Icon(Icons.add,
+                                                        color: styleSheet
+                                                            .COLOR.whiteColor,
+                                                        size: 10),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ],
+                                  ),
+                                  Text(
+                                    "AED ${product.productList[i].totalPrice.isNotEmpty ? product.productList[i].totalPrice : product.productList[i].price}",
+                                    style: styleSheet.TEXT_THEME.fs14Bold
+                                        .copyWith(
+                                            color: styleSheet.COLOR.blackColor),
                                   )
                                 ],
                               ),
@@ -226,7 +254,11 @@ class _CheckoutViewState extends State<CheckoutView> {
                       context: context,
                       builder: (context) {
                         return const ApplyDiscountDialog();
-                      });
+                      }).then((val) {
+                    if (val != null) {
+                      isDiscountAdded = true;
+                    }
+                  });
                 },
                 label: Text(
                   "Add Discount",
@@ -239,30 +271,94 @@ class _CheckoutViewState extends State<CheckoutView> {
               ),
               Row(
                 children: [
-                  Container(
-                      margin:
-                          styleSheet.DECORATION.PADDING_5.copyWith(right: 3),
-                      padding: styleSheet.DECORATION.PADDING_5,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: styleSheet.COLOR.redColor,
-                      ),
-                      child: Icon(
-                        Icons.delete,
-                        color: styleSheet.COLOR.whiteColor,
-                      )),
+                  InkWell(
+                    onTap: () {
+                      product.clearProducts();
+                      setState(() {});
+                    },
+                    child: Container(
+                        margin:
+                            styleSheet.DECORATION.PADDING_5.copyWith(right: 3),
+                        padding: styleSheet.DECORATION.PADDING_5,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: styleSheet.COLOR.redColor,
+                        ),
+                        child: Icon(
+                          Icons.delete,
+                          color: styleSheet.COLOR.whiteColor,
+                        )),
+                  ),
                   styleSheet.appConfig.addWidth(50),
                   Expanded(
-                      child: PrimaryBtnView(
-                          btnName: "Continue",
-                          onPressed: () {
-                            widget.onPressedBack!();
-                          }))
+                    child: PrimaryBtnView(
+                      btnName: "Continue",
+                      onPressed: () {
+                        if (product.productList
+                                .any((e) => e.totalPrice.isNotEmpty) ==
+                            true) {
+                          selectedView(InventoryInvoiceState.Without_Discount);
+                        } else {
+                          selectedView(InventoryInvoiceState.DiscountState);
+                          // widget.onPressedBack!();
+                        }
+                      },
+                    ),
+                  ),
                 ],
               ).paddingAll(10),
             ],
           )
       ],
     );
+
+    return Obx(() => getView(selectedView.value, defaultView));
+  }
+
+  getView(state, defaultView) {
+    switch (state) {
+      case InventoryInvoiceState.DiscountState:
+        return InventoryDiscountView(
+          onPressedBack: (val) {
+            if (val) {
+              selectedView(InventoryInvoiceState.Default);
+            } else {
+              widget.onPressedBack!();
+            }
+          },
+        );
+      case InventoryInvoiceState.Without_Discount:
+        return InventoryPaymentView(
+          onPressedBack: (val) {
+            if (val) {
+              selectedView(InventoryInvoiceState.Default);
+            } else {
+              widget.onPressedBack!();
+            }
+          },
+        );
+
+      default:
+        return defaultView;
+    }
+  }
+
+  incrementCounter(int i) {
+    if (int.parse(product.productList[i].qty) != 1) {
+      product.productList[i].qty =
+          (int.parse(product.productList[i].qty) - 1).toString();
+      product.calculateProductPrice(i);
+      setState(() {});
+    }
+  }
+
+  decrementCounter(i) {
+    if (int.parse(product.productList[i].qty) > 0) {
+      product.productList[i].qty =
+          (int.parse(product.productList[i].qty) + 1).toString();
+
+      product.calculateProductPrice(i);
+      setState(() {});
+    }
   }
 }

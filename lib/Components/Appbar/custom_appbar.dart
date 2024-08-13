@@ -50,7 +50,8 @@ class DrawerAppBarView extends StatelessWidget implements PreferredSizeWidget {
   bool showLeading;
   Widget? actions;
 
-  DrawerAppBarView({required this.title, this.showLeading = false, super.key});
+  DrawerAppBarView(
+      {required this.title, this.showLeading = false, this.actions, super.key});
 
   @override
   Widget build(BuildContext context) {

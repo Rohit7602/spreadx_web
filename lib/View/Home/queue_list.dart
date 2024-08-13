@@ -39,77 +39,83 @@ class _QueueListViewState extends State<QueueListView> {
                   separatorBuilder: (context, i) =>
                       styleSheet.appConfig.addHeight(10),
                   itemBuilder: (context, i) {
-                    return Stack(
-                      alignment: Alignment.topRight,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(top: 10),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                            color: styleSheet.COLOR.keyboardBtnColor,
-                            borderRadius: styleSheet.DECORATION.RADIUS_5,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  const Icon(Icons.shopping_cart_outlined),
-                                  styleSheet.appConfig.addWidth(10),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "#SO4433001",
-                                        style: styleSheet.TEXT_THEME.fs14Bold,
-                                      ),
-                                      styleSheet.appConfig.addHeight(2),
-                                      Text(
-                                        "Items: ${queueList.queueList[i].qty}",
-                                        style: styleSheet.TEXT_THEME.fs12Medium,
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                "${queueList.queueList[i].price}.0",
-                                style: styleSheet.TEXT_THEME.fs14Bold,
-                              )
-                            ],
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return QueueRemoveDialog(
-                                    onTap: () {
-                                      queueList.queueList.removeAt(i);
-                                      Navigator.of(context).pop();
-                                      setState(() {});
-                                    },
-                                  );
-                                });
-                          },
-                          child: Container(
-                            padding: styleSheet.DECORATION.PADDING_2,
+                    return InkWell(
+                      onTap: () {
+                        queueList.addProducts(queueList.queueList[i]);
+                      },
+                      child: Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(top: 10),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
                             decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: styleSheet.COLOR.redColor,
+                              color: styleSheet.COLOR.keyboardBtnColor,
+                              borderRadius: styleSheet.DECORATION.RADIUS_5,
                             ),
-                            child: Icon(
-                              Icons.close,
-                              color: styleSheet.COLOR.whiteColor,
-                              size: 15,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Icon(Icons.shopping_cart_outlined),
+                                    styleSheet.appConfig.addWidth(10),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "#SO4433001",
+                                          style: styleSheet.TEXT_THEME.fs14Bold,
+                                        ),
+                                        styleSheet.appConfig.addHeight(2),
+                                        Text(
+                                          "Items: ${queueList.queueList[i].qty}",
+                                          style:
+                                              styleSheet.TEXT_THEME.fs12Medium,
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  "${queueList.queueList[i].price}.0",
+                                  style: styleSheet.TEXT_THEME.fs14Bold,
+                                )
+                              ],
                             ),
                           ),
-                        )
-                      ],
+                          InkWell(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return QueueRemoveDialog(
+                                      onTap: () {
+                                        queueList.queueList.removeAt(i);
+                                        Navigator.of(context).pop();
+                                        setState(() {});
+                                      },
+                                    );
+                                  });
+                            },
+                            child: Container(
+                              padding: styleSheet.DECORATION.PADDING_2,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: styleSheet.COLOR.redColor,
+                              ),
+                              child: Icon(
+                                Icons.close,
+                                color: styleSheet.COLOR.whiteColor,
+                                size: 15,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     );
                   },
                 ),
