@@ -3,9 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:spreadx_web/Components/Controller/product_controller.dart';
 import 'package:spreadx_web/Components/Models/product_model.dart';
-import 'package:spreadx_web/Components/transaction_tile.dart';
 import 'package:spreadx_web/Data/local_data.dart';
-import 'package:spreadx_web/View/Customer/cust_transaction.dart';
 import 'package:spreadx_web/View/Product/edit_product_details_view.dart';
 import 'package:spreadx_web/main.dart';
 

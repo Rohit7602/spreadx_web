@@ -48,6 +48,15 @@ class ProductController extends GetxController {
     update();
   }
 
+  List<ProductModel> _assignedProduct = [];
+  List<ProductModel> get assignedProductList => _assignedProduct;
+
+  addAssignedProduct(List<ProductModel> pr) {
+    _assignedProduct = pr;
+
+    update();
+  }
+
   // Queue List Controller
 
   final List<ProductModel> _queueList = [];

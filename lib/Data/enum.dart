@@ -36,7 +36,12 @@ enum AddProductState {
   Multiple_Product
 }
 
-enum EditSupplierViewState { Default, Purchase_History }
+enum EditSupplierViewState {
+  Default,
+  Purchase_History,
+  Purchase_Products,
+  Assign_Products,View_Product
+}
 
 enum InventoryState { Default, Stock, Purchase_Product, Purchase_History }
 

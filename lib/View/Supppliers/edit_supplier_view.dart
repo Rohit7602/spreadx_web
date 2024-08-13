@@ -5,7 +5,11 @@ import 'package:spreadx_web/Components/Dropdown/primary_drop_down.dart';
 import 'package:spreadx_web/Components/phone_text_field.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Data/enum.dart';
+import 'package:spreadx_web/View/Inventory/purchase_products_view.dart';
+import 'package:spreadx_web/View/Product/product_view.dart';
+import 'package:spreadx_web/View/Supppliers/assign_product_supplier.dart';
 import 'package:spreadx_web/View/Supppliers/supplier_purchase_history_view.dart';
+import 'package:spreadx_web/View/Supppliers/view_product_supplier.dart';
 import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -82,21 +86,28 @@ class _EditSupplierViewState extends State<EditSupplierView> {
                   styleSheet.appConfig.addHeight(40),
                   Align(
                       alignment: Alignment.center,
-                      child: PrimaryBtnView(btnName: "Save", onPressed: () {})),
+                      child: PrimaryBtnView(
+                          btnName: "Save", onPressed: widget.onPressedBack!)),
                   styleSheet.appConfig.addHeight(20),
                   PrimaryBtnView(
                       btnName: "View Products",
-                      onPressed: () {},
+                      onPressed: () {
+                        selected(EditSupplierViewState.View_Product);
+                      },
                       isExpanded: true),
                   styleSheet.appConfig.addHeight(20),
                   PrimaryBtnView(
                       btnName: "Assign Products",
-                      onPressed: () {},
+                      onPressed: () {
+                        selected(EditSupplierViewState.Assign_Products);
+                      },
                       isExpanded: true),
                   styleSheet.appConfig.addHeight(20),
                   PrimaryBtnView(
                       btnName: "Purchase Products",
-                      onPressed: () {},
+                      onPressed: () {
+                        selected(EditSupplierViewState.Purchase_Products);
+                      },
                       isExpanded: true),
                   styleSheet.appConfig.addHeight(20),
                   PrimaryBtnView(
@@ -117,6 +128,24 @@ class _EditSupplierViewState extends State<EditSupplierView> {
       switch (selected.value) {
         case EditSupplierViewState.Purchase_History:
           return EditSupplierPurchaseHistoryView(onPressedBack: onPressedBack);
+        case EditSupplierViewState.Purchase_Products:
+          return PurchaseProductsView(
+            onPressedBack: () {
+              selected(EditSupplierViewState.Default);
+            },
+          );
+        case EditSupplierViewState.Assign_Products:
+          return AssignProductSupplier(
+            onPressedBack: () {
+              selected(EditSupplierViewState.Default);
+            },
+          );
+        case EditSupplierViewState.View_Product:
+          return ViewProductSupplier(
+            onPressedBack: () {
+              selected(EditSupplierViewState.Default);
+            },
+          );
         default:
           return defaultView;
       }
