@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/Dialog/barcode_dialog.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -39,6 +40,15 @@ class _EnterManuallyMultipleProductsViewState
                             children: [
                               Expanded(
                                   child: PrimaryTextFormField(
+                                      readonly: true,
+                                      onTap: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return BarcodeDialog(
+                                                  hintText: "Barcode");
+                                            });
+                                      },
                                       hinttext: "Barcode")),
                               styleSheet.appConfig.addWidth(20),
                               PrimaryBtnView(btnName: "Add", onPressed: () {}),

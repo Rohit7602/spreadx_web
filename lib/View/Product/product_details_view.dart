@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:spreadx_web/Components/Models/product_model.dart';
+import 'package:spreadx_web/Components/transaction_tile.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/View/Product/edit_product_details_view.dart';
 import 'package:spreadx_web/main.dart';
@@ -22,6 +22,22 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   final RxBool expandEditButton = RxBool(false);
 
   final RxString selected = "default".obs;
+
+  final List<String> transactionType = [
+    "Sales",
+    "Return",
+    "Sales",
+    "Purchase",
+    "Sales",
+    "Return",
+    "Purchase",
+    "Sales",
+    "Purchase",
+    "Return",
+    "Sales",
+    "Return",
+    "Purchase"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -344,44 +360,12 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                     const EdgeInsets.symmetric(vertical: 5),
                                 separatorBuilder: (context, i) =>
                                     styleSheet.appConfig.addHeight(10),
-                                itemCount: 5,
+                                itemCount: transactionType.length,
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, i) {
-                                  return Container(
-                                    color: styleSheet.COLOR.lightGreyColor,
-                                    child: ListTile(
-                                      leading: Image.asset(
-                                          styleSheet.icons.saleIcon,
-                                          color: styleSheet.COLOR.greyColor,
-                                          width: 24),
-                                      title: Text("Sales",
-                                          style:
-                                              styleSheet.TEXT_THEME.fs14Bold),
-                                      subtitle: Text("IN4290003",
-                                          style: styleSheet.TEXT_THEME.fs12Bold
-                                              .copyWith(
-                                                  color: styleSheet
-                                                      .COLOR.greyColor)),
-                                      trailing: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Text("+1.00",
-                                              style: styleSheet
-                                                  .TEXT_THEME.fs14Bold
-                                                  .copyWith(
-                                                      color: styleSheet
-                                                          .COLOR.greenColor)),
-                                          Text(
-                                              DateFormat("yyyy-MM-dd hh:mm:ss")
-                                                  .format(DateTime.now()),
-                                              style: styleSheet
-                                                  .TEXT_THEME.fs12Bold),
-                                        ],
-                                      ),
-                                    ),
-                                  );
+                                  return TransactionTile(
+                                      title: transactionType[i]);
                                 })
                           ],
                         ),
