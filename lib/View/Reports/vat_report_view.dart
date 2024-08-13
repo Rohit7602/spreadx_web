@@ -30,7 +30,9 @@ class VatReportView extends StatelessWidget {
           ),
         ),
         Obx(() {
-          return ListView.builder(
+          return ListView.separated(
+            separatorBuilder: (context, i) =>
+                styleSheet.appConfig.addHeight(10),
             padding: styleSheet.DECORATION.PADDING_20.copyWith(top: 40),
             shrinkWrap: true,
             itemCount: drawerController.drawer.length,
