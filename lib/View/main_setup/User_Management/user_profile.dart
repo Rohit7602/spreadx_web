@@ -1,7 +1,6 @@
 import 'package:country_pickers/country.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spreadx_web/Components/Appbar/custom_appbar.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Controller/users_controller.dart';
 import 'package:spreadx_web/Components/Dropdown/primary_drop_down.dart';
@@ -13,7 +12,7 @@ import 'package:spreadx_web/main.dart';
 
 class UserProfileView extends StatelessWidget {
   final void Function()? onPressedBack;
-  UserProfileView({required this.onPressedBack, super.key});
+  const UserProfileView({required this.onPressedBack, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +20,12 @@ class UserProfileView extends StatelessWidget {
     return ListView(
       padding: styleSheet.DECORATION.PADDING_20,
       children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: IconButton(
+              onPressed: onPressedBack, icon: const Icon(Icons.arrow_back)),
+        ),
+        styleSheet.appConfig.addHeight(10),
         SecondaryTextFormField(
             onTap: () => openVirtualKeyboard(),
             hinttext: "Employee Name",

@@ -255,58 +255,68 @@ class _ProductCheckViewState extends State<ProductCheckView> {
           ),
           styleSheet.appConfig.addHeight(20),
           Expanded(
-              child: !gridTile
-                  ? GridView.builder(
-                      itemCount: LocalData.productList.length,
-                      shrinkWrap: true,
-                      gridDelegate: CustomSliverGridDelegate(
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          crossAxisCount: 3,
-                          itemHeight: 110),
-                      itemBuilder: (context, i) {
-                        return LayoutBuilder(builder: (context, constraints) {
-                          final pr = LocalData.productList[i];
-                          return GestureDetector(
-                              onTap: () {
-                                var product = Get.find<ProductController>();
-                                product.addProducts(pr);
-                                itemCount++;
-                                setState(() {});
-                              },
-                              child: isCategory
-                                  ? const CustomGridForCategory()
-                                  : CustomGridForProducts(
+            child: !gridTile
+                ? GridView.builder(
+                    itemCount: LocalData.productList.length,
+                    shrinkWrap: true,
+                    gridDelegate: CustomSliverGridDelegate(
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        crossAxisCount: 3,
+                        itemHeight: 110),
+                    itemBuilder: (context, i) {
+                      return LayoutBuilder(builder: (context, constraints) {
+                        final pr = LocalData.productList[i];
+                        return GestureDetector(
+                          onTap: () {
+                            isCategory = false;
+                            setState(() {});
+                          },
+                          child: isCategory
+                              ? const CustomGridForCategory()
+                              : CustomGridForProducts(
+                                  data: pr,
+                                  isInCart: product.productList
+                                      .any((v) => v.id == pr.id),
+                                ),
+                        );
+                      });
+                    })
+                : ListView.separated(
+                    itemCount: LocalData.productList.length,
+                    itemBuilder: (context, i) {
+                      return LayoutBuilder(builder: (context, constraints) {
+                        final pr = LocalData.productList[i];
+                        return GestureDetector(
+                            onTap: () {
+                              var product = Get.find<ProductController>();
+                              product.addProducts(pr);
+                              itemCount++;
+                              setState(() {});
+                            },
+                            child: isCategory
+                                ? GestureDetector(
+                                    child: const CustomListForCategory())
+                                : GestureDetector(
+                                    onTap: () {
+                                      var product =
+                                          Get.find<ProductController>();
+                                      product.addProducts(pr);
+                                      itemCount++;
+                                      setState(() {});
+                                    },
+                                    child: CustomListForProducts(
                                       data: pr,
                                       isInCart: product.productList
                                           .any((v) => v.id == pr.id),
-                                    ));
-                        });
-                      })
-                  : ListView.separated(
-                      itemCount: LocalData.productList.length,
-                      itemBuilder: (context, i) {
-                        return LayoutBuilder(builder: (context, constraints) {
-                          final pr = LocalData.productList[i];
-                          return GestureDetector(
-                              onTap: () {
-                                var product = Get.find<ProductController>();
-                                product.addProducts(pr);
-                                itemCount++;
-                                setState(() {});
-                              },
-                              child: isCategory
-                                  ? const CustomListForCategory()
-                                  : CustomListForProducts(
-                                      data: pr,
-                                      isInCart: product.productList
-                                          .any((v) => v.id == pr.id),
-                                    ));
-                        });
-                      },
-                      separatorBuilder: (BuildContext context, int index) =>
-                          styleSheet.appConfig.addHeight(10),
-                    ))
+                                    ),
+                                  ));
+                      });
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        styleSheet.appConfig.addHeight(10),
+                  ),
+          ),
         ],
       ),
     );
@@ -432,21 +442,17 @@ class CustomGridForCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        alignment: Alignment.centerLeft,
-        height: 70,
-        decoration:
-            BoxDecoration(color: styleSheet.COLOR.whiteColor, boxShadow: [
-          BoxShadow(
-              offset: const Offset(0, 4),
-              color: styleSheet.COLOR.blackColor.withOpacity(0.2),
-              blurRadius: 8),
-        ]),
-        child: Text("Grocery Items (1)", style: styleSheet.TEXT_THEME.fs12Bold),
-      ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      alignment: Alignment.centerLeft,
+      height: 70,
+      decoration: BoxDecoration(color: styleSheet.COLOR.whiteColor, boxShadow: [
+        BoxShadow(
+            offset: const Offset(0, 4),
+            color: styleSheet.COLOR.blackColor.withOpacity(0.2),
+            blurRadius: 8),
+      ]),
+      child: Text("Grocery Items (1)", style: styleSheet.TEXT_THEME.fs12Bold),
     );
   }
 }

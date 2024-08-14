@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spreadx_web/Data/enum.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 
 class DrawersController extends GetxController {
@@ -36,8 +37,8 @@ class DrawersController extends GetxController {
   TextEditingController get description => _descriptionController;
 
   onSave(BuildContext context) {
-    final data = DrawerModel(
-        "0", DateTime.now().toString(), DateTime.now().toString(), "");
+    final data = DrawerModel("0", DateTime.now().toString(),
+        DateTime.now().toString(), "", VatModelStatus.Is_New);
 
     addDrawer(data);
     amount.clear();

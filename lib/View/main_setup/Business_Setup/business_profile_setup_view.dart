@@ -56,6 +56,7 @@ class _BusinessProfileSetupViewState extends State<BusinessProfileSetupView> {
                             alignment: Alignment.bottomRight,
                             children: [
                               Container(
+                                  clipBehavior: Clip.antiAlias,
                                   alignment: Alignment.center,
                                   height: 100,
                                   width: 100,

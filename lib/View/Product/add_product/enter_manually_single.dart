@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
+import 'package:get/get.dart'; 
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Button/text_btn.dart';
 import 'package:spreadx_web/Components/Controller/product_controller.dart';
@@ -10,8 +9,7 @@ import 'package:spreadx_web/Components/check_stock_availability_tile.dart';
 import 'package:spreadx_web/Components/dashed_rect.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Data/enum.dart';
-import 'package:spreadx_web/Data/local_data.dart';
-import 'package:spreadx_web/Utils/Routes/routes.dart';
+import 'package:spreadx_web/Data/local_data.dart'; 
 import 'package:spreadx_web/View/Product/edit_product_details/edit_product_add_brand_view.dart';
 import 'package:spreadx_web/View/Product/edit_product_details/edit_product_details_add_category.dart';
 import 'package:spreadx_web/View/Product/edit_product_details/edit_product_details_add_packing_view.dart';

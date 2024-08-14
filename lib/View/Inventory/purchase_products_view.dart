@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/text_btn.dart';
 import 'package:spreadx_web/Components/Controller/product_controller.dart';
@@ -111,7 +112,8 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
                   children: [
                     InkWell(
                       borderRadius: styleSheet.DECORATION.RADIUS_20,
-                      onTap: () {
+                      onTap: () async {
+                        if (!await rebuild()) return;
                         if (gridTile) {
                           gridTile = false;
                           setState(() {});
@@ -141,11 +143,11 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
                     ),
                     InkWell(
                       borderRadius: styleSheet.DECORATION.RADIUS_20,
-                      onTap: () {
+                      onTap: () async {
+                        if (!await rebuild()) return;
                         if (gridTile == false) {
-                          setState(() {
-                            gridTile = true;
-                          });
+                          gridTile = true;
+                          setState(() {});
                         }
                       },
                       child: Container(
@@ -210,7 +212,8 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
                     ),
                     InkWell(
                       borderRadius: styleSheet.DECORATION.RADIUS_20,
-                      onTap: () {
+                      onTap: () async {
+                        if (!await rebuild()) return;
                         if (isStock) {
                           setState(() {
                             isStock = false;
@@ -252,9 +255,11 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
               children: [
                 InkWell(
                   borderRadius: styleSheet.DECORATION.RADIUS_20,
-                  onTap: () {
+                  onTap: () async {
+                    if (!await rebuild()) return;
                     if (isCategory == false) {
                       isCategory = true;
+
                       setState(() {});
                     }
                   },
@@ -283,11 +288,12 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
                 ),
                 InkWell(
                   borderRadius: styleSheet.DECORATION.RADIUS_20,
-                  onTap: () {
+                  onTap: () async {
+                    if (!await rebuild()) return;
                     if (isCategory) {
-                      setState(() {
-                        isCategory = false;
-                      });
+                      isCategory = false;
+
+                      setState(() {});
                     }
                   },
                   child: Container(
@@ -333,7 +339,7 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
                             return Stack(
                               alignment: Alignment.topRight,
                               children: [
-                                GestureDetector(
+                                InkWell(
                                   onTap: () {
                                     var product = Get.find<ProductController>();
                                     product.addProducts(pr);
@@ -488,6 +494,20 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
         return defaultView;
       }
     });
+  }
+
+  Future<bool> rebuild() async {
+    if (!mounted) return false;
+
+    // if there's a current frame,
+    if (SchedulerBinding.instance.schedulerPhase != SchedulerPhase.idle) {
+      // wait for the end of that frame.
+      await SchedulerBinding.instance.endOfFrame;
+      if (!mounted) return false;
+    }
+
+    setState(() {});
+    return true;
   }
 }
 

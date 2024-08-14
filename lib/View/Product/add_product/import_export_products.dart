@@ -120,15 +120,20 @@ class _ImportExportProductsState extends State<ImportExportProducts> {
                                                 children: [
                                                   Expanded(
                                                     child: TextButton(
-                                                        onPressed: () {},
+                                                        onPressed: () async {
+                                                          await ImageController
+                                                              .pickImageByGallery();
+                                                          setState(() {});
+                                                        },
                                                         style: TextButton.styleFrom(
                                                             padding: const EdgeInsets
                                                                 .symmetric(
                                                                 vertical: 15),
                                                             shape: RoundedRectangleBorder(
                                                                 borderRadius:
-                                                                    BorderRadius.circular(
-                                                                        5),
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5),
                                                                 side: BorderSide(
                                                                     color: styleSheet
                                                                         .COLOR
@@ -159,15 +164,20 @@ class _ImportExportProductsState extends State<ImportExportProducts> {
                                                 children: [
                                                   Expanded(
                                                     child: TextButton(
-                                                        onPressed: () {},
+                                                        onPressed: () async {
+                                                          await ImageController
+                                                              .pickImageByGallery();
+                                                          setState(() {});
+                                                        },
                                                         style: TextButton.styleFrom(
                                                             padding: const EdgeInsets
                                                                 .symmetric(
                                                                 vertical: 15),
                                                             shape: RoundedRectangleBorder(
                                                                 borderRadius:
-                                                                    BorderRadius.circular(
-                                                                        5),
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5),
                                                                 side: BorderSide(
                                                                     color: styleSheet
                                                                         .COLOR
@@ -188,11 +198,7 @@ class _ImportExportProductsState extends State<ImportExportProducts> {
                                     PrimaryBtnView(
                                         btnName: "Upload Files",
                                         isExpanded: true,
-                                        onPressed: () async {
-                                          await ImageController
-                                              .pickImageByGallery();
-                                          setState(() {});
-                                        })
+                                        onPressed: () async {})
                                   ],
                                 ),
                               )

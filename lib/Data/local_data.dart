@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:spreadx_web/Components/Models/product_model.dart';
+import 'package:spreadx_web/Data/enum.dart';
 import 'package:spreadx_web/main.dart';
 
 class LocalData {
@@ -23,8 +24,8 @@ class LocalData {
         "Show DRAWERS history and entries, or open/close current drawer."),
     ReportDataListClass("Sales Summary",
         "Show Sales summary and statistics of the current day and more date ranges."),
-    ReportDataListClass("VAT REEPORT",
-        "Show VAT reports history including VAT IN/OUT summary."),
+    ReportDataListClass(
+        "VAT REPORT", "Show VAT reports history including VAT IN/OUT summary."),
   ];
 
 // *************** Sales Reports Data List ********************
@@ -110,17 +111,22 @@ class LocalData {
 
   static List<ProductModel> productList = [
     ProductModel("1", "default - PCS", "default - PCS", "0", "0", "0", ""),
-    ProductModel("2", "default - PCS", "default - PCS", "0", "0", "4", ""),
-    ProductModel("3", "default - PCS", "default - PCS", "0", "0", "2", ""),
+    ProductModel("1", "default - PCS", "default - PCS", "0", "0", "4", ""),
+    ProductModel("2", "default - PCS", "default - PCS", "0", "0", "2", ""),
+  ];
+
+  static List<CategoryModel> listOfCategory = [
+    CategoryModel("cat_1", "Grocery", "1"),
+    CategoryModel("cat_2", "Grocery", "2"),
   ];
 
 // *************** Existing Customer List ********************
   static List<ExistingCustomer> existingCustomerList = [
-    ExistingCustomer("Dogw", "KD Makwana", "Cash Customer"),
-    ExistingCustomer("123000", "KDMC Mac", "Cash Customer"),
-    ExistingCustomer("355", "KDM Mac", "Cash Customer"),
-    ExistingCustomer("pXM5", "TEST MASTER2", "Credit Customer"),
-    ExistingCustomer("nsIR", "KDM Cash", "Cash Customer")
+    ExistingCustomer("Dogw", "KD Makwana", "Cash Customer", "790889079"),
+    ExistingCustomer("123000", "KDMC Mac", "Cash Customer", "23423423"),
+    ExistingCustomer("355", "KDM Mac", "Cash Customer", "0789780"),
+    ExistingCustomer("pXM5", "TEST MASTER2", "Credit Customer", "676889"),
+    ExistingCustomer("nsIR", "KDM Cash", "Cash Customer", "45657567856")
   ];
 
 // *************** Business Type List ********************
@@ -190,6 +196,75 @@ class LocalData {
         item: IssueRefundItemModel(
             title: "default - PCS - 3", description: "default-3")),
   ];
+
+  /// *********************** List of Transaction Data *****************
+
+  static List<TransactionModel> transactionList = [
+    TransactionModel("1", "PIN34243", "0.00", "31 Jul12:04 PM"),
+    TransactionModel("2", "PIN342432", "0.00", "31 Jul12:04 PM"),
+    TransactionModel("3", "PIN34221", "0.00", "31 Jul12:04 PM"),
+  ];
+
+  /// *********************** List of Enteries Transaction Data *****************
+
+  static List<EnteriesModel> entryTrList = [
+    EnteriesModel(
+        "PIN70879",
+        "Purchases",
+        "09 Aug 2024 05:04 PM",
+        "Rohit",
+        "[default - pcs]",
+        "2.0",
+        "0.00",
+        "0.00",
+        "0.00",
+        "0.00",
+        "V2",
+        "0.00",
+        "0.00"),
+    EnteriesModel(
+        "PIN70879",
+        "Purchases",
+        "09 Aug 2024 05:04 PM",
+        "Rohit",
+        "[default - pcs]",
+        "2.0",
+        "0.00",
+        "0.00",
+        "0.00",
+        "0.00",
+        "V2",
+        "0.00",
+        "0.00"),
+    EnteriesModel(
+        "PIN70879",
+        "Purchases",
+        "09 Aug 2024 05:04 PM",
+        "Rohit",
+        "[default - pcs]",
+        "2.0",
+        "0.00",
+        "0.00",
+        "0.00",
+        "0.00",
+        "V2",
+        "0.00",
+        "0.00"),
+    EnteriesModel(
+        "PIN70879",
+        "Purchases",
+        "09 Aug 2024 05:04 PM",
+        "Rohit",
+        "[default - pcs]",
+        "2.0",
+        "0.00",
+        "0.00",
+        "0.00",
+        "0.00",
+        "V2",
+        "0.00",
+        "0.00"),
+  ];
 }
 // ******** Class Start From Here ******************
 
@@ -240,9 +315,9 @@ class MoneyList {
 
 // class For Assign Customer
 class ExistingCustomer {
-  String id, name, customerType;
+  String id, name, customerType, number;
 
-  ExistingCustomer(this.id, this.name, this.customerType);
+  ExistingCustomer(this.id, this.name, this.customerType, this.number);
 }
 
 // class for Users
@@ -301,7 +376,9 @@ class DrawerModel {
   String openTime;
   String closeTime;
   String type;
-  DrawerModel(this.amount, this.openTime, this.closeTime, this.type);
+  VatModelStatus status;
+  DrawerModel(
+      this.amount, this.openTime, this.closeTime, this.type, this.status);
 }
 
 // class for Product Details > Packing data
@@ -378,4 +455,47 @@ class IssueRefundItemModel {
   @override
   String toString() =>
       'IssueRefundItemModel(title: $title, description: $description)';
+}
+
+// class for Transaction Model
+
+class TransactionModel {
+  String id;
+  String trNumber;
+  String price;
+  String dateTime;
+
+  TransactionModel(this.id, this.trNumber, this.price, this.dateTime);
+}
+
+// class for Enteries Model
+class EnteriesModel {
+  String trNumber,
+      type,
+      date,
+      customerName,
+      productName,
+      qty,
+      price,
+      lineTotal,
+      discount,
+      netTotal,
+      vatType,
+      vatAmount,
+      total;
+
+  EnteriesModel(
+      this.trNumber,
+      this.type,
+      this.date,
+      this.customerName,
+      this.productName,
+      this.qty,
+      this.price,
+      this.lineTotal,
+      this.discount,
+      this.netTotal,
+      this.vatType,
+      this.vatAmount,
+      this.total);
 }

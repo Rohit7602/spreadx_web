@@ -247,7 +247,7 @@ class _SupplierDetailsViewState extends State<SupplierDetailsView> {
                                       }, child: Obx(() {
                                         return Container(
                                           padding: const EdgeInsets.symmetric(
-                                              horizontal: 80),
+                                              horizontal: 60),
                                           child: Container(
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 10),

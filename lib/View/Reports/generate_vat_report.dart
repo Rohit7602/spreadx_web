@@ -4,7 +4,6 @@ import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Button/small_btn.dart';
 import 'package:spreadx_web/Components/Controller/drawer_controller.dart';
 import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
-import 'package:spreadx_web/Components/Dialog/closing_amount_dialog.dart';
 import 'package:spreadx_web/Components/custom_row.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/keyboard_handler.dart';

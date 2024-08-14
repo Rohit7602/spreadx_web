@@ -6,7 +6,6 @@ import 'package:spreadx_web/Components/phone_text_field.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Data/enum.dart';
 import 'package:spreadx_web/View/Inventory/purchase_products_view.dart';
-import 'package:spreadx_web/View/Product/product_view.dart';
 import 'package:spreadx_web/View/Supppliers/assign_product_supplier.dart';
 import 'package:spreadx_web/View/Supppliers/supplier_purchase_history_view.dart';
 import 'package:spreadx_web/View/Supppliers/view_product_supplier.dart';

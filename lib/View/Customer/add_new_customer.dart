@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:country_pickers/country.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Controller/add_customer_controller.dart';
 import 'package:spreadx_web/Components/Dropdown/primary_drop_down.dart';
+import 'package:spreadx_web/Components/Image_Picker/image_picker.dart';
 import 'package:spreadx_web/Components/phone_text_field.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/View/Customer/business_type_view.dart';
@@ -22,6 +26,7 @@ class AddNewCustomerView extends StatefulWidget {
 class _AddNewCustomerViewState extends State<AddNewCustomerView> {
   bool isBusinessType = false;
 
+  File? pickedFile;
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<CustomerController>();
@@ -52,18 +57,28 @@ class _AddNewCustomerViewState extends State<AddNewCustomerView> {
                         alignment: Alignment.bottomRight,
                         children: [
                           Container(
+                            clipBehavior: Clip.antiAlias,
                             height: 250,
                             width: 250,
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: styleSheet.COLOR.lightGreyColor),
-                            child: const Icon(
-                              Icons.person,
-                              size: 100,
-                            ),
+                            child: pickedFile != null
+                                ? Image.file(
+                                    File(pickedFile!.path),
+                                    fit: BoxFit.cover,
+                                  )
+                                : const Icon(
+                                    Icons.person,
+                                    size: 100,
+                                  ),
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: () async {
+                              pickedFile =
+                                  await ImageController.pickImageByGallery();
+                              setState(() {});
+                            },
                             child: Container(
                               margin: const EdgeInsets.only(right: 30),
                               height: 40,

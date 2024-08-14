@@ -333,42 +333,64 @@ class _AssignCustomerDialogState extends State<AssignCustomerDialog> {
                       onTap: () => openVirtualKeyboard(),
                     ),
                     styleSheet.appConfig.addHeight(10),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      separatorBuilder: (context, i) =>
-                          styleSheet.appConfig.addHeight(10),
-                      itemCount: listOfsearch.length,
-                      itemBuilder: (context, i) {
-                        var customer = listOfsearch[i];
+                    listOfsearch.isEmpty
+                        ? Center(
+                            child: Text(
+                              "Search List is Empty",
+                              style: styleSheet.TEXT_THEME.fs12Medium,
+                            ).paddingOnly(top: 20),
+                          )
+                        : ListView.separated(
+                            shrinkWrap: true,
+                            separatorBuilder: (context, i) =>
+                                styleSheet.appConfig.addHeight(10),
+                            itemCount: listOfsearch.length,
+                            itemBuilder: (context, i) {
+                              var customer = listOfsearch[i];
 
-                        return Container(
-                          padding: styleSheet.DECORATION.PADDING_10,
-                          decoration: BoxDecoration(
-                            borderRadius: styleSheet.DECORATION.RADIUS_10,
-                            color: styleSheet.COLOR.productCardGreyColor
-                                .withOpacity(0.4),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                customer.id,
-                                style: styleSheet.TEXT_THEME.fs12Bold,
-                              ),
-                              Text(
-                                customer.name,
-                                style: styleSheet.TEXT_THEME.fs12Medium,
-                              ),
-                              styleSheet.appConfig.addHeight(3),
-                              Text(
-                                customer.customerType,
-                                style: styleSheet.TEXT_THEME.fs12Medium,
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    )
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pop(CustomerModel(
+                                      barcode: "",
+                                      code: "",
+                                      firstName: listOfsearch[i].name,
+                                      lastName: "",
+                                      number: listOfsearch[i].number,
+                                      email: "",
+                                      accountType: "",
+                                      address: ""));
+                                },
+                                child: Container(
+                                  padding: styleSheet.DECORATION.PADDING_10,
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        styleSheet.DECORATION.RADIUS_10,
+                                    color: styleSheet.COLOR.productCardGreyColor
+                                        .withOpacity(0.4),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        customer.id,
+                                        style: styleSheet.TEXT_THEME.fs12Bold,
+                                      ),
+                                      Text(
+                                        customer.name,
+                                        style: styleSheet.TEXT_THEME.fs12Medium,
+                                      ),
+                                      styleSheet.appConfig.addHeight(3),
+                                      Text(
+                                        customer.customerType,
+                                        style: styleSheet.TEXT_THEME.fs12Medium,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          )
                   ],
                 ).paddingAll(10);
               }

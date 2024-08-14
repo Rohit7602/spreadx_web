@@ -25,6 +25,7 @@ class PrimaryDropDown extends StatelessWidget {
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
     return Container(
+      margin: const EdgeInsets.only(top: 5),
       height: 40,
       decoration: BoxDecoration(
           color: styleSheet.COLOR.lightGreyColor,

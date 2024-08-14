@@ -97,6 +97,7 @@ class _EditProductsDetailsFormViewState
                                 styleSheet.appConfig.addHeight(40),
                                 /** *********************** [Image Picker] Container *********************** */
                                 Container(
+                                  clipBehavior: Clip.antiAlias,
                                   alignment: Alignment.center,
                                   height: 250,
                                   decoration: BoxDecoration(

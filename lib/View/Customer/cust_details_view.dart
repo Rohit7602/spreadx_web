@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:spreadx_web/Components/Controller/add_customer_controller.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/View/Customer/cust_transaction.dart';
@@ -319,7 +318,7 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                                   }, child: Obx(() {
                                     return Container(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 80),
+                                          horizontal: 60),
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 10),

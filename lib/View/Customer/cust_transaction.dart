@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/View/Transactions/Transaction_details/transaction_details_view.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -23,6 +24,10 @@ class _CustomerTransactionViewState extends State<CustomerTransactionView> {
   RxString selected = RxString("default");
 
   RxBool isPaid = RxBool(true);
+
+  var trList = LocalData.transactionList;
+
+  List<TransactionModel> lisOfTr = [];
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +146,7 @@ class _CustomerTransactionViewState extends State<CustomerTransactionView> {
                       shrinkWrap: true,
                       separatorBuilder: (context, i) =>
                           styleSheet.appConfig.addHeight(10),
-                      itemCount: 3,
+                      itemCount: trList.length,
                       itemBuilder: (context, i) {
                         return ListTile(
                           onTap: () {
@@ -152,22 +157,45 @@ class _CustomerTransactionViewState extends State<CustomerTransactionView> {
                           tileColor: styleSheet.COLOR.fieldGreyColor,
                           leading: const Icon(Icons.contact_page_sharp),
                           title: Text(
-                            "#IN234934",
+                            trList[i].trNumber,
                             style: styleSheet.TEXT_THEME.fs14Bold,
                           ),
                           subtitle: Text("31 Jul12:04 PM",
                               style: styleSheet.TEXT_THEME.fs12Bold),
-                          trailing: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(
-                                "AED 0.00",
-                                style: styleSheet.TEXT_THEME.fs12Bold,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "AED 0.00",
+                                    style: styleSheet.TEXT_THEME.fs12Bold,
+                                  ),
+                                  Text(
+                                    "Pending: AED 0.00",
+                                    style: styleSheet.TEXT_THEME.fs12Bold,
+                                  )
+                                ],
                               ),
-                              Text(
-                                "Pending: AED 0.00",
-                                style: styleSheet.TEXT_THEME.fs12Bold,
-                              )
+                              styleSheet.appConfig.addWidth(10),
+                              IconButton(
+                                  onPressed: () {
+                                    if (lisOfTr
+                                        .any((e) => e.id == trList[i].id)) {
+                                      lisOfTr.remove(trList[i]);
+                                    } else {
+                                      lisOfTr.add(trList[i]);
+                                    }
+                                    setState(() {});
+                                  },
+                                  icon: Icon(
+                                    Icons.check_circle_outline_rounded,
+                                    color:
+                                        lisOfTr.any((e) => e.id == trList[i].id)
+                                            ? styleSheet.COLOR.greenColor
+                                            : styleSheet.COLOR.blackColor,
+                                  ))
                             ],
                           ),
                         );

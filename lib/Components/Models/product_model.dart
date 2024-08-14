@@ -6,6 +6,14 @@ class ProductModel {
       this.qty, this.stock, this.totalPrice);
 }
 
+class CategoryModel {
+  String catId;
+  String catName;
+  String productId;
+
+  CategoryModel(this.catId, this.catName, this.productId);
+}
+
 class ProductsClass {
   final String id;
   final String barCode;

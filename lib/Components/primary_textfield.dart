@@ -132,6 +132,7 @@ class SecondaryTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
     return Container(
+      margin: const EdgeInsets.only(top: 5),
       color: fillColor ? styleSheet.COLOR.fieldGreyColor : null,
       child: TextFormField(
         readOnly: readOnly,

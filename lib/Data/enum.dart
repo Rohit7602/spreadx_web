@@ -40,7 +40,8 @@ enum EditSupplierViewState {
   Default,
   Purchase_History,
   Purchase_Products,
-  Assign_Products,View_Product
+  Assign_Products,
+  View_Product
 }
 
 enum InventoryState { Default, Stock, Purchase_Product, Purchase_History }
@@ -48,3 +49,5 @@ enum InventoryState { Default, Stock, Purchase_Product, Purchase_History }
 enum ReportState { Default, Sales, Sales_Summary, Drawers, VAT_Report }
 
 enum InventoryInvoiceState { Default, DiscountState, Without_Discount }
+
+enum VatModelStatus { Is_New, Sumbmitted, Closed }
