@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Dialog/barcode_dialog.dart';
+import 'package:spreadx_web/Components/Models/product_model.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -16,6 +18,10 @@ class EnterManuallyMultipleProductsView extends StatefulWidget {
 
 class _EnterManuallyMultipleProductsViewState
     extends State<EnterManuallyMultipleProductsView> {
+  final TextEditingController barcodeController = TextEditingController();
+
+  RxList<ProductModel> products = RxList<ProductModel>([]);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,18 +46,36 @@ class _EnterManuallyMultipleProductsViewState
                             children: [
                               Expanded(
                                   child: PrimaryTextFormField(
+                                      controller: barcodeController,
                                       readonly: true,
-                                      onTap: () {
-                                        showDialog(
+                                      onTap: () async {
+                                        final data = await showDialog(
                                             context: context,
                                             builder: (context) {
                                               return BarcodeDialog(
                                                   hintText: "Barcode");
                                             });
+                                        barcodeController.text = data;
+                                        print(data);
                                       },
                                       hinttext: "Barcode")),
                               styleSheet.appConfig.addWidth(20),
-                              PrimaryBtnView(btnName: "Add", onPressed: () {}),
+                              PrimaryBtnView(
+                                  btnName: "Add",
+                                  onPressed: () {
+                                    products.add(ProductModel(
+                                        DateTime.now()
+                                            .millisecondsSinceEpoch
+                                            .toString(),
+                                        "Product ${products.length + 1}",
+                                        "Product ${products.length + 1} Description",
+                                        "0.00",
+                                        "1",
+                                        "0",
+                                        "0.00",
+                                        barCode: barcodeController.text));
+                                    barcodeController.clear();
+                                  }),
                               styleSheet.appConfig.addWidth(40),
                               IconButton(
                                   onPressed: () {},
