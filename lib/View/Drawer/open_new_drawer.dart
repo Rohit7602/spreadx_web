@@ -15,46 +15,53 @@ class OpenNewDrawerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: styleSheet.DECORATION.PADDING_10,
-        margin: styleSheet.DECORATION.PADDING_20.copyWith(top: 40),
-        decoration: BoxDecoration(
-          borderRadius: styleSheet.DECORATION.RADIUS_10,
-          color: styleSheet.COLOR.whiteColor,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              "OPENING AMOUNT",
-              style: styleSheet.TEXT_THEME.fs10Medium
-                  .copyWith(color: styleSheet.COLOR.blackColor),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        IconButton(
+            onPressed: onPressedBack, icon: const Icon(Icons.arrow_back)),
+        Container(
+            padding: styleSheet.DECORATION.PADDING_10,
+            margin: styleSheet.DECORATION.PADDING_20.copyWith(top: 0),
+            decoration: BoxDecoration(
+              borderRadius: styleSheet.DECORATION.RADIUS_10,
+              color: styleSheet.COLOR.whiteColor,
             ),
-            SecondaryTextFormField(
-              onTap: () => openVirtualKeyboard(),
-              controller: drawerController.amount,
-              hinttext: "0.00",
-            ),
-            styleSheet.appConfig.addHeight(20),
-            PrimaryBtnView(
-                isExpanded: true,
-                btnName: "Open New Drawer",
-                onPressed: () {
-                  if (drawerController.amount.text.isEmpty) {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return FieldErrorDialog(
-                            text: "Actual opening amount is required",
-                          );
-                        });
-                  } else {
-                    drawerController.onSave(context);
-                    onPressedBack();
-                  }
-                }),
-          ],
-        ));
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "OPENING AMOUNT",
+                  style: styleSheet.TEXT_THEME.fs10Medium
+                      .copyWith(color: styleSheet.COLOR.blackColor),
+                ),
+                SecondaryTextFormField(
+                  onTap: () => openVirtualKeyboard(),
+                  controller: drawerController.amount,
+                  hinttext: "0.00",
+                ),
+                styleSheet.appConfig.addHeight(20),
+                PrimaryBtnView(
+                    isExpanded: true,
+                    btnName: "Open New Drawer",
+                    onPressed: () {
+                      if (drawerController.amount.text.isEmpty) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return FieldErrorDialog(
+                                text: "Actual opening amount is required",
+                              );
+                            });
+                      } else {
+                        drawerController.onSave(context);
+                        onPressedBack();
+                      }
+                    }),
+              ],
+            )),
+      ],
+    );
   }
 }

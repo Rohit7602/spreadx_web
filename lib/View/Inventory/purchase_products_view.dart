@@ -380,25 +380,25 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
                                                         .COLOR.whiteColor))),
                                   ),
                                 ),
-                                itemCount != 0
-                                    ? Container(
-                                        margin: styleSheet.DECORATION.PADDING_2,
-                                        padding:
-                                            styleSheet.DECORATION.PADDING_5,
-                                        decoration: BoxDecoration(
-                                            color: styleSheet.COLOR.greenColor,
-                                            borderRadius:
-                                                styleSheet.DECORATION.RADIUS_5),
-                                        child: Text(
-                                          "${itemCount.toString()}.0",
-                                          style: styleSheet
-                                              .TEXT_THEME.fs12Medium
-                                              .copyWith(
-                                                  color: styleSheet
-                                                      .COLOR.whiteColor),
-                                        ),
-                                      )
-                                    : const SizedBox()
+                                // itemCount != 0
+                                //     ? Container(
+                                //         margin: styleSheet.DECORATION.PADDING_2,
+                                //         padding:
+                                //             styleSheet.DECORATION.PADDING_5,
+                                //         decoration: BoxDecoration(
+                                //             color: styleSheet.COLOR.greenColor,
+                                //             borderRadius:
+                                //                 styleSheet.DECORATION.RADIUS_5),
+                                //         child: Text(
+                                //           "${itemCount.toString()}.0",
+                                //           style: styleSheet
+                                //               .TEXT_THEME.fs12Medium
+                                //               .copyWith(
+                                //                   color: styleSheet
+                                //                       .COLOR.whiteColor),
+                                //         ),
+                                //       )
+                                //     : const SizedBox()
                               ],
                             );
                           });

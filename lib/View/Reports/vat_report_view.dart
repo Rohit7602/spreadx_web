@@ -12,7 +12,8 @@ import 'package:spreadx_web/View/Reports/total_vat_report.dart';
 import 'package:spreadx_web/main.dart';
 
 class VatReportView extends StatefulWidget {
-  const VatReportView({super.key});
+  void Function() onPressedBack;
+  VatReportView({required this.onPressedBack, super.key});
 
   @override
   State<VatReportView> createState() => _VatReportViewState();
@@ -28,7 +29,11 @@ class _VatReportViewState extends State<VatReportView> {
     final view = ResponsiveHandler().getResponsiveness(context);
     var defaultView = SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          IconButton(
+              onPressed: widget.onPressedBack,
+              icon: const Icon(Icons.arrow_back)),
           if (drawerController.drawer
                   .any((val) => val.status != VatModelStatus.Is_New) ||
               drawerController.drawer.isEmpty)

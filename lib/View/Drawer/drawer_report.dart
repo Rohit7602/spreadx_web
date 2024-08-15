@@ -21,12 +21,16 @@ class DrawerReportView extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            IconButton(
+                onPressed: onPressedBack, icon: const Icon(Icons.arrow_back)),
             InkWell(
               onTap: () {
                 selectedView("drawerEntries");
               },
               child: Container(
+                margin: const EdgeInsets.only(left: 20),
                 padding: styleSheet.DECORATION.PADDING_20,
                 decoration: BoxDecoration(
                   borderRadius: styleSheet.DECORATION.RADIUS_5,
@@ -61,6 +65,7 @@ class DrawerReportView extends StatelessWidget {
             ),
             styleSheet.appConfig.addHeight(10),
             Container(
+              margin: const EdgeInsets.only(left: 20),
               constraints: BoxConstraints(
                   maxHeight:
                       styleSheet.appConfig.getScreenHeight(context) * 0.6),
@@ -107,17 +112,21 @@ class DrawerReportView extends StatelessWidget {
                 isExpanded: true,
                 btnName: "Share",
                 onPressed: () {
-                  onPressedBack();
+                  styleSheet.appConfig.shareNow();
                 },
                 icon: Icons.share),
           ],
-        )
+        ).paddingOnly(left: 20)
       ],
-    ).paddingOnly(right: 20, left: 20, bottom: 20, top: 40);
+    ).paddingOnly(right: 20, left: 0, bottom: 20, top: 0);
 
     return Obx(() {
       if (selectedView.value == "drawerEntries") {
-        return EnteriesDrawerView();
+        return EnteriesDrawerView(
+          onPressedBack: () {
+            selectedView("default");
+          },
+        );
       } else {
         return defaultView;
       }

@@ -222,7 +222,9 @@ class _SalesSummaryViewState extends State<SalesSummaryView>
                   PrimaryBtnWithIcon(
                       isExpanded: true,
                       btnName: "Share",
-                      onPressed: () {},
+                      onPressed: () {
+                        styleSheet.appConfig.shareNow();
+                      },
                       icon: Icons.share),
                 ],
               ).paddingOnly(left: 20, bottom: 20, right: 20, top: 10)

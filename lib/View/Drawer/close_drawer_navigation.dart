@@ -22,52 +22,61 @@ class CloseDrawerNavigationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: styleSheet.DECORATION.PADDING_10,
-        margin: styleSheet.DECORATION.PADDING_20.copyWith(top: 40),
-        decoration: BoxDecoration(
-          borderRadius: styleSheet.DECORATION.RADIUS_10,
-          color: styleSheet.COLOR.whiteColor,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          IconButton(
+              onPressed: onPressedBack, icon: const Icon(Icons.arrow_back)),
+          Container(
+            height: styleSheet.appConfig.getScreenHeight(context) - 150,
+            padding: styleSheet.DECORATION.PADDING_10,
+            margin: styleSheet.DECORATION.PADDING_20.copyWith(top: 10),
+            decoration: BoxDecoration(
+              borderRadius: styleSheet.DECORATION.RADIUS_10,
+              color: styleSheet.COLOR.whiteColor,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "ACTUAL IN DRAWER",
-                  style: styleSheet.TEXT_THEME.fs10Medium
-                      .copyWith(color: styleSheet.COLOR.blackColor),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "ACTUAL IN DRAWER",
+                      style: styleSheet.TEXT_THEME.fs10Medium
+                          .copyWith(color: styleSheet.COLOR.blackColor),
+                    ),
+                    SecondaryTextFormField(
+                      onTap: () => openVirtualKeyboard(),
+                      controller: amountController,
+                      hinttext: "0.00",
+                    ),
+                  ],
                 ),
-                SecondaryTextFormField(
-                  onTap: () => openVirtualKeyboard(),
-                  controller: amountController,
-                  hinttext: "0.00",
-                ),
+                PrimaryBtnView(
+                    btnColor: styleSheet.COLOR.redColor,
+                    isExpanded: true,
+                    btnName: "Close Navigation Menu",
+                    onPressed: () {
+                      if (amountController.text.isEmpty) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return FieldErrorDialog(
+                                text: "Actual closing amount is required",
+                              );
+                            });
+                      } else {
+                        drawer.addCloseDrawer();
+                        drawer.clearDrawer();
+                        onPressedBack();
+                      }
+                    })
               ],
             ),
-            PrimaryBtnView(
-                btnColor: styleSheet.COLOR.redColor,
-                isExpanded: true,
-                btnName: "Close Navigation Menu",
-                onPressed: () {
-                  if (amountController.text.isEmpty) {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return FieldErrorDialog(
-                            text: "Actual closing amount is required",
-                          );
-                        });
-                  } else {
-                    drawer.addCloseDrawer();
-                    drawer.clearDrawer();
-                    onPressedBack();
-                  }
-                })
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

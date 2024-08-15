@@ -9,7 +9,9 @@ import 'package:spreadx_web/main.dart';
 
 class TransactionView extends StatefulWidget {
   void Function() onPressedBack;
-  TransactionView({required this.onPressedBack, super.key});
+  bool isComingFromtr;
+  TransactionView(
+      {required this.onPressedBack, this.isComingFromtr = true, super.key});
 
   @override
   State<TransactionView> createState() => _TransactionViewState();
@@ -79,38 +81,17 @@ class _TransactionViewState extends State<TransactionView> {
                       ),
                       subtitle: Text("31 Jul12:04 PM",
                           style: styleSheet.TEXT_THEME.fs12Bold),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
+                      trailing: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                "AED 0.00",
-                                style: styleSheet.TEXT_THEME.fs12Bold,
-                              ),
-                              Text(
-                                "Pending: AED 0.00",
-                                style: styleSheet.TEXT_THEME.fs12Bold,
-                              )
-                            ],
+                          Text(
+                            "AED 0.00",
+                            style: styleSheet.TEXT_THEME.fs12Bold,
                           ),
-                          styleSheet.appConfig.addWidth(10),
-                          IconButton(
-                              onPressed: () {
-                                if (lisOfTr.any((e) => e.id == trList[i].id)) {
-                                  lisOfTr.remove(trList[i]);
-                                } else {
-                                  lisOfTr.add(trList[i]);
-                                }
-                                setState(() {});
-                              },
-                              icon: Icon(
-                                Icons.check_circle_outline_rounded,
-                                color: lisOfTr.any((e) => e.id == trList[i].id)
-                                    ? styleSheet.COLOR.greenColor
-                                    : styleSheet.COLOR.blackColor,
-                              ))
+                          Text(
+                            "Pending: AED 0.00",
+                            style: styleSheet.TEXT_THEME.fs12Bold,
+                          )
                         ],
                       ),
                     );
@@ -130,9 +111,11 @@ class _TransactionViewState extends State<TransactionView> {
       if (selected.value == "default") {
         return defaultView;
       } else {
-        return TransactionDetailsView(onPressedBack: () {
-          selected("default");
-        });
+        return TransactionDetailsView(
+            isComingFromTr: widget.isComingFromtr,
+            onPressedBack: () {
+              selected("default");
+            });
       }
     });
   }

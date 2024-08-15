@@ -27,6 +27,12 @@ class _AddNewCustomerViewState extends State<AddNewCustomerView> {
   bool isBusinessType = false;
 
   File? pickedFile;
+
+  RxBool isInfo = RxBool(true);
+
+  RxBool enableNotification = RxBool(false);
+
+  RxBool approval = RxBool(false);
   @override
   Widget build(BuildContext context) {
     var controller = Get.find<CustomerController>();
@@ -96,15 +102,17 @@ class _AddNewCustomerViewState extends State<AddNewCustomerView> {
                       ),
                       styleSheet.appConfig.addHeight(25),
                       const Spacer(),
-                      DrawerButtonView(
-                        btnName: widget.isEdit
-                            ? "Save Customer"
-                            : "Add New Customer",
-                        onPressed: () {
-                          controller.onSave(context);
-                          widget.onPressedBack!();
-                        },
-                      ).paddingAll(20)
+                      Obx(() => DrawerButtonView(
+                            btnName: !isInfo.value
+                                ? "Update Settings"
+                                : widget.isEdit
+                                    ? "Save Customer"
+                                    : "Add New Customer",
+                            onPressed: () {
+                              controller.onSave(context);
+                              widget.onPressedBack!();
+                            },
+                          ).paddingAll(20))
                     ],
                   ),
                 ),
@@ -114,103 +122,263 @@ class _AddNewCustomerViewState extends State<AddNewCustomerView> {
                     child: ListView(
                       children: [
                         styleSheet.appConfig.addHeight(20),
-                        SecondaryTextFormField(
-                            onTap: () => openVirtualKeyboard(),
-                            hinttext: "Barcode",
-                            controller: controller.barcode),
-                        styleSheet.appConfig.addHeight(20),
-                        SecondaryTextFormField(
-                            onTap: () => openVirtualKeyboard(),
-                            hinttext: "Code",
-                            controller: controller.code),
-                        styleSheet.appConfig.addHeight(20),
-                        SecondaryTextFormField(
-                            onTap: () => openVirtualKeyboard(),
-                            hinttext: "First Name",
-                            controller: controller.firstname),
-                        styleSheet.appConfig.addHeight(20),
-                        SecondaryTextFormField(
-                            onTap: () => openVirtualKeyboard(),
-                            hinttext: "Last Name",
-                            controller: controller.lastName),
-                        styleSheet.appConfig.addHeight(20),
-                        PhoneTextField(
-                            controller: controller.phoneNumber,
-                            onValuePick: (Country country) {}),
-                        styleSheet.appConfig.addHeight(20),
-                        SecondaryTextFormField(
-                            onTap: () => openVirtualKeyboard(),
-                            hinttext: "Email",
-                            controller: controller.email),
-                        styleSheet.appConfig.addHeight(20),
-                        SecondaryTextFormField(
-                            onTap: () => openVirtualKeyboard(),
-                            hinttext: "Address",
-                            controller: controller.address),
-                        styleSheet.appConfig.addHeight(20),
-                        Obx(() => PrimaryDropDown(
-                            isExpanded: true,
-                            border: true,
-                            hint: "Account Type",
-                            dropdownValue: controller.accountType,
-                            items: const ["Cash", "Credit"],
-                            value: (v) {
-                              controller.setAccountType(v!);
-                            })),
-                        styleSheet.appConfig.addHeight(20),
-                        Obx(
-                          () => controller.accountType.toLowerCase() == "credit"
-                              ? Column(
+                        if (widget.isEdit)
+                          Obx(() {
+                            return Container(
+                              height: 45,
+                              decoration: BoxDecoration(
+                                borderRadius: styleSheet.DECORATION.RADIUS_5,
+                                color: styleSheet.COLOR.bgLightBlueColor2,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      isInfo.value = !isInfo.value;
+                                      setState(() {});
+                                    },
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(),
+                                        Text(
+                                          "Account Info",
+                                          style: styleSheet.TEXT_THEME.fs12Bold
+                                              .copyWith(
+                                                  color: isInfo.value
+                                                      ? styleSheet
+                                                          .COLOR.primaryColor
+                                                      : styleSheet
+                                                          .COLOR.blackColor),
+                                        ),
+                                        isInfo.value
+                                            ? Container(
+                                                height: 2,
+                                                width: 60,
+                                                decoration: BoxDecoration(
+                                                    borderRadius: styleSheet
+                                                        .DECORATION.RADIUS_10,
+                                                    color: styleSheet
+                                                        .COLOR.primaryColor),
+                                              )
+                                            : const SizedBox()
+                                      ],
+                                    ),
+                                  ),
+                                  styleSheet.appConfig.addWidth(30),
+                                  InkWell(
+                                    onTap: () {
+                                      isInfo.value = !isInfo.value;
+                                      setState(() {});
+                                    },
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(),
+                                        Text(
+                                          "Settings",
+                                          style: styleSheet.TEXT_THEME.fs12Bold
+                                              .copyWith(
+                                                  color: isInfo.value
+                                                      ? styleSheet
+                                                          .COLOR.blackColor
+                                                      : styleSheet
+                                                          .COLOR.primaryColor),
+                                        ),
+                                        isInfo.value
+                                            ? const SizedBox()
+                                            : Container(
+                                                height: 2,
+                                                width: 60,
+                                                decoration: BoxDecoration(
+                                                    borderRadius: styleSheet
+                                                        .DECORATION.RADIUS_10,
+                                                    color: styleSheet
+                                                        .COLOR.primaryColor),
+                                              )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+                        LayoutBuilder(builder: (context, constra) {
+                          if (isInfo.value) {
+                            return Column(
+                              children: [
+                                SecondaryTextFormField(
+                                    onTap: () => openVirtualKeyboard(),
+                                    hinttext: "Barcode",
+                                    controller: controller.barcode),
+                                styleSheet.appConfig.addHeight(20),
+                                SecondaryTextFormField(
+                                    onTap: () => openVirtualKeyboard(),
+                                    hinttext: "Code",
+                                    controller: controller.code),
+                                styleSheet.appConfig.addHeight(20),
+                                SecondaryTextFormField(
+                                    onTap: () => openVirtualKeyboard(),
+                                    hinttext: "First Name",
+                                    controller: controller.firstname),
+                                styleSheet.appConfig.addHeight(20),
+                                SecondaryTextFormField(
+                                    onTap: () => openVirtualKeyboard(),
+                                    hinttext: "Last Name",
+                                    controller: controller.lastName),
+                                styleSheet.appConfig.addHeight(20),
+                                PhoneTextField(
+                                    controller: controller.phoneNumber,
+                                    onValuePick: (Country country) {}),
+                                styleSheet.appConfig.addHeight(20),
+                                SecondaryTextFormField(
+                                    onTap: () => openVirtualKeyboard(),
+                                    hinttext: "Email",
+                                    controller: controller.email),
+                                styleSheet.appConfig.addHeight(20),
+                                SecondaryTextFormField(
+                                    onTap: () => openVirtualKeyboard(),
+                                    hinttext: "Address",
+                                    controller: controller.address),
+                                styleSheet.appConfig.addHeight(20),
+                                Obx(() => PrimaryDropDown(
+                                    isExpanded: true,
+                                    border: true,
+                                    hint: "Account Type",
+                                    dropdownValue: controller.accountType,
+                                    items: const ["Cash", "Credit"],
+                                    value: (v) {
+                                      controller.setAccountType(v!);
+                                    })),
+                                styleSheet.appConfig.addHeight(20),
+                                Obx(
+                                  () => controller.accountType.toLowerCase() ==
+                                          "credit"
+                                      ? Column(
+                                          children: [
+                                            SecondaryTextFormField(
+                                                onTap: () =>
+                                                    openVirtualKeyboard(),
+                                                hinttext: "Credit Limit",
+                                                controller:
+                                                    controller.creditLimit),
+                                            styleSheet.appConfig.addHeight(20),
+                                            SecondaryTextFormField(
+                                                onTap: () =>
+                                                    openVirtualKeyboard(),
+                                                hinttext: "Days Limit",
+                                                controller:
+                                                    controller.daysLimit),
+                                            styleSheet.appConfig.addHeight(20),
+                                          ],
+                                        )
+                                      : const SizedBox(),
+                                ),
+                                Obx(() => PrimaryDropDown(
+                                    isExpanded: true,
+                                    border: true,
+                                    hint: "Account Category",
+                                    dropdownValue: controller.accountCategory,
+                                    items: const [
+                                      "Personal Account",
+                                      "Business Account"
+                                    ],
+                                    value: (v) {
+                                      controller.setAccountCategory(v!);
+                                    })),
+                                styleSheet.appConfig.addHeight(20),
+                                Obx(
+                                  () => controller.accountCategory
+                                              .toLowerCase() ==
+                                          "business account"
+                                      ? Column(
+                                          children: [
+                                            SecondaryTextFormField(
+                                                onTap: () =>
+                                                    openVirtualKeyboard(),
+                                                hinttext: "Business Name",
+                                                controller:
+                                                    controller.businessName),
+                                            styleSheet.appConfig.addHeight(20),
+                                            SecondaryTextFormField(
+                                                onTap: () {
+                                                  isBusinessType = true;
+                                                  setState(() {});
+                                                },
+                                                hinttext: "Business Type",
+                                                controller:
+                                                    controller.businessType),
+                                            styleSheet.appConfig.addHeight(20),
+                                          ],
+                                        )
+                                      : const SizedBox(),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return Column(
+                              children: [
+                                Obx(() => ListTile(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 0),
+                                      onTap: () {
+                                        enableNotification.value =
+                                            !enableNotification.value;
+                                      },
+                                      title: Text(
+                                        "Enable Notifications",
+                                        style: styleSheet.TEXT_THEME.fs14Medium,
+                                      ),
+                                      leading: Checkbox(
+                                          value: enableNotification.value,
+                                          onChanged: (val) {
+                                            enableNotification(val);
+                                          }),
+                                    )),
+                                Obx(() => ListTile(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 0),
+                                      onTap: () {
+                                        approval.value = !approval.value;
+                                      },
+                                      title: Text(
+                                        "Every Order Requrie Approval",
+                                        style: styleSheet.TEXT_THEME.fs14Medium,
+                                      ),
+                                      leading: Checkbox(
+                                          value: approval.value,
+                                          onChanged: (val) {
+                                            approval(val);
+                                          }),
+                                    )),
+                                styleSheet.appConfig.addHeight(10),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    SecondaryTextFormField(
-                                        onTap: () => openVirtualKeyboard(),
-                                        hinttext: "Credit Limit",
-                                        controller: controller.creditLimit),
-                                    styleSheet.appConfig.addHeight(20),
-                                    SecondaryTextFormField(
-                                        onTap: () => openVirtualKeyboard(),
-                                        hinttext: "Days Limit",
-                                        controller: controller.daysLimit),
-                                    styleSheet.appConfig.addHeight(20),
+                                    const Flexible(
+                                      flex: 1,
+                                      child: Text(
+                                          "Send Notification when amount >"),
+                                    ),
+                                    styleSheet.appConfig.addWidth(50),
+                                    Flexible(
+                                      flex: 1,
+                                      child: PrimaryTextFormField(
+                                        hinttext: "Amount",
+                                      ),
+                                    ),
                                   ],
                                 )
-                              : const SizedBox(),
-                        ),
-                        Obx(() => PrimaryDropDown(
-                            isExpanded: true,
-                            border: true,
-                            hint: "Account Category",
-                            dropdownValue: controller.accountCategory,
-                            items: const [
-                              "Personal Account",
-                              "Business Account"
-                            ],
-                            value: (v) {
-                              controller.setAccountCategory(v!);
-                            })),
-                        styleSheet.appConfig.addHeight(20),
-                        Obx(
-                          () => controller.accountCategory.toLowerCase() ==
-                                  "business account"
-                              ? Column(
-                                  children: [
-                                    SecondaryTextFormField(
-                                        onTap: () => openVirtualKeyboard(),
-                                        hinttext: "Business Name",
-                                        controller: controller.businessName),
-                                    styleSheet.appConfig.addHeight(20),
-                                    SecondaryTextFormField(
-                                        onTap: () {
-                                          isBusinessType = true;
-                                          setState(() {});
-                                        },
-                                        hinttext: "Business Type",
-                                        controller: controller.businessType),
-                                    styleSheet.appConfig.addHeight(20),
-                                  ],
-                                )
-                              : const SizedBox(),
-                        ),
+                              ],
+                            ).paddingOnly(right: 20);
+                          }
+                        })
                       ],
                     ))
               ],

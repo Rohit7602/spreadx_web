@@ -67,7 +67,9 @@ class _ReportsViewState extends State<ReportsView> {
           onPressedBack: setDefaultView,
         );
       case ReportState.VAT_Report:
-        return const VatReportView();
+        return VatReportView(
+          onPressedBack: setDefaultView,
+        );
 
       default:
         return defaultView;

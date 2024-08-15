@@ -4,6 +4,7 @@ import 'package:country_pickers/country.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/Loading/loader.dart';
 import 'package:spreadx_web/Components/password_text_field.dart';
 import 'package:spreadx_web/Components/phone_text_field.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
@@ -135,7 +136,13 @@ class _LoginComponentViewState extends State<LoginComponentView> {
             btnName: "Login",
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                context.go(MyRoute.homeScreen);
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const ShowLoading();
+                    });
+                Future.delayed(const Duration(seconds: 2),
+                    () => context.go(MyRoute.homeScreen));
               }
             },
           ),

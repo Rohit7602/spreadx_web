@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 class AppConfig {
   AppConfig._private();
@@ -35,7 +36,12 @@ class AppConfig {
   // Random id Generator
 
   generateId() {
-    return  Random().nextInt(1000);
-    
+    return Random().nextInt(1000);
+  }
+
+  // Share Function
+
+  shareNow() {
+    Share.share("Share Invoice");
   }
 }

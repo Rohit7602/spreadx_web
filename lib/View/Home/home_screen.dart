@@ -6,12 +6,14 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Controller/product_controller.dart';
+import 'package:spreadx_web/Components/Controller/users_controller.dart';
 import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/apply_discount.dart';
 import 'package:spreadx_web/Components/Dialog/assign_customer_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/barcode_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/custom_item_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/money_dialog.dart';
+import 'package:spreadx_web/Components/Dialog/passcode_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/product_check.dart';
 import 'package:spreadx_web/Components/Dialog/queue_remove_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/split_pay.dart';
@@ -43,6 +45,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
   final amountController = TextEditingController();
   final barcodeController = TextEditingController();
   final quantityController = TextEditingController();
+  var userController = Get.find<UsersController>();
 
   var product = Get.find<ProductController>();
 
@@ -104,7 +107,15 @@ class _HomeScreenViewState extends State<HomeScreenView>
         actions: [
           IconButton(
               onPressed: () {
-                context.go(MyRoute.mainMenuDrawer);
+                if (userController.securityPD != 0 && userController.askPD) {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const PasscodeDialog();
+                      });
+                } else {
+                  context.go(MyRoute.mainMenuDrawer);
+                }
               },
               icon: const Icon(
                 Icons.settings,

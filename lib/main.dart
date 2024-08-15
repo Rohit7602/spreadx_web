@@ -15,8 +15,8 @@ void main() {
   styleSheet = ConstantSheet.instance;
   tz.initializeTimeZones();
 
-  // WindowManager.instance.setMinimumSize(const Size(1024, 810));
-  WindowManager.instance.setMinimumSize(const Size(1024, 600));
+  WindowManager.instance.setMinimumSize(const Size(1024, 810));
+  // WindowManager.instance.setMinimumSize(const Size(1024, 600));
 
   runApp(const MyApp());
 }

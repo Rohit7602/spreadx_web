@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spreadx_web/Components/Controller/users_controller.dart';
 import 'package:spreadx_web/Components/Dialog/barcode_dialog.dart';
 import 'package:spreadx_web/main.dart';
-
 
 class SecurityView extends StatelessWidget {
   final void Function()? onPressedBack;
   SecurityView({super.key, this.onPressedBack});
 
   final RxBool requirePassword = RxBool(false);
+
+  RxString passcode = RxString("1234");
+
+  var userController = Get.find<UsersController>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,21 +47,29 @@ class SecurityView extends StatelessWidget {
                           value: requirePassword.value,
                           onChanged: (v) {
                             requirePassword(v);
+                            userController.updateSecurityPD(v);
                           }))),
                   SecurityListTile(
                       title: "Passcode",
                       divider: false,
                       subtitle: "Maximum 4 digits.",
-                      onTap: () {
-                        showDialog(
+                      onTap: () async {
+                        await showDialog(
                             context: context,
                             builder: (context) {
                               return BarcodeDialog(hintText: "Passcode");
-                            });
+                            }).then((val) {
+                          if (val != null) {
+                            passcode(val);
+                            userController.updatePassword(int.parse(val));
+                          }
+                        });
                       },
-                      trailing: Text("1234",
-                          style: styleSheet.TEXT_THEME.fs16Bold
-                              .copyWith(color: styleSheet.COLOR.primaryColor)))
+                      trailing: Obx(() => Text(passcode.value,
+                          style: styleSheet.TEXT_THEME.fs16Bold.copyWith(
+                              color: requirePassword.value
+                                  ? styleSheet.COLOR.primaryColor
+                                  : styleSheet.COLOR.greyColor))))
                 ],
               ))
             ],
@@ -109,5 +121,3 @@ class SecurityListTile extends StatelessWidget {
     );
   }
 }
-
-

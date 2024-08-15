@@ -41,7 +41,9 @@ class AppIcons {
 
   String dashboardIcon = "assets/Icons/dashboard_icon.png";
   String saleIcon = "assets/Icons/sale_icon.png";
+  String scannerIcon = "assets/Icons/scanner_icon.png";
   String productIcon = "assets/Icons/product_icon.png";
+  String filterIcon = "assets/Icons/filter_icon.png";
   String inventoryIcon = "assets/Icons/inventory_icon.png";
   String transactionIcon = "assets/Icons/transaction_icon.png";
   String supplierIcon = "assets/Icons/supplier_icon.png";
@@ -70,5 +72,6 @@ class AppIcons {
   String user = "assets/Icons/user.png";
 
   String arrowIcon = "assets/Icons/arrow_icon.png";
+
   //
 }

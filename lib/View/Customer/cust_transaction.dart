@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Data/local_data.dart';
+import 'package:spreadx_web/View/Inventory/invent_payment_view.dart';
 import 'package:spreadx_web/View/Transactions/Transaction_details/transaction_details_view.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -77,6 +78,7 @@ class _CustomerTransactionViewState extends State<CustomerTransactionView> {
                             InkWell(
                               onTap: () {
                                 isPaid.value = !isPaid.value;
+                                setState(() {});
                               },
                               child: Column(
                                 mainAxisAlignment:
@@ -109,6 +111,7 @@ class _CustomerTransactionViewState extends State<CustomerTransactionView> {
                             InkWell(
                               onTap: () {
                                 isPaid.value = !isPaid.value;
+                                setState(() {});
                               },
                               child: Column(
                                 mainAxisAlignment:
@@ -179,28 +182,37 @@ class _CustomerTransactionViewState extends State<CustomerTransactionView> {
                                 ],
                               ),
                               styleSheet.appConfig.addWidth(10),
-                              IconButton(
-                                  onPressed: () {
-                                    if (lisOfTr
-                                        .any((e) => e.id == trList[i].id)) {
-                                      lisOfTr.remove(trList[i]);
-                                    } else {
-                                      lisOfTr.add(trList[i]);
-                                    }
-                                    setState(() {});
-                                  },
-                                  icon: Icon(
-                                    Icons.check_circle_outline_rounded,
-                                    color:
-                                        lisOfTr.any((e) => e.id == trList[i].id)
-                                            ? styleSheet.COLOR.greenColor
-                                            : styleSheet.COLOR.blackColor,
-                                  ))
+                              if (!isPaid.value)
+                                IconButton(
+                                    onPressed: () {
+                                      if (lisOfTr
+                                          .any((e) => e.id == trList[i].id)) {
+                                        lisOfTr.remove(trList[i]);
+                                      } else {
+                                        lisOfTr.add(trList[i]);
+                                      }
+                                      setState(() {});
+                                    },
+                                    icon: Icon(
+                                      Icons.check_circle_outline_rounded,
+                                      color: lisOfTr
+                                              .any((e) => e.id == trList[i].id)
+                                          ? styleSheet.COLOR.greenColor
+                                          : styleSheet.COLOR.blackColor,
+                                    ))
                             ],
                           ),
                         );
                       },
                     ),
+                    const Spacer(),
+                    if (!isPaid.value)
+                      PrimaryBtnView(
+                          isExpanded: true,
+                          btnName: "Pay Invoices",
+                          onPressed: () {
+                            selected("paymentView");
+                          })
                   ],
                 ))
           ],
@@ -214,13 +226,17 @@ class _CustomerTransactionViewState extends State<CustomerTransactionView> {
     );
 
     return Obx(() {
-      if (selected.value == "default") {
-        return defaultView;
-      } else {
-        return TransactionDetailsView(onPressedBack: () {
-          selected("default");
+      if (selected.value == "details") {
+        return TransactionDetailsView(onPressedBack: setDefaultView);
+      } else if (selected.value == "paymentView") {
+        return InventoryPaymentView(onPressedBack: (val) {
+          setDefaultView();
         });
+      } else {
+        return defaultView;
       }
     });
   }
+
+  setDefaultView() => selected("default");
 }

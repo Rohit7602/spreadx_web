@@ -53,7 +53,7 @@ class _DrawerViewState extends State<DrawerView> {
               ).paddingAll(20)
             : Obx(() {
                 return ListView.builder(
-                  padding: styleSheet.DECORATION.PADDING_20.copyWith(top: 40),
+                  padding: styleSheet.DECORATION.PADDING_20.copyWith(top: 10),
                   shrinkWrap: true,
                   itemCount: drawerController.drawer.length,
                   itemBuilder: (context, i) {

@@ -115,11 +115,6 @@ class LocalData {
     ProductModel("2", "default - PCS", "default - PCS", "0", "0", "2", ""),
   ];
 
-  static List<CategoryModel> listOfCategory = [
-    CategoryModel("cat_1", "Grocery", "1"),
-    CategoryModel("cat_2", "Grocery", "2"),
-  ];
-
 // *************** Existing Customer List ********************
   static List<ExistingCustomer> existingCustomerList = [
     ExistingCustomer("Dogw", "KD Makwana", "Cash Customer", "790889079"),

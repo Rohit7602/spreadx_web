@@ -116,6 +116,7 @@ class _AddProductViewState extends State<AddProductView> {
 
   void onPressedBack() {
     selected(AddProductState.Default);
+    setState(() {});
   }
 
   Widget getView(Widget defaultView) {

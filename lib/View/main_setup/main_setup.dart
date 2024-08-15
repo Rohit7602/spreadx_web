@@ -39,11 +39,20 @@ class _MainSetupViewState extends State<MainSetupView> {
         children: [
           Flexible(
             flex: 1,
-            child: Center(
-              child: Image.asset(
-                styleSheet.images.main_setup_img,
-                height: 300,
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(),
+                Image.asset(
+                  styleSheet.images.main_setup_img,
+                  height: 300,
+                ),
+                Text(
+                  "Version: 2.0.5",
+                  style: styleSheet.TEXT_THEME.fs14Medium
+                      .copyWith(color: styleSheet.COLOR.greyColor),
+                )
+              ],
             ),
           ),
           styleSheet.appConfig.addWidth(10),

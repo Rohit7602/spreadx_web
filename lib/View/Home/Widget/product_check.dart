@@ -274,10 +274,18 @@ class _ProductCheckViewState extends State<ProductCheckView> {
                           },
                           child: isCategory
                               ? const CustomGridForCategory()
-                              : CustomGridForProducts(
-                                  data: pr,
-                                  isInCart: product.productList
-                                      .any((v) => v.id == pr.id),
+                              : GestureDetector(
+                                  onTap: () {
+                                    var product = Get.find<ProductController>();
+                                    product.addProducts(pr);
+                                    itemCount++;
+                                    setState(() {});
+                                  },
+                                  child: CustomGridForProducts(
+                                    data: pr,
+                                    isInCart: product.productList
+                                        .any((v) => v.id == pr.id),
+                                  ),
                                 ),
                         );
                       });
@@ -289,10 +297,12 @@ class _ProductCheckViewState extends State<ProductCheckView> {
                         final pr = LocalData.productList[i];
                         return GestureDetector(
                             onTap: () {
-                              var product = Get.find<ProductController>();
-                              product.addProducts(pr);
-                              itemCount++;
+                              isCategory = false;
                               setState(() {});
+                              // var product = Get.find<ProductController>();
+                              // product.addProducts(pr);
+                              // itemCount++;
+                              // setState(() {});
                             },
                             child: isCategory
                                 ? GestureDetector(

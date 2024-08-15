@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Data/local_data.dart';
-import 'package:spreadx_web/Utils/Routes/routes.dart';
 
 class UsersController extends GetxController {
   final RxList<UserModel> _users = RxList<UserModel>([]);
@@ -10,10 +8,12 @@ class UsersController extends GetxController {
 
   setUsers(List<UserModel> data) {
     _users(data);
+    update();
   }
 
   addUser(UserModel data) {
     _users.add(data);
+    update();
   }
 
   final TextEditingController _employeeName = TextEditingController();
@@ -66,5 +66,22 @@ class UsersController extends GetxController {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Password and Confirm Password doesn't match")));
     }
+  }
+
+  int _securityPD = 0;
+  int get securityPD => _securityPD;
+
+  updatePassword(int pd) {
+    _securityPD = pd;
+    update();
+  }
+
+  bool _askPD = false;
+  bool get askPD => _askPD;
+
+  updateSecurityPD(bool status) {
+    _askPD = status;
+
+    update();
   }
 }

@@ -8,6 +8,7 @@ import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Data/enum.dart';
 import 'package:spreadx_web/Utils/Routes/routes.dart';
 import 'package:spreadx_web/View/Customer/customer_list.dart';
+import 'package:spreadx_web/View/Data_center/data_center.dart';
 import 'package:spreadx_web/View/Home/Widget/custom_drawer_view.dart';
 import 'package:spreadx_web/View/Inventory/inventory_view.dart';
 import 'package:spreadx_web/View/Product/product_view.dart';
@@ -87,7 +88,7 @@ class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
             case DrawerState.Reports:
               return const ReportsView();
             case DrawerState.DataCenter:
-              return const Center(child: Text("Comming Soon"));
+              return const DataCenterView();
             case DrawerState.MainSetup:
               return const MainSetupView();
             case DrawerState.Support:

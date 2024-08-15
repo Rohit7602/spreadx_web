@@ -93,6 +93,7 @@ class _InventoryViewState extends State<InventoryView> {
         );
       case InventoryState.Purchase_History:
         return TransactionView(
+          isComingFromtr: false,
           onPressedBack: () {
             selectedView(InventoryState.Default);
           },

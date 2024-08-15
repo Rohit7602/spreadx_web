@@ -6,6 +6,8 @@ class StockDetailsView extends StatelessWidget {
   void Function() onPressedBack;
   StockDetailsView({required this.onPressedBack, super.key});
 
+  RxString dateTime = RxString("");
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,15 +39,27 @@ class StockDetailsView extends StatelessWidget {
                   .copyWith(color: styleSheet.COLOR.blackColor),
             ),
             styleSheet.appConfig.addWidth(10),
-            ElevatedButton(
+            Obx(() => ElevatedButton(
                 style: ButtonStyle(
                     fixedSize: WidgetStateProperty.all(const Size(130, 37)),
                     backgroundColor:
                         WidgetStateProperty.all(styleSheet.COLOR.primaryColor),
                     shape: WidgetStateProperty.all(RoundedRectangleBorder(
                         borderRadius: styleSheet.DECORATION.RADIUS_50))),
-                onPressed: () {},
-                child: const Text("Select Date"))
+                onPressed: () async {
+                  await showDatePicker(
+                          context: context,
+                          firstDate: DateTime(1950),
+                          lastDate: DateTime(2050))
+                      .then((val) {
+                    if (val != null) {
+                      dateTime(val.toString().split(" ").first);
+                    }
+                  });
+                },
+                child: Text(dateTime.value.isNotEmpty
+                    ? dateTime.value
+                    : "Select Date"))),
           ],
         ),
         styleSheet.appConfig.addHeight(30),

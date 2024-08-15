@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Controller/product_controller.dart';
+import 'package:spreadx_web/Components/Dialog/filter_product_dialog.dart';
 import 'package:spreadx_web/Components/Models/product_model.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -22,9 +23,27 @@ class _ViewProductSupplierState extends State<ViewProductSupplier> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        IconButton(
-            onPressed: widget.onPressedBack,
-            icon: const Icon(Icons.arrow_back)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+                onPressed: widget.onPressedBack,
+                icon: const Icon(Icons.arrow_back)),
+            IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const FilterProductDialog();
+                    });
+              },
+              icon: Image.asset(
+                styleSheet.icons.filterIcon,
+                color: styleSheet.COLOR.primaryColor,
+              ),
+            ),
+          ],
+        ).paddingOnly(right: 10),
         Wrap(
           children: [
             ...List.generate(

@@ -136,6 +136,7 @@ class _EditSupplierPurchaseHistoryViewState
                             subtitle: Text(trList[i].dateTime,
                                 style: styleSheet.TEXT_THEME.fs12Bold),
                             trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -151,16 +152,42 @@ class _EditSupplierPurchaseHistoryViewState
                                   ],
                                 ),
                                 styleSheet.appConfig.addWidth(10),
-                                IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                        Icons.check_circle_outline_rounded))
+                                Obx(() => selectedTab.value == 1
+                                    ? IconButton(
+                                        onPressed: () {
+                                          if (lisOfTr.any(
+                                              (e) => e.id == trList[i].id)) {
+                                            lisOfTr.remove(trList[i]);
+                                          } else {
+                                            lisOfTr.add(trList[i]);
+                                          }
+                                          setState(() {});
+                                        },
+                                        icon: Icon(
+                                          Icons.check_circle_outline_rounded,
+                                          color: lisOfTr.any(
+                                                  (e) => e.id == trList[i].id)
+                                              ? styleSheet.COLOR.greenColor
+                                              : styleSheet.COLOR.blackColor,
+                                        ))
+                                    : const SizedBox())
                               ],
                             ),
                           );
                         },
                       ),
-                    )
+                    ),
+                    const Spacer(),
+                    Obx(() {
+                      return selectedTab.value == 1
+                          ? PrimaryBtnView(
+                              isExpanded: true,
+                              btnName: "Pay Invoices",
+                              onPressed: () {
+                                selected("paymentView");
+                              })
+                          : const SizedBox();
+                    })
                   ],
                 ),
               ),

@@ -8,7 +8,10 @@ class ProductController extends GetxController {
   addProducts(ProductModel product) {
     if (_productList.any((value) => value.id == product.id)) {
       final i = _productList.indexOf(product);
-      _productList[i].qty = (int.parse(_productList[i].qty) + 1).toString();
+
+      if (i > 0) {
+        _productList[i].qty = (int.parse(_productList[i].qty) + 1).toString();
+      }
     } else {
       product.qty = "1";
       _productList.add(product);

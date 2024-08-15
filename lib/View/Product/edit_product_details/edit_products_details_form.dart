@@ -89,7 +89,10 @@ class _EditProductsDetailsFormViewState
                                             color: styleSheet
                                                 .COLOR.productCardGreyColor),
                                         child: IconButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              pickedFile = null;
+                                              setState(() {});
+                                            },
                                             color: styleSheet.COLOR.redColor,
                                             icon: const Icon(Icons.close)),
                                       ),

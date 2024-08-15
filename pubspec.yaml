@@ -51,6 +51,7 @@ dependencies:
   percent_indicator: ^4.2.3
   image_picker: ^1.1.2
   syncfusion_flutter_datepicker: ^26.2.9
+  share_plus: ^10.0.1
 
 dev_dependencies:
   flutter_test:

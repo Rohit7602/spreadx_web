@@ -42,6 +42,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     "Purchase"
   ];
 
+  bool showHistory = false;
+
   @override
   Widget build(BuildContext context) {
     final defaultValue = Scaffold(
@@ -57,260 +59,260 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                     icon: const Icon(Icons.arrow_back_outlined)),
               ),
               Expanded(
-                  child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(widget.product.description,
+                                  style: styleSheet.TEXT_THEME.fs20Bold),
+                              styleSheet.appConfig.addHeight(5),
+                              Text(widget.product.description,
+                                  style: styleSheet.TEXT_THEME.fs14Medium
+                                      .copyWith(
+                                          color: styleSheet.COLOR.greyColor)),
+                              styleSheet.appConfig.addHeight(10),
+                              Container(
+                                padding: styleSheet.DECORATION.PADDING_10,
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        styleSheet.DECORATION.RADIUS_10,
+                                    color: styleSheet
+                                        .COLOR.discountCardGrenColor
+                                        .withOpacity(0.5)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(showHistory ? "Purchases" : "Sales",
+                                        style: styleSheet.TEXT_THEME.fs16Bold
+                                            .copyWith(
+                                                color: styleSheet
+                                                    .COLOR.greyColor)),
+                                    styleSheet.appConfig.addHeight(5),
+                                    Row(
+                                      children: [
+                                        Text("AED",
+                                            style:
+                                                styleSheet.TEXT_THEME.fs12Bold),
+                                        styleSheet.appConfig.addWidth(15),
+                                        Text("0.00",
+                                            style: styleSheet
+                                                .TEXT_THEME.fs14Bold
+                                                .copyWith(
+                                                    color: styleSheet
+                                                        .COLOR.greenColor)),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              styleSheet.appConfig.addHeight(5),
+                              Row(
+                                children: [
+                                  Expanded(
+                                      child: Container(
+                                    padding: styleSheet.DECORATION.PADDING_10,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            styleSheet.DECORATION.RADIUS_10,
+                                        color: styleSheet.COLOR.redColor
+                                            .withOpacity(0.1)),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Returns",
+                                            style: styleSheet
+                                                .TEXT_THEME.fs16Bold
+                                                .copyWith(
+                                                    color: styleSheet
+                                                        .COLOR.greyColor)),
+                                        styleSheet.appConfig.addHeight(5),
+                                        Row(
+                                          children: [
+                                            Text("AED",
+                                                style: styleSheet
+                                                    .TEXT_THEME.fs12Bold
+                                                    .copyWith(
+                                                        color: styleSheet
+                                                            .COLOR.greyColor)),
+                                            styleSheet.appConfig.addWidth(15),
+                                            Text("0.00",
+                                                style: styleSheet
+                                                    .TEXT_THEME.fs14Bold),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  )),
+                                  styleSheet.appConfig.addWidth(5),
+                                  Expanded(
+                                      child: Container(
+                                    padding: styleSheet.DECORATION.PADDING_10,
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            styleSheet.DECORATION.RADIUS_10,
+                                        color: styleSheet.COLOR.blueColor
+                                            .withOpacity(0.1)),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                            showHistory
+                                                ? "Purchase Quantity"
+                                                : "Sold Quantity",
+                                            style: styleSheet
+                                                .TEXT_THEME.fs16Bold
+                                                .copyWith(
+                                                    color: styleSheet
+                                                        .COLOR.greyColor)),
+                                        styleSheet.appConfig.addHeight(5),
+                                        Text("0.00",
+                                            style: styleSheet
+                                                .TEXT_THEME.fs12Bold
+                                                .copyWith(
+                                                    color: styleSheet
+                                                        .COLOR.primaryColor))
+                                      ],
+                                    ),
+                                  ))
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+
+                        // *********************************** Expansion Floating Button ***********************************
+                        Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsets.only(left: 20, right: 5),
+                          padding: const EdgeInsets.only(bottom: 10),
+                          decoration: BoxDecoration(
+                              color: styleSheet.COLOR.whiteColor,
+                              borderRadius: BorderRadius.circular(100),
+                              boxShadow: [
+                                BoxShadow(
+                                    spreadRadius: 1,
+                                    blurRadius: 1,
+                                    color: styleSheet.COLOR.greyColor
+                                        .withOpacity(0.5),
+                                    offset: const Offset(1, 0))
+                              ]),
+                          child: Padding(
+                            padding: const EdgeInsets.all(2),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(widget.product.description,
-                                    style: styleSheet.TEXT_THEME.fs20Bold),
-                                styleSheet.appConfig.addHeight(5),
-                                Text(widget.product.description,
-                                    style: styleSheet.TEXT_THEME.fs14Medium
-                                        .copyWith(
-                                            color: styleSheet.COLOR.greyColor)),
-                                styleSheet.appConfig.addHeight(10),
                                 Container(
-                                  padding: styleSheet.DECORATION.PADDING_10,
+                                  alignment: Alignment.center,
+                                  width: 50,
+                                  height: 50,
                                   decoration: BoxDecoration(
-                                      borderRadius:
-                                          styleSheet.DECORATION.RADIUS_10,
+                                      shape: BoxShape.circle,
                                       color: styleSheet
-                                          .COLOR.discountCardGrenColor
-                                          .withOpacity(0.5)),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Sales",
-                                          style: styleSheet.TEXT_THEME.fs16Bold
-                                              .copyWith(
-                                                  color: styleSheet
-                                                      .COLOR.greyColor)),
-                                      styleSheet.appConfig.addHeight(5),
-                                      Row(
-                                        children: [
-                                          Text("AED",
-                                              style: styleSheet
-                                                  .TEXT_THEME.fs12Bold),
-                                          styleSheet.appConfig.addWidth(15),
-                                          Text("0.00",
-                                              style: styleSheet
-                                                  .TEXT_THEME.fs14Bold
-                                                  .copyWith(
-                                                      color: styleSheet
-                                                          .COLOR.greenColor)),
-                                        ],
-                                      )
-                                    ],
+                                          .COLOR.productCardGreyColor),
+                                  child: Text(
+                                    "64 x 36",
+                                    style: styleSheet.TEXT_THEME.fs10Medium
+                                        .copyWith(
+                                            color: styleSheet.COLOR.greyColor),
                                   ),
                                 ),
                                 styleSheet.appConfig.addHeight(5),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                        child: Container(
-                                      padding: styleSheet.DECORATION.PADDING_10,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              styleSheet.DECORATION.RADIUS_10,
-                                          color: styleSheet.COLOR.redColor
-                                              .withOpacity(0.1)),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                Obx(() => expandEditButton.value
+                                    ? Column(
                                         children: [
-                                          Text("Returns",
-                                              style: styleSheet
-                                                  .TEXT_THEME.fs16Bold
-                                                  .copyWith(
-                                                      color: styleSheet
-                                                          .COLOR.greyColor)),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: styleSheet
+                                                    .COLOR.greenColor
+                                                    .withOpacity(0.2)),
+                                            child: IconButton.filled(
+                                                color: styleSheet
+                                                    .COLOR.darkGreenColor,
+                                                onPressed: () {
+                                                  expandEditButton(false);
+                                                  selected("edit");
+                                                },
+                                                padding:
+                                                    const EdgeInsets.all(10),
+                                                icon: const Icon(
+                                                    Icons.edit_outlined)),
+                                          ),
                                           styleSheet.appConfig.addHeight(5),
-                                          Row(
-                                            children: [
-                                              Text("AED",
-                                                  style: styleSheet
-                                                      .TEXT_THEME.fs12Bold
-                                                      .copyWith(
-                                                          color: styleSheet
-                                                              .COLOR
-                                                              .greyColor)),
-                                              styleSheet.appConfig.addWidth(15),
-                                              Text("0.00",
-                                                  style: styleSheet
-                                                      .TEXT_THEME.fs14Bold),
-                                            ],
-                                          )
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: styleSheet.COLOR.orange
+                                                    .withOpacity(0.2)),
+                                            child: IconButton.filled(
+                                                color: styleSheet.COLOR.orange,
+                                                onPressed: () {
+                                                  expandEditButton(false);
+                                                  // selected("transactions");
+                                                  setState(() {
+                                                    showHistory = !showHistory;
+                                                  });
+                                                },
+                                                padding:
+                                                    const EdgeInsets.all(10),
+                                                icon:
+                                                    const Icon(Icons.restore)),
+                                          ),
+                                          styleSheet.appConfig.addHeight(5),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: styleSheet.COLOR.redColor
+                                                    .withOpacity(0.2)),
+                                            child: IconButton.filled(
+                                                color:
+                                                    styleSheet.COLOR.redColor,
+                                                onPressed: () {
+                                                  expandEditButton(false);
+
+                                                  productController
+                                                      .removeProduct(
+                                                          widget.product.id);
+                                                  widget.onPressedBack!();
+                                                },
+                                                padding:
+                                                    const EdgeInsets.all(10),
+                                                icon: const Icon(Icons.delete)),
+                                          ),
                                         ],
-                                      ),
-                                    )),
-                                    styleSheet.appConfig.addWidth(5),
-                                    Expanded(
+                                      )
+                                    : InkWell(
+                                        onTap: () {
+                                          expandEditButton(true);
+                                        },
                                         child: Container(
-                                      padding: styleSheet.DECORATION.PADDING_10,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              styleSheet.DECORATION.RADIUS_10,
-                                          color: styleSheet.COLOR.blueColor
-                                              .withOpacity(0.1)),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text("Sold Quantity",
-                                              style: styleSheet
-                                                  .TEXT_THEME.fs16Bold
-                                                  .copyWith(
-                                                      color: styleSheet
-                                                          .COLOR.greyColor)),
-                                          styleSheet.appConfig.addHeight(5),
-                                          Text("0.00",
-                                              style: styleSheet
-                                                  .TEXT_THEME.fs12Bold
-                                                  .copyWith(
-                                                      color: styleSheet
-                                                          .COLOR.primaryColor))
-                                        ],
-                                      ),
-                                    ))
-                                  ],
-                                )
+                                          padding: const EdgeInsets.all(8.0),
+                                          child:
+                                              const Icon(Icons.add, size: 25),
+                                        ),
+                                      ))
                               ],
                             ),
                           ),
-
-                          // *********************************** Expansion Floating Button ***********************************
-                          Container(
-                            alignment: Alignment.center,
-                            margin: const EdgeInsets.only(left: 20, right: 5),
-                            padding: const EdgeInsets.only(bottom: 10),
-                            decoration: BoxDecoration(
-                                color: styleSheet.COLOR.whiteColor,
-                                borderRadius: BorderRadius.circular(100),
-                                boxShadow: [
-                                  BoxShadow(
-                                      spreadRadius: 1,
-                                      blurRadius: 1,
-                                      color: styleSheet.COLOR.greyColor
-                                          .withOpacity(0.5),
-                                      offset: const Offset(1, 0))
-                                ]),
-                            child: Padding(
-                              padding: const EdgeInsets.all(2),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    alignment: Alignment.center,
-                                    width: 50,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: styleSheet
-                                            .COLOR.productCardGreyColor),
-                                    child: Text(
-                                      "64 x 36",
-                                      style: styleSheet.TEXT_THEME.fs10Medium
-                                          .copyWith(
-                                              color:
-                                                  styleSheet.COLOR.greyColor),
-                                    ),
-                                  ),
-                                  styleSheet.appConfig.addHeight(5),
-                                  Obx(() => expandEditButton.value
-                                      ? Column(
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: styleSheet
-                                                      .COLOR.greenColor
-                                                      .withOpacity(0.2)),
-                                              child: IconButton.filled(
-                                                  color: styleSheet
-                                                      .COLOR.darkGreenColor,
-                                                  onPressed: () {
-                                                    expandEditButton(false);
-                                                    selected("edit");
-                                                  },
-                                                  padding:
-                                                      const EdgeInsets.all(10),
-                                                  icon: const Icon(
-                                                      Icons.edit_outlined)),
-                                            ),
-                                            styleSheet.appConfig.addHeight(5),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: styleSheet.COLOR.orange
-                                                      .withOpacity(0.2)),
-                                              child: IconButton.filled(
-                                                  color:
-                                                      styleSheet.COLOR.orange,
-                                                  onPressed: () {
-                                                    expandEditButton(false);
-                                                    // selected("transactions");
-                                                  },
-                                                  padding:
-                                                      const EdgeInsets.all(10),
-                                                  icon: const Icon(
-                                                      Icons.restore)),
-                                            ),
-                                            styleSheet.appConfig.addHeight(5),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: styleSheet
-                                                      .COLOR.redColor
-                                                      .withOpacity(0.2)),
-                                              child: IconButton.filled(
-                                                  color:
-                                                      styleSheet.COLOR.redColor,
-                                                  onPressed: () {
-                                                    expandEditButton(false);
-
-                                                    productController
-                                                        .removeProduct(
-                                                            widget.product.id);
-                                                    widget.onPressedBack!();
-                                                  },
-                                                  padding:
-                                                      const EdgeInsets.all(10),
-                                                  icon:
-                                                      const Icon(Icons.delete)),
-                                            ),
-                                          ],
-                                        )
-                                      : InkWell(
-                                          onTap: () {
-                                            expandEditButton(true);
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child:
-                                                const Icon(Icons.add, size: 25),
-                                          ),
-                                        ))
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      styleSheet.appConfig.addHeight(20),
-                      Text("Transactions",
-                          style: styleSheet.TEXT_THEME.fs20Bold
-                              .copyWith(color: styleSheet.COLOR.greyColor)),
-                      styleSheet.appConfig.addHeight(20),
-                      Container(
+                        )
+                      ],
+                    ),
+                    styleSheet.appConfig.addHeight(20),
+                    Text("Transactions",
+                        style: styleSheet.TEXT_THEME.fs20Bold
+                            .copyWith(color: styleSheet.COLOR.greyColor)),
+                    styleSheet.appConfig.addHeight(20),
+                    Expanded(
+                      child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         decoration: BoxDecoration(
                             color: styleSheet.COLOR.whiteColor,
@@ -364,55 +366,58 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                             ),
 
                             // ************************ Transactions List ************************
-                            ListView.separated(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 5),
-                                separatorBuilder: (context, i) =>
-                                    styleSheet.appConfig.addHeight(10),
-                                itemCount: transactionType.length,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, i) {
-                                  return Container(
-                                    color: styleSheet.COLOR.lightGreyColor,
-                                    child: ListTile(
-                                      leading: Image.asset(
-                                          styleSheet.icons.saleIcon,
-                                          color: styleSheet.COLOR.greyColor,
-                                          width: 24),
-                                      title: Text("Sales",
-                                          style:
-                                              styleSheet.TEXT_THEME.fs14Bold),
-                                      subtitle: Text("IN4290003",
-                                          style: styleSheet.TEXT_THEME.fs12Bold
-                                              .copyWith(
-                                                  color: styleSheet
-                                                      .COLOR.greyColor)),
-                                      trailing: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Text("+1.00",
-                                              style: styleSheet
-                                                  .TEXT_THEME.fs14Bold
-                                                  .copyWith(
-                                                      color: styleSheet
-                                                          .COLOR.greenColor)),
-                                          Text(
-                                              DateFormat("yyyy-MM-dd hh:mm:ss")
-                                                  .format(DateTime.now()),
-                                              style: styleSheet
-                                                  .TEXT_THEME.fs12Bold),
-                                        ],
+                            Expanded(
+                              child: ListView.separated(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  separatorBuilder: (context, i) =>
+                                      styleSheet.appConfig.addHeight(10),
+                                  itemCount: transactionType.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, i) {
+                                    return Container(
+                                      color: styleSheet.COLOR.lightGreyColor,
+                                      child: ListTile(
+                                        leading: Image.asset(
+                                            styleSheet.icons.saleIcon,
+                                            color: styleSheet.COLOR.greyColor,
+                                            width: 24),
+                                        title: Text("Sales",
+                                            style:
+                                                styleSheet.TEXT_THEME.fs14Bold),
+                                        subtitle: Text("IN4290003",
+                                            style: styleSheet
+                                                .TEXT_THEME.fs12Bold
+                                                .copyWith(
+                                                    color: styleSheet
+                                                        .COLOR.greyColor)),
+                                        trailing: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            Text("+1.00",
+                                                style: styleSheet
+                                                    .TEXT_THEME.fs14Bold
+                                                    .copyWith(
+                                                        color: styleSheet
+                                                            .COLOR.greenColor)),
+                                            Text(
+                                                DateFormat(
+                                                        "yyyy-MM-dd hh:mm:ss")
+                                                    .format(DateTime.now()),
+                                                style: styleSheet
+                                                    .TEXT_THEME.fs12Bold),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                })
+                                    );
+                                  }),
+                            )
                           ],
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 ),
               ))
             ],

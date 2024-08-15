@@ -8,7 +8,9 @@ import 'package:spreadx_web/main.dart';
 
 class TransactionDetailsView extends StatefulWidget {
   final void Function()? onPressedBack;
-  const TransactionDetailsView({super.key, required this.onPressedBack});
+  bool isComingFromTr;
+  TransactionDetailsView(
+      {super.key, required this.onPressedBack, this.isComingFromTr = true});
 
   @override
   State<TransactionDetailsView> createState() => _TransactionDetailsViewState();
@@ -227,7 +229,9 @@ class _TransactionDetailsViewState extends State<TransactionDetailsView> {
                         children: [
                           Expanded(
                               child: AddProductBtn(
-                                  ontap: () {},
+                                  ontap: () {
+                                    styleSheet.appConfig.shareNow();
+                                  },
                                   title: "Share",
                                   icon: Icons.share_outlined)),
                           styleSheet.appConfig.addWidth(15),
@@ -249,13 +253,14 @@ class _TransactionDetailsViewState extends State<TransactionDetailsView> {
                                   title: "Reprint",
                                   icon: Icons.print_outlined)),
                           styleSheet.appConfig.addWidth(15),
-                          Expanded(
-                              child: AddProductBtn(
-                                  ontap: () {
-                                    selected("refund");
-                                  },
-                                  title: "Issue Refund",
-                                  icon: Icons.wallet)),
+                          if (widget.isComingFromTr)
+                            Expanded(
+                                child: AddProductBtn(
+                                    ontap: () {
+                                      selected("refund");
+                                    },
+                                    title: "Issue Refund",
+                                    icon: Icons.wallet)),
                         ],
                       )
                     ],

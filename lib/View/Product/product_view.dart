@@ -2,7 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spreadx_web/Components/Button/text_btn.dart';
 import 'package:spreadx_web/Components/Controller/product_controller.dart';
+import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
+import 'package:spreadx_web/Components/Dialog/filter_product_dialog.dart';
 import 'package:spreadx_web/Components/Models/product_model.dart';
 import 'package:spreadx_web/View/Product/add_product/add_product_view.dart';
 import 'package:spreadx_web/View/Product/product_details_view.dart';
@@ -39,16 +42,22 @@ class _ProductViewState extends State<ProductView> {
                   children: [
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(
-                        Icons.qr_code_scanner,
+                      icon: Image.asset(
+                        styleSheet.icons.scannerIcon,
                         color: styleSheet.COLOR.primaryColor,
                       ),
                     ),
                     styleSheet.appConfig.addWidth(10),
                     IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.menu,
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const FilterProductDialog();
+                            });
+                      },
+                      icon: Image.asset(
+                        styleSheet.icons.filterIcon,
                         color: styleSheet.COLOR.primaryColor,
                       ),
                     ),
@@ -166,6 +175,7 @@ class _ProductViewState extends State<ProductView> {
       } else if (selectedView.value == "add") {
         return AddProductView(onPressedBack: () {
           selectedView("default");
+          setState(() {});
         });
       } else {
         return ProductDetailsView(
