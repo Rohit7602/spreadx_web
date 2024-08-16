@@ -54,16 +54,14 @@ class _EditProductAddBrandViewState extends State<EditProductAddBrandView> {
                     onPressed: widget.onPressedBack,
                     icon: const Icon(Icons.arrow_back_outlined)),
               ),
-              Expanded(
-                  child: Column(
+              Column(
                 children: [
                   PrimaryTextFormField(
                       prefixIcon: const Icon(Icons.search),
                       onTap: () => openVirtualKeyboard(),
                       hinttext: "Search Brand..."),
                   styleSheet.appConfig.addHeight(10),
-                  Expanded(
-                      child: Obx(
+                  Obx(
                     () => GridView.builder(
                         itemCount: _brands.length,
                         shrinkWrap: true,
@@ -83,9 +81,9 @@ class _EditProductAddBrandViewState extends State<EditProductAddBrandView> {
                                 style: styleSheet.TEXT_THEME.fs18Bold),
                           );
                         }),
-                  ))
+                  )
                 ],
-              ))
+              )
             ],
           ),
         ),

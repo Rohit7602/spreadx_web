@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Data/local_data.dart';
-import 'package:spreadx_web/Utils/Routes/routes.dart';
 
 class CustomerController extends GetxController {
   final RxList<CustomerModel> _addCustomer = RxList<CustomerModel>([]);

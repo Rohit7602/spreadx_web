@@ -158,7 +158,7 @@ class _DetailedViewState extends State<_DetailedView> {
                   ),
                   hinttext: "Brand",
                   onTap: () =>
-                      {widget.onPressedBack(EditProductDetailStates.Brand)},
+                      widget.onPressedBack(EditProductDetailStates.Brand),
                 ),
                 styleSheet.appConfig.addHeight(20),
                 SecondaryTextFormField(
@@ -176,7 +176,7 @@ class _DetailedViewState extends State<_DetailedView> {
                   ),
                   hinttext: "Category",
                   onTap: () =>
-                      {widget.onPressedBack(EditProductDetailStates.Category)},
+                      widget.onPressedBack(EditProductDetailStates.Category),
                 ),
                 styleSheet.appConfig.addHeight(20),
                 SecondaryTextFormField(
@@ -194,7 +194,7 @@ class _DetailedViewState extends State<_DetailedView> {
                   ),
                   hinttext: "Packing",
                   onTap: () =>
-                      {widget.onPressedBack(EditProductDetailStates.Packing)},
+                      widget.onPressedBack(EditProductDetailStates.Packing),
                 ),
                 Container(
                   decoration: BoxDecoration(color: styleSheet.COLOR.whiteColor),
