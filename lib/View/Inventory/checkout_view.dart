@@ -14,7 +14,9 @@ import 'package:spreadx_web/main.dart';
 
 class CheckoutView extends StatefulWidget {
   final void Function()? onPressedBack;
-  const CheckoutView({required this.onPressedBack, super.key});
+  bool showISSupplier;
+  CheckoutView(
+      {required this.onPressedBack, this.showISSupplier = false, super.key});
 
   @override
   State<CheckoutView> createState() => _CheckoutViewState();
@@ -47,26 +49,27 @@ class _CheckoutViewState extends State<CheckoutView> {
                   icon: const Icon(Icons.arrow_back)),
             ),
             styleSheet.appConfig.addHeight(20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TextButtonView(
-                    btnName: "Add Supplier",
-                    onPressed: () async {
-                      await showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const AssignSupplierDialog();
-                          }).then((val) {
-                        if (val != null) {
-                          setState(() {
-                            addSupplier = val;
-                          });
-                        }
-                      });
-                    }),
-              ],
-            ),
+            if (widget.showISSupplier)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  TextButtonView(
+                      btnName: "Add Supplier",
+                      onPressed: () async {
+                        await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const AssignSupplierDialog();
+                            }).then((val) {
+                          if (val != null) {
+                            setState(() {
+                              addSupplier = val;
+                            });
+                          }
+                        });
+                      }),
+                ],
+              ),
             styleSheet.appConfig.addHeight(10),
             addSupplier.isNotEmpty
                 ? Container(

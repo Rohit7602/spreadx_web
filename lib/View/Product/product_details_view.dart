@@ -382,10 +382,14 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                             styleSheet.icons.saleIcon,
                                             color: styleSheet.COLOR.greyColor,
                                             width: 24),
-                                        title: Text("Sales",
+                                        title: Text(
+                                            showHistory ? "Purchases" : "Sales",
                                             style:
                                                 styleSheet.TEXT_THEME.fs14Bold),
-                                        subtitle: Text("IN4290003",
+                                        subtitle: Text(
+                                            showHistory
+                                                ? "PIN4290003"
+                                                : "IN4290003",
                                             style: styleSheet
                                                 .TEXT_THEME.fs12Bold
                                                 .copyWith(

@@ -35,6 +35,7 @@ class CheckStockAvailabilityTile extends StatelessWidget {
         ),
         Obx(() => enableCheckStockAvailability.value
             ? SecondaryTextFormField(
+                allowNumbers: true,
                 label: true,
                 hinttext: "Initial Stock",
                 onTap: () => openVirtualKeyboard(),

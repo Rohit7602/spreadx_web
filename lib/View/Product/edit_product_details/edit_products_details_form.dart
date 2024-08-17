@@ -33,6 +33,9 @@ class _EditProductsDetailsFormViewState
 
   File? pickedFile;
 
+  String brand = "default";
+  String category = "default";
+
   @override
   Widget build(BuildContext context) {
     final defaultView = Scaffold(
@@ -182,11 +185,18 @@ class _EditProductsDetailsFormViewState
                         child: Column(
                       children: [
                         SecondaryTextFormField(
+                          allowNumbers: true,
+                          label: true,
+                          hinttext: "VAT",
+                          onTap: () => openVirtualKeyboard(),
+                        ),
+                        styleSheet.appConfig.addHeight(20),
+                        SecondaryTextFormField(
                           readOnly: true,
                           suffixicon: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text("default",
+                              Text(brand,
                                   style: styleSheet.TEXT_THEME.fs12Bold
                                       .copyWith(
                                           color:
@@ -206,7 +216,7 @@ class _EditProductsDetailsFormViewState
                           suffixicon: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text("default",
+                              Text(category,
                                   style: styleSheet.TEXT_THEME.fs12Bold
                                       .copyWith(
                                           color:
@@ -297,10 +307,26 @@ class _EditProductsDetailsFormViewState
       switch (selected.value) {
         case EditProductDetailStates.Brand:
           return EditProductAddBrandView(
-              product: widget.product, onPressedBack: onPressedBack);
+              product: widget.product,
+              onPressedBack: (val) {
+                if (val.isNotEmpty) {
+                  setState(() {
+                    brand = val;
+                  });
+                }
+                onPressedBack();
+              });
         case EditProductDetailStates.Category:
           return EditProductAddCategoryView(
-              product: widget.product, onPressedBack: onPressedBack);
+              product: widget.product,
+              onPressedBack: (val) {
+                if (val.isNotEmpty) {
+                  setState(() {
+                    category = val;
+                  });
+                }
+                onPressedBack();
+              });
         case EditProductDetailStates.Packing:
           return EditProductAddPackingView(
               product: widget.product, onPressedBack: onPressedBack);

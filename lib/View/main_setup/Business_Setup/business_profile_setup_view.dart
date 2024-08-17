@@ -27,6 +27,12 @@ class _BusinessProfileSetupViewState extends State<BusinessProfileSetupView> {
 
   final phoneController = TextEditingController();
 
+  final businessNameController = TextEditingController();
+  final licenseNumberController = TextEditingController();
+  final trnController = TextEditingController();
+  final businessEmailController = TextEditingController();
+  final businessAddressController = TextEditingController();
+
   File? pickedFile;
 
   @override
@@ -103,19 +109,25 @@ class _BusinessProfileSetupViewState extends State<BusinessProfileSetupView> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("bot#3456784rf456\nBusiness",
+                                Text(
+                                    "${businessNameController.text.isNotEmpty ? businessNameController.text : "N/A"}\nBusiness",
                                     textAlign: TextAlign.center,
                                     style: styleSheet.TEXT_THEME.fs20Bold),
                                 styleSheet.appConfig.addHeight(5),
-                                Text("N/A",
+                                Text(
+                                    businessAddressController.text.isNotEmpty
+                                        ? businessAddressController.text
+                                        : "N/A",
                                     textAlign: TextAlign.center,
                                     style: styleSheet.TEXT_THEME.fs16Bold),
                                 styleSheet.appConfig.addHeight(5),
-                                Text("Phone : N/A",
+                                Text(
+                                    "Phone : ${phoneController.text.isNotEmpty ? phoneController.text : "N/A"}",
                                     textAlign: TextAlign.center,
                                     style: styleSheet.TEXT_THEME.fs14Bold),
                                 styleSheet.appConfig.addHeight(5),
-                                Text("TRN : N/A",
+                                Text(
+                                    "TRN : ${trnController.text.isNotEmpty ? trnController.text : "N/A"}",
                                     textAlign: TextAlign.center,
                                     style: styleSheet.TEXT_THEME.fs12Medium),
                               ],
@@ -133,24 +145,28 @@ class _BusinessProfileSetupViewState extends State<BusinessProfileSetupView> {
                             style: styleSheet.TEXT_THEME.fs18Bold),
                         styleSheet.appConfig.addHeight(10),
                         SecondaryTextFormField(
+                          controller: businessNameController,
                           onTap: () => openVirtualKeyboard(),
                           label: true,
                           hinttext: "Business Name",
                         ),
                         styleSheet.appConfig.addHeight(20),
                         SecondaryTextFormField(
+                          controller: licenseNumberController,
                           onTap: () => openVirtualKeyboard(),
                           label: true,
                           hinttext: "Trade Licence Number",
                         ),
                         styleSheet.appConfig.addHeight(20),
                         SecondaryTextFormField(
+                          controller: trnController,
                           onTap: () => openVirtualKeyboard(),
                           label: true,
                           hinttext: "TRN",
                         ),
                         styleSheet.appConfig.addHeight(20),
                         SecondaryTextFormField(
+                          controller: businessEmailController,
                           onTap: () => openVirtualKeyboard(),
                           label: true,
                           hinttext: "Business Email",
@@ -195,6 +211,7 @@ class _BusinessProfileSetupViewState extends State<BusinessProfileSetupView> {
                             style: styleSheet.TEXT_THEME.fs18Bold),
                         styleSheet.appConfig.addHeight(10),
                         SecondaryTextFormField(
+                          controller: businessAddressController,
                           onTap: () => openVirtualKeyboard(),
                           label: true,
                           hinttext: "Business Address",
@@ -202,7 +219,9 @@ class _BusinessProfileSetupViewState extends State<BusinessProfileSetupView> {
                         styleSheet.appConfig.addHeight(40),
                         PrimaryBtnView(
                             btnName: "Update",
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {});
+                            },
                             isExpanded: true)
                       ],
                     ))

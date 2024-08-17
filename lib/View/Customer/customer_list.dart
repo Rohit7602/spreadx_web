@@ -107,7 +107,8 @@ class _CustomerListViewState extends State<CustomerListView> {
                                                       BorderRadius.circular(
                                                           15)),
                                               child: Text(
-                                                "unknown",
+                                                controller.customer[i]
+                                                    .accountCategory,
                                                 style: styleSheet
                                                     .TEXT_THEME.fs10Medium
                                                     .copyWith(
@@ -128,7 +129,8 @@ class _CustomerListViewState extends State<CustomerListView> {
                                                       BorderRadius.circular(
                                                           15)),
                                               child: Text(
-                                                "cash",
+                                                controller
+                                                    .customer[i].accountType,
                                                 style: styleSheet
                                                     .TEXT_THEME.fs10Medium
                                                     .copyWith(

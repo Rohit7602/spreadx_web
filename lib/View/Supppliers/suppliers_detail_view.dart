@@ -9,7 +9,12 @@ import 'package:spreadx_web/main.dart';
 
 class SupplierDetailsView extends StatefulWidget {
   final void Function()? onPressedBack;
-  const SupplierDetailsView({super.key, required this.onPressedBack});
+  SuppliersModel supplierModel;
+  SupplierDetailsView({
+    super.key,
+    required this.onPressedBack,
+    required this.supplierModel,
+  });
 
   @override
   State<SupplierDetailsView> createState() => _SupplierDetailsViewState();
@@ -23,19 +28,15 @@ class _SupplierDetailsViewState extends State<SupplierDetailsView> {
   final RxString selected = "default".obs;
 
   final List<String> transactionType = [
-    "Sales",
-    "Sales",
-    "Return",
-    "Return",
-    "Sales",
-    "Sales",
     "Purchase",
-    "Return",
-    "Sales",
     "Purchase",
-    "Sales",
-    "Return",
-    "Sales"
+    "Purchase",
+    "Purchase",
+    "Purchase",
+    "Purchase",
+    "Purchase",
+    "Purchase",
+    "Purchase",
   ];
 
   @override
@@ -67,7 +68,7 @@ class _SupplierDetailsViewState extends State<SupplierDetailsView> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("default",
+                                  Text(widget.supplierModel.name,
                                       style: styleSheet.TEXT_THEME.fs20Bold),
                                   styleSheet.appConfig.addHeight(15),
                                   Container(
@@ -411,6 +412,7 @@ class _SupplierDetailsViewState extends State<SupplierDetailsView> {
         return defaultValue;
       } else if (selected.value == "transactions") {
         return CustomerTransactionView(
+          isShowIssueRefund: false,
           onPressedBack: setDefaultView,
         );
       } else {

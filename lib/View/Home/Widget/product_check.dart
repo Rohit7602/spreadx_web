@@ -2,7 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Controller/product_controller.dart';
+import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
+import 'package:spreadx_web/Components/Dialog/enter_weight_dialog.dart';
 import 'package:spreadx_web/Components/Models/product_model.dart';
 import 'package:spreadx_web/Components/custom_grid.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
@@ -275,11 +278,22 @@ class _ProductCheckViewState extends State<ProductCheckView> {
                           child: isCategory
                               ? const CustomGridForCategory()
                               : GestureDetector(
-                                  onTap: () {
-                                    var product = Get.find<ProductController>();
-                                    product.addProducts(pr);
-                                    itemCount++;
-                                    setState(() {});
+                                  onTap: () async {
+                                    if (i == 1) {
+                                      await showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return const EnterWeightDialog();
+                                          }).then((val) {
+                                        product.addProducts(pr);
+                                        itemCount++;
+                                        setState(() {});
+                                      });
+                                    } else {
+                                      product.addProducts(pr);
+                                      itemCount++;
+                                      setState(() {});
+                                    }
                                   },
                                   child: CustomGridForProducts(
                                     data: pr,
@@ -299,21 +313,27 @@ class _ProductCheckViewState extends State<ProductCheckView> {
                             onTap: () {
                               isCategory = false;
                               setState(() {});
-                              // var product = Get.find<ProductController>();
-                              // product.addProducts(pr);
-                              // itemCount++;
-                              // setState(() {});
                             },
                             child: isCategory
                                 ? GestureDetector(
                                     child: const CustomListForCategory())
                                 : GestureDetector(
-                                    onTap: () {
-                                      var product =
-                                          Get.find<ProductController>();
-                                      product.addProducts(pr);
-                                      itemCount++;
-                                      setState(() {});
+                                    onTap: () async {
+                                      if (i == 1) {
+                                        await showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return const EnterWeightDialog();
+                                            }).then((val) {
+                                          product.addProducts(pr);
+                                          itemCount++;
+                                          setState(() {});
+                                        });
+                                      } else {
+                                        product.addProducts(pr);
+                                        itemCount++;
+                                        setState(() {});
+                                      }
                                     },
                                     child: CustomListForProducts(
                                       data: pr,

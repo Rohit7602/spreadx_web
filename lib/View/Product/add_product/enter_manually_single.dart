@@ -19,6 +19,7 @@ import 'package:spreadx_web/View/Product/edit_product_details/edit_product_detai
 import 'package:spreadx_web/View/Product/edit_product_details/widgets/add_packing_dialog.dart';
 import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
+import 'package:win32/win32.dart';
 
 part 'widgets/detailed_view.dart';
 part 'widgets/quick_add_view.dart';
@@ -180,23 +181,21 @@ class _EnterManuallySingleProductViewState
     return Obx(() {
       switch (selectedView.value) {
         case EditProductDetailStates.Brand:
-          return Expanded(
-            child: EditProductAddBrandView(
-                product: ProductModel("456789", "Default", "", "", "", "", ""),
-                onPressedBack: setDefaultView),
-          );
+          return EditProductAddBrandView(
+              product: ProductModel("456789", "Default", "", "", "", "", ""),
+              onPressedBack: (val) {
+                setDefaultView();
+              });
         case EditProductDetailStates.Category:
-          return Expanded(
-            child: EditProductAddCategoryView(
-                product: ProductModel("456789", "Default", "", "", "", "", ""),
-                onPressedBack: setDefaultView),
-          );
+          return EditProductAddCategoryView(
+              product: ProductModel("456789", "Default", "", "", "", "", ""),
+              onPressedBack: (val) {
+                setDefaultView();
+              });
         case EditProductDetailStates.Packing:
-          return Expanded(
-            child: EditProductAddPackingView(
-                product: ProductModel("456789", "Default", "", "", "", "", ""),
-                onPressedBack: setDefaultView),
-          );
+          return EditProductAddPackingView(
+              product: ProductModel("456789", "Default", "", "", "", "", ""),
+              onPressedBack: setDefaultView);
         default:
           return defaultView;
       }

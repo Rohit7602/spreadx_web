@@ -8,13 +8,16 @@ import 'package:spreadx_web/Components/Controller/product_controller.dart';
 import 'package:spreadx_web/Components/Dialog/custom_item_dialog.dart';
 import 'package:spreadx_web/Components/custom_grid.dart';
 import 'package:spreadx_web/Data/local_data.dart';
+import 'package:spreadx_web/View/Home/Widget/product_check.dart';
 import 'package:spreadx_web/View/Inventory/checkout_view.dart';
 import 'package:spreadx_web/View/Inventory/invoice_view.dart';
 import 'package:spreadx_web/main.dart';
 
 class PurchaseProductsView extends StatefulWidget {
   void Function() onPressedBack;
-  PurchaseProductsView({required this.onPressedBack, super.key});
+  bool? isSupplier;
+  PurchaseProductsView(
+      {required this.onPressedBack, this.isSupplier, super.key});
 
   @override
   State<PurchaseProductsView> createState() => _PurchaseProductsViewState();
@@ -336,82 +339,83 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
                         itemBuilder: (context, i) {
                           return LayoutBuilder(builder: (context, constraints) {
                             final pr = LocalData.productList[i];
-                            return Stack(
-                              alignment: Alignment.topRight,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    var product = Get.find<ProductController>();
-                                    product.addProducts(pr);
-                                    itemCount++;
-                                    setState(() {});
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.bottomCenter,
-                                    height: 90,
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            styleSheet.DECORATION.RADIUS_5,
-                                        color: styleSheet
-                                            .COLOR.productCardGreyColor,
-                                        boxShadow: [
-                                          BoxShadow(
-                                              offset: const Offset(0, 4),
-                                              color: styleSheet.COLOR.blackColor
-                                                  .withOpacity(0.2),
-                                              blurRadius: 8),
-                                        ]),
+
+                            if (isCategory) {
+                              return Stack(
+                                alignment: Alignment.topRight,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      isCategory = false;
+                                      setState(() {});
+                                      // var product =
+                                      //     Get.find<ProductController>();
+                                      // product.addProducts(pr);
+                                      // itemCount++;
+                                      // setState(() {});
+                                    },
                                     child: Container(
-                                        padding: const EdgeInsets.only(left: 5),
-                                        alignment: Alignment.centerLeft,
-                                        width: styleSheet.appConfig
-                                            .getScreenWidth(context),
-                                        height: 35,
-                                        decoration: BoxDecoration(
-                                          color: styleSheet.COLOR.blackColor,
+                                      alignment: Alignment.bottomCenter,
+                                      height: 90,
+                                      decoration: BoxDecoration(
                                           borderRadius:
                                               styleSheet.DECORATION.RADIUS_5,
-                                        ),
-                                        child: Text("Grocery Items (1)",
-                                            style: styleSheet
-                                                .TEXT_THEME.fs12Medium
-                                                .copyWith(
-                                                    color: styleSheet
-                                                        .COLOR.whiteColor))),
+                                          color: styleSheet
+                                              .COLOR.productCardGreyColor,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                offset: const Offset(0, 4),
+                                                color: styleSheet
+                                                    .COLOR.blackColor
+                                                    .withOpacity(0.2),
+                                                blurRadius: 8),
+                                          ]),
+                                      child: Container(
+                                          padding:
+                                              const EdgeInsets.only(left: 5),
+                                          alignment: Alignment.centerLeft,
+                                          width: styleSheet.appConfig
+                                              .getScreenWidth(context),
+                                          height: 35,
+                                          decoration: BoxDecoration(
+                                            color: styleSheet.COLOR.blackColor,
+                                            borderRadius:
+                                                styleSheet.DECORATION.RADIUS_5,
+                                          ),
+                                          child: Text("Grocery Items (1)",
+                                              style: styleSheet
+                                                  .TEXT_THEME.fs12Medium
+                                                  .copyWith(
+                                                      color: styleSheet
+                                                          .COLOR.whiteColor))),
+                                    ),
                                   ),
-                                ),
-                                // itemCount != 0
-                                //     ? Container(
-                                //         margin: styleSheet.DECORATION.PADDING_2,
-                                //         padding:
-                                //             styleSheet.DECORATION.PADDING_5,
-                                //         decoration: BoxDecoration(
-                                //             color: styleSheet.COLOR.greenColor,
-                                //             borderRadius:
-                                //                 styleSheet.DECORATION.RADIUS_5),
-                                //         child: Text(
-                                //           "${itemCount.toString()}.0",
-                                //           style: styleSheet
-                                //               .TEXT_THEME.fs12Medium
-                                //               .copyWith(
-                                //                   color: styleSheet
-                                //                       .COLOR.whiteColor),
-                                //         ),
-                                //       )
-                                //     : const SizedBox()
-                              ],
-                            );
-                          });
-                        })
-                    : ListView.separated(
-                        itemCount: 1,
-                        itemBuilder: (context, i) {
-                          return LayoutBuilder(builder: (context, constraints) {
-                            final pr = LocalData.productList[i];
-                            return Stack(
-                              alignment: Alignment.topRight,
-                              children: [
-                                GestureDetector(
+                                  // itemCount != 0
+                                  //     ? Container(
+                                  //         margin: styleSheet.DECORATION.PADDING_2,
+                                  //         padding:
+                                  //             styleSheet.DECORATION.PADDING_5,
+                                  //         decoration: BoxDecoration(
+                                  //             color: styleSheet.COLOR.greenColor,
+                                  //             borderRadius:
+                                  //                 styleSheet.DECORATION.RADIUS_5),
+                                  //         child: Text(
+                                  //           "${itemCount.toString()}.0",
+                                  //           style: styleSheet
+                                  //               .TEXT_THEME.fs12Medium
+                                  //               .copyWith(
+                                  //                   color: styleSheet
+                                  //                       .COLOR.whiteColor),
+                                  //         ),
+                                  //       )
+                                  //     : const SizedBox()
+                                ],
+                              );
+                            } else {
+                              return Stack(
+                                alignment: Alignment.topRight,
+                                children: [
+                                  GestureDetector(
                                     onTap: () {
                                       var product =
                                           Get.find<ProductController>();
@@ -419,28 +423,85 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
                                       itemCount++;
                                       setState(() {});
                                     },
-                                    child: const CustomListForCategory()),
-                                itemCount != 0
-                                    ? Container(
-                                        margin: styleSheet.DECORATION.PADDING_2,
-                                        padding:
-                                            styleSheet.DECORATION.PADDING_5,
-                                        decoration: BoxDecoration(
-                                            color: styleSheet.COLOR.greenColor,
-                                            borderRadius:
-                                                styleSheet.DECORATION.RADIUS_5),
-                                        child: Text(
-                                          "${itemCount.toString()}.0",
-                                          style: styleSheet
-                                              .TEXT_THEME.fs12Medium
-                                              .copyWith(
+                                    child: CustomGridForProducts(
+                                      data: pr,
+                                      isInCart: false,
+                                    ),
+                                  ),
+                                  itemCount != 0
+                                      ? Container(
+                                          margin:
+                                              styleSheet.DECORATION.PADDING_2,
+                                          padding:
+                                              styleSheet.DECORATION.PADDING_5,
+                                          decoration: BoxDecoration(
+                                              color:
+                                                  styleSheet.COLOR.greenColor,
+                                              borderRadius: styleSheet
+                                                  .DECORATION.RADIUS_5),
+                                          child: Text(
+                                            "${itemCount.toString()}.0",
+                                            style: styleSheet
+                                                .TEXT_THEME.fs12Medium
+                                                .copyWith(
+                                                    color: styleSheet
+                                                        .COLOR.whiteColor),
+                                          ),
+                                        )
+                                      : const SizedBox()
+                                ],
+                              );
+                            }
+                          });
+                        })
+                    : ListView.separated(
+                        itemCount: 1,
+                        itemBuilder: (context, i) {
+                          return LayoutBuilder(builder: (context, constraints) {
+                            final pr = LocalData.productList[i];
+                            return isCategory
+                                ? GestureDetector(
+                                    onTap: () {
+                                      isCategory = false;
+                                      setState(() {});
+                                    },
+                                    child: const CustomListForCategory())
+                                : Stack(
+                                    alignment: Alignment.topRight,
+                                    children: [
+                                      InkWell(
+                                          onTap: () {
+                                            var product =
+                                                Get.find<ProductController>();
+                                            product.addProducts(pr);
+                                            itemCount++;
+                                            setState(() {});
+                                          },
+                                          child:
+                                              CustomListForProducts(data: pr)),
+                                      itemCount != 0
+                                          ? Container(
+                                              margin: styleSheet
+                                                  .DECORATION.PADDING_2,
+                                              padding: styleSheet
+                                                  .DECORATION.PADDING_5,
+                                              decoration: BoxDecoration(
                                                   color: styleSheet
-                                                      .COLOR.whiteColor),
-                                        ),
-                                      )
-                                    : const SizedBox()
-                              ],
-                            );
+                                                      .COLOR.greenColor,
+                                                  borderRadius: styleSheet
+                                                      .DECORATION.RADIUS_5),
+                                              child: Text(
+                                                "${itemCount.toString()}.0",
+                                                style: styleSheet
+                                                    .TEXT_THEME.fs12Medium
+                                                    .copyWith(
+                                                        color: styleSheet
+                                                            .COLOR.whiteColor),
+                                              ),
+                                            )
+                                          : const SizedBox()
+                                    ],
+                                  );
                           });
                         },
                         separatorBuilder: (BuildContext context, int index) =>
@@ -479,6 +540,7 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
     return Obx(() {
       if (selectedView.value == "checkout") {
         return CheckoutView(
+          showISSupplier: widget.isSupplier != null ? widget.isSupplier! : true,
           onPressedBack: () {
             selectedView("default");
             setState(() {});

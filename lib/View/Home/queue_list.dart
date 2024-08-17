@@ -41,6 +41,7 @@ class _QueueListViewState extends State<QueueListView> {
                   itemBuilder: (context, i) {
                     return InkWell(
                       onTap: () {
+                        queueList.setQueueRibon(true);
                         queueList.addProducts(queueList.queueList[i]);
                       },
                       child: Stack(

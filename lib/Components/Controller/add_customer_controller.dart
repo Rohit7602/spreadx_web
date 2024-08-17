@@ -78,12 +78,21 @@ class CustomerController extends GetxController {
         number: _phoneNumber.text,
         email: email.text,
         accountType: accountType,
-        address: address.text);
+        address: address.text,
+        accountCategory: accountCategory);
 
     addCustomer(data);
     barcode.clear();
     phoneNumber.clear();
+    code.clear();
     email.clear();
+    lastName.clear();
+    businessName.clear();
+    businessType.clear();
+    creditLimit.clear();
+    daysLimit.clear();
+    address.clear();
+
     setAccountType("");
   }
 }

@@ -122,9 +122,9 @@ class _EnterManuallyMultipleProductsViewState
                                     label: const Text('No'),
                                     size: ColumnSize.L,
                                   ),
-                                  DataColumn2(
-                                    fixedWidth: view.tableSmallWidth,
-                                    label: const Text('Barcode'),
+                                  const DataColumn2(
+                                    fixedWidth: 120,
+                                    label: Text('Barcode'),
                                   ),
                                   const DataColumn2(
                                     label: Text('Description'),
@@ -175,7 +175,7 @@ class _EnterManuallyMultipleProductsViewState
                                               builder: (context) {
                                                 return const EditProductDialog();
                                               }),
-                                          Text("22".toString())),
+                                          Text(products[index].barCode)),
                                       DataCell(
                                           onTap: () => showDialog(
                                               context: context,

@@ -313,18 +313,6 @@ class _EditProductDialogState extends State<EditProductDialog> {
                           onTap: () => openVirtualKeyboard(),
                         ),
                       ),
-                      styleSheet.appConfig.addWidth(10),
-                      Expanded(
-                        child: Obx(() => PrimaryDropDown(
-                            isExpanded: true,
-                            border: true,
-                            hint: "Vat",
-                            dropdownValue: category.value,
-                            items: const ["Vat Included", "Vat Excluded"],
-                            value: (v) {
-                              brand(v!);
-                            })),
-                      ),
                     ],
                   ),
                   styleSheet.appConfig.addHeight(20),

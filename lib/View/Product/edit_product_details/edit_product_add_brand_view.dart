@@ -8,7 +8,7 @@ import 'package:spreadx_web/main.dart';
 
 class EditProductAddBrandView extends StatefulWidget {
   final ProductModel product;
-  final void Function()? onPressedBack;
+  final void Function(String)? onPressedBack;
   const EditProductAddBrandView(
       {super.key, required this.product, required this.onPressedBack});
 
@@ -51,7 +51,9 @@ class _EditProductAddBrandViewState extends State<EditProductAddBrandView> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
-                    onPressed: widget.onPressedBack,
+                    onPressed: () {
+                      widget.onPressedBack!("");
+                    },
                     icon: const Icon(Icons.arrow_back_outlined)),
               ),
               Column(
@@ -72,13 +74,18 @@ class _EditProductAddBrandViewState extends State<EditProductAddBrandView> {
                                 crossAxisSpacing: 20,
                                 mainAxisSpacing: 20),
                         itemBuilder: (context, i) {
-                          return Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: styleSheet.COLOR.fieldGreyColor)),
-                            child: Text(_brands[i],
-                                style: styleSheet.TEXT_THEME.fs18Bold),
+                          return InkWell(
+                            onTap: () {
+                              widget.onPressedBack!(_brands[i]);
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: styleSheet.COLOR.fieldGreyColor)),
+                              child: Text(_brands[i],
+                                  style: styleSheet.TEXT_THEME.fs18Bold),
+                            ),
                           );
                         }),
                   )

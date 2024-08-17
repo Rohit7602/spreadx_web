@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/Controller/navigation_controller.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/View/Reports/enteries_view.dart';
 import 'package:spreadx_web/main.dart';
@@ -10,6 +11,8 @@ class TotalVatReportView extends StatelessWidget {
   TotalVatReportView({required this.onPressedBack, super.key});
 
   RxString selectedView = RxString("default");
+
+  var navController = Get.find<NavigationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +24,7 @@ class TotalVatReportView extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
+                navController.setExportBtn(true);
                 selectedView("enteries");
               },
               child: Container(
@@ -327,5 +331,8 @@ class TotalVatReportView extends StatelessWidget {
     });
   }
 
-  setDefault() => selectedView("default");
+  setDefault() {
+    navController.setExportBtn(false);
+    selectedView("default");
+  }
 }

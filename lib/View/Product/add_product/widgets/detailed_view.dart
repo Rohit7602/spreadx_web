@@ -23,9 +23,9 @@ class _DetailedViewState extends State<_DetailedView> {
       children: [
         /// ************************************ Section 1 ************************************
         /// ***********************************************************************************
-        Flexible(
-          flex: 1,
+        Expanded(
           child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: [
               pickedFile != null
                   ? Image.file(
@@ -33,11 +33,15 @@ class _DetailedViewState extends State<_DetailedView> {
                         pickedFile!.path,
                       ),
                       fit: BoxFit.cover,
+                      height:
+                          styleSheet.appConfig.getScreenHeight(context) * 0.4,
                     )
                   : DashedRect(
                       padding:
                           styleSheet.DECORATION.PADDING_5.copyWith(top: 10),
                       child: SizedBox(
+                        height:
+                            styleSheet.appConfig.getScreenHeight(context) * 0.4,
                         width: styleSheet.appConfig.getScreenWidth(context),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -48,6 +52,7 @@ class _DetailedViewState extends State<_DetailedView> {
                             Text("Add image or a label to your product",
                                 style: styleSheet.TEXT_THEME.fs16Bold.copyWith(
                                     color: styleSheet.COLOR.primaryColor)),
+                            styleSheet.appConfig.addHeight(20),
                             Text("PNG, JPG, GIF up to 20MB",
                                 style: styleSheet.TEXT_THEME.fs12Bold.copyWith(
                                     color: styleSheet.COLOR.greyColor
@@ -77,8 +82,7 @@ class _DetailedViewState extends State<_DetailedView> {
 
         /// ************************************ Section 2 ************************************
         /// ***********************************************************************************
-        Flexible(
-          flex: 1,
+        Expanded(
           child: Column(
             children: [
               SecondaryTextFormField(
@@ -125,118 +129,102 @@ class _DetailedViewState extends State<_DetailedView> {
 
         /// ************************************ Section 3 ************************************
         /// ***********************************************************************************
-        Flexible(
-            flex: 1,
+        Expanded(
             child: Column(
-              children: [
-                Obx(() => PrimaryDropDown(
-                    hint: "VAT Included ",
-                    isExpanded: true,
-                    dropdownValue: _vatInclude.value,
-                    border: true,
-                    items: const ["VAT Include", "VAT Exclude"],
-                    value: (v) => _vatInclude(v))),
-                styleSheet.appConfig.addHeight(20),
-                SecondaryTextFormField(
-                  label: true,
-                  hinttext: "0.00",
-                  onTap: () => openVirtualKeyboard(),
-                ),
-                styleSheet.appConfig.addHeight(20),
-                SecondaryTextFormField(
-                  readOnly: true,
-                  suffixicon: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text("default",
-                          style: styleSheet.TEXT_THEME.fs12Bold
-                              .copyWith(color: styleSheet.COLOR.primaryColor)),
-                      styleSheet.appConfig.addWidth(5),
-                      Icon(Icons.navigate_next,
-                          color: styleSheet.COLOR.greyColor)
-                    ],
+          children: [
+            SecondaryTextFormField(
+              label: true,
+              hinttext: "VAT %",
+              onTap: () => openVirtualKeyboard(),
+            ),
+            styleSheet.appConfig.addHeight(20),
+            SecondaryTextFormField(
+              readOnly: true,
+              suffixicon: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("default",
+                      style: styleSheet.TEXT_THEME.fs12Bold
+                          .copyWith(color: styleSheet.COLOR.primaryColor)),
+                  styleSheet.appConfig.addWidth(5),
+                  Icon(Icons.navigate_next, color: styleSheet.COLOR.greyColor)
+                ],
+              ),
+              hinttext: "Brand",
+              onTap: () => widget.onPressedBack(EditProductDetailStates.Brand),
+            ),
+            styleSheet.appConfig.addHeight(20),
+            SecondaryTextFormField(
+              readOnly: true,
+              suffixicon: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("default",
+                      style: styleSheet.TEXT_THEME.fs12Bold
+                          .copyWith(color: styleSheet.COLOR.primaryColor)),
+                  styleSheet.appConfig.addWidth(5),
+                  Icon(Icons.navigate_next, color: styleSheet.COLOR.greyColor)
+                ],
+              ),
+              hinttext: "Category",
+              onTap: () =>
+                  widget.onPressedBack(EditProductDetailStates.Category),
+            ),
+            styleSheet.appConfig.addHeight(20),
+            SecondaryTextFormField(
+              readOnly: true,
+              suffixicon: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("1 Packing",
+                      style: styleSheet.TEXT_THEME.fs12Bold
+                          .copyWith(color: styleSheet.COLOR.primaryColor)),
+                  styleSheet.appConfig.addWidth(5),
+                  Icon(Icons.navigate_next, color: styleSheet.COLOR.greyColor)
+                ],
+              ),
+              hinttext: "Packing",
+              onTap: () =>
+                  widget.onPressedBack(EditProductDetailStates.Packing),
+            ),
+            Container(
+              decoration: BoxDecoration(color: styleSheet.COLOR.whiteColor),
+              child: Row(
+                children: [
+                  Container(
+                    width: 4,
+                    height: 30,
+                    decoration: BoxDecoration(color: styleSheet.COLOR.redColor),
                   ),
-                  hinttext: "Brand",
-                  onTap: () =>
-                      widget.onPressedBack(EditProductDetailStates.Brand),
-                ),
-                styleSheet.appConfig.addHeight(20),
-                SecondaryTextFormField(
-                  readOnly: true,
-                  suffixicon: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text("default",
-                          style: styleSheet.TEXT_THEME.fs12Bold
-                              .copyWith(color: styleSheet.COLOR.primaryColor)),
-                      styleSheet.appConfig.addWidth(5),
-                      Icon(Icons.navigate_next,
-                          color: styleSheet.COLOR.greyColor)
-                    ],
-                  ),
-                  hinttext: "Category",
-                  onTap: () =>
-                      widget.onPressedBack(EditProductDetailStates.Category),
-                ),
-                styleSheet.appConfig.addHeight(20),
-                SecondaryTextFormField(
-                  readOnly: true,
-                  suffixicon: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text("1 Packing",
-                          style: styleSheet.TEXT_THEME.fs12Bold
-                              .copyWith(color: styleSheet.COLOR.primaryColor)),
-                      styleSheet.appConfig.addWidth(5),
-                      Icon(Icons.navigate_next,
-                          color: styleSheet.COLOR.greyColor)
-                    ],
-                  ),
-                  hinttext: "Packing",
-                  onTap: () =>
-                      widget.onPressedBack(EditProductDetailStates.Packing),
-                ),
-                Container(
-                  decoration: BoxDecoration(color: styleSheet.COLOR.whiteColor),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 4,
-                        height: 30,
-                        decoration:
-                            BoxDecoration(color: styleSheet.COLOR.redColor),
-                      ),
-                      styleSheet.appConfig.addWidth(20),
-                      Expanded(
-                          child: Text("PCS",
-                              style: styleSheet.TEXT_THEME.fs14Bold)),
-                      Expanded(
-                          flex: 2,
-                          child: Row(children: [
-                            Expanded(
-                                child: Text("x1",
-                                    style: styleSheet.TEXT_THEME.fs12Bold
-                                        .copyWith(
-                                            color:
-                                                styleSheet.COLOR.greyColor))),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 2),
-                              decoration: BoxDecoration(
-                                  color: styleSheet.COLOR.blueColor,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Text(
-                                "1.0",
+                  styleSheet.appConfig.addWidth(20),
+                  Expanded(
+                      child:
+                          Text("PCS", style: styleSheet.TEXT_THEME.fs14Bold)),
+                  Expanded(
+                      flex: 2,
+                      child: Row(children: [
+                        Expanded(
+                            child: Text("x1",
                                 style: styleSheet.TEXT_THEME.fs12Bold.copyWith(
-                                    color: styleSheet.COLOR.whiteColor),
-                              ),
-                            )
-                          ]))
-                    ],
-                  ),
-                )
-              ],
-            ))
+                                    color: styleSheet.COLOR.greyColor))),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 2),
+                          decoration: BoxDecoration(
+                              color: styleSheet.COLOR.blueColor,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Text(
+                            "1.0",
+                            style: styleSheet.TEXT_THEME.fs12Bold
+                                .copyWith(color: styleSheet.COLOR.whiteColor),
+                          ),
+                        )
+                      ]))
+                ],
+              ),
+            )
+          ],
+        ))
       ],
     );
   }

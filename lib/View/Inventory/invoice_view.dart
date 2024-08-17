@@ -123,7 +123,9 @@ class InvoiceView extends StatelessWidget {
             PrimaryBtnWithIcon(
                 isExpanded: true,
                 btnName: "Share",
-                onPressed: () {},
+                onPressed: () {
+                  styleSheet.appConfig.shareNow();
+                },
                 icon: Icons.share),
           ],
         )

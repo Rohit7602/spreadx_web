@@ -29,6 +29,7 @@ import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/Utils/Routes/routes.dart';
 import 'package:spreadx_web/View/Home/Widget/product_check.dart';
 import 'package:spreadx_web/View/Home/queue_list.dart';
+import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 import '../../Components/Dialog/item_details_dialog.dart';
@@ -187,6 +188,40 @@ class _HomeScreenViewState extends State<HomeScreenView>
                           ],
                         ),
                         styleSheet.appConfig.addHeight(10),
+                        Obx(
+                          () => product.showQueueRibbon.value
+                              ? Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        styleSheet.DECORATION.RADIUS_5,
+                                    color: styleSheet.COLOR.primaryColor,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "#SO4433001",
+                                        style: styleSheet.TEXT_THEME.fs14Medium
+                                            .copyWith(
+                                                color: styleSheet
+                                                    .COLOR.whiteColor),
+                                      ),
+                                      Text(
+                                        "Pending",
+                                        style: styleSheet.TEXT_THEME.fs14Medium
+                                            .copyWith(
+                                                color: styleSheet
+                                                    .COLOR.whiteColor),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : const SizedBox(),
+                        ),
                         styleSheet.appConfig.addHeight(10),
                         GetBuilder(
                           init: ProductController(),
@@ -277,6 +312,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                 onTap: () {
                                                   product.removeProduct(data
                                                       .productList[index].id);
+                                                  product.setQueueRibon(false);
                                                 },
                                                 child: Container(
                                                   padding:
@@ -552,8 +588,10 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                                     .COLOR.blackColor
                                                     .withOpacity(0.7)),
                                       ),
-                                      const SecondaryTextFormField(
+                                      SecondaryTextFormField(
+                                        onTap: () => openVirtualKeyboard(),
                                         fillColor: true,
+                                        allowNumbers: true,
                                         hinttext: "0.0",
                                       ),
                                       styleSheet.appConfig.addHeight(20),

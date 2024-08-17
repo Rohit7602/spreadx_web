@@ -2,8 +2,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Components/Appbar/custom_appbar.dart';
+import 'package:spreadx_web/Components/Controller/navigation_controller.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Data/enum.dart';
 import 'package:spreadx_web/Utils/Routes/routes.dart';
@@ -32,41 +34,51 @@ class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
 
   bool showSearchBar = false;
 
+  var navController = Get.find<NavigationController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: DrawerAppBarView(
-        showLeading: false,
-        title: getDrawerName(drawerState),
-        actions: Row(
-          children: [
-            if (getSearchBar() && showSearchBar)
-              SizedBox(
-                width: 600,
-                child: PrimaryTextFormField(
-                  onTap: () => openVirtualKeyboard(),
-                  hinttext: "Search..",
-                ),
-              ),
-            if (getSearchBar())
-              IconButton(
-                  onPressed: () {
-                    showSearchBar = true;
-                    setState(() {});
-                  },
-                  icon: Icon(
-                    CupertinoIcons.search,
-                    color: styleSheet.COLOR.whiteColor,
-                  )),
-            styleSheet.appConfig.addWidth(10),
-            InkWell(
-                onTap: () {
-                  context.go(MyRoute.homeScreen);
-                },
-                child: Image.asset(styleSheet.icons.screenIcon))
-          ],
-        ),
-      ),
+          showLeading: false,
+          title: getDrawerName(drawerState),
+          actions: Obx(
+            () => Row(
+              children: [
+                if (navController.showSearch.value && showSearchBar)
+                  SizedBox(
+                    width: 600,
+                    child: PrimaryTextFormField(
+                      onTap: () => openVirtualKeyboard(),
+                      hinttext: "Search..",
+                    ),
+                  ),
+                if (navController.showSearch.value)
+                  IconButton(
+                      onPressed: () {
+                        showSearchBar = true;
+                        setState(() {});
+                      },
+                      icon: Icon(
+                        CupertinoIcons.search,
+                        color: styleSheet.COLOR.whiteColor,
+                      )),
+                styleSheet.appConfig.addWidth(10),
+                InkWell(
+                    onTap: () {
+                      context.go(MyRoute.homeScreen);
+                    },
+                    child: Image.asset(styleSheet.icons.screenIcon)),
+                if (navController.showExportBtn.value)
+                  InkWell(
+                      onTap: () {},
+                      child: Image.asset(
+                        styleSheet.icons.exportIcon,
+                        height: 20,
+                      )).paddingOnly(right: 20, left: 10),
+              ],
+            ),
+          )),
       drawer: CustomDrawerView(
         onTap: setDrawerState,
       ),
@@ -112,8 +124,10 @@ class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
     drawerState = state;
     showSearchBar = false;
 
+    setState(() {
+      getSearchBar();
+    });
     Navigator.of(context).pop();
-    setState(() {});
   }
 
   String getDrawerName(DrawerState state) {
@@ -142,13 +156,14 @@ class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
     }
   }
 
-  bool getSearchBar() {
+  getSearchBar() {
     if (drawerState == DrawerState.Products ||
         drawerState == DrawerState.Customers ||
-        drawerState == DrawerState.Transactions) {
-      return true;
+        drawerState == DrawerState.Transactions ||
+        drawerState == DrawerState.Suppliers) {
+      navController.setShowSearch(true);
     } else {
-      return false;
+      navController.setShowSearch(false);
     }
   }
 }

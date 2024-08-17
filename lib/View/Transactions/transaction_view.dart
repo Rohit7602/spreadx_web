@@ -99,11 +99,12 @@ class _TransactionViewState extends State<TransactionView> {
                 ))
           ],
         ).paddingSymmetric(horizontal: 15, vertical: 10),
-        IconButton(
-            onPressed: () {
-              widget.onPressedBack();
-            },
-            icon: const Icon(Icons.arrow_back)),
+        if (!widget.isComingFromtr)
+          IconButton(
+              onPressed: () {
+                widget.onPressedBack();
+              },
+              icon: const Icon(Icons.arrow_back)),
       ],
     );
 

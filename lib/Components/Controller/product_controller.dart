@@ -5,6 +5,13 @@ class ProductController extends GetxController {
   final List<ProductModel> _productList = [];
   List<ProductModel> get productList => _productList;
 
+  final RxBool _showQueueRibbon = false.obs;
+  RxBool get showQueueRibbon => _showQueueRibbon;
+
+  setQueueRibon(bool status) {
+    _showQueueRibbon(status);
+  }
+
   addProducts(ProductModel product) {
     if (_productList.any((value) => value.id == product.id)) {
       final i = _productList.indexOf(product);

@@ -29,6 +29,8 @@ class _CustomItemDialogState extends State<CustomItemDialog> {
         shrinkWrap: true,
         children: [
           TextFormField(
+            onTap: () => openVirtualKeyboard(),
+            
             controller: priceController,
             textAlign: TextAlign.center,
             textAlignVertical: TextAlignVertical.center,

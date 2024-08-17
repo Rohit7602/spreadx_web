@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/View/Product/add_product/widgets/add_product_btn.dart';
 import 'package:spreadx_web/View/Transactions/Transaction_details/refund_summary_view.dart';
+import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 class IssueRefundView extends StatefulWidget {
@@ -14,8 +17,9 @@ class IssueRefundView extends StatefulWidget {
 }
 
 class _IssueRefundViewState extends State<IssueRefundView> {
-  RxString refundAmountValue = RxString("0.0");
   Rx<List<IssueRefundModel>> selectedItems = Rx<List<IssueRefundModel>>([]);
+
+  final amountController = TextEditingController();
 
   RxString selected = RxString("default");
   @override
@@ -44,8 +48,26 @@ class _IssueRefundViewState extends State<IssueRefundView> {
                     Text("Refund Amount",
                         style: styleSheet.TEXT_THEME.fs20Bold),
                     styleSheet.appConfig.addHeight(20),
-                    Obx(() => Text(refundAmountValue.value,
-                        style: styleSheet.TEXT_THEME.fs24Bold)),
+                    TextFormField(
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'[0-9]+[,.]{0,1}[0-9]*')),
+                        TextInputFormatter.withFunction(
+                          (oldValue, newValue) => newValue.copyWith(
+                            text: newValue.text.replaceAll(',', '.'),
+                          ),
+                        ),
+                      ],
+                      onTap: () => openVirtualKeyboard(),
+                      controller: amountController,
+                      textAlign: TextAlign.center,
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                          hintStyle: styleSheet.TEXT_THEME.fs18Bold
+                              .copyWith(color: styleSheet.COLOR.greyColor),
+                          border: InputBorder.none,
+                          hintText: "0.0"),
+                    ).paddingSymmetric(horizontal: 20),
                     Divider(
                       color: styleSheet.COLOR.blackColor,
                     ),
@@ -85,12 +107,13 @@ class _IssueRefundViewState extends State<IssueRefundView> {
                                   }
                                 }
 
-                                refundAmountValue(selectedItems.value.isEmpty
-                                    ? "0.0"
-                                    : selectedItems.value
-                                        .map((e) => e.amount)
-                                        .reduce((a, b) => a + b)
-                                        .toString());
+                                amountController.text =
+                                    (selectedItems.value.isEmpty
+                                        ? "0.0"
+                                        : selectedItems.value
+                                            .map((e) => e.amount)
+                                            .reduce((a, b) => a + b)
+                                            .toString());
                               },
                               child: selectedItems.value.length ==
                                       LocalData.issueRefundData.length
@@ -143,8 +166,8 @@ class _IssueRefundViewState extends State<IssueRefundView> {
                                                 .update((v) => v!.add(data));
                                           }
 
-                                          refundAmountValue(
-                                              selectedItems.value.isEmpty
+                                          amountController.text =
+                                              (selectedItems.value.isEmpty
                                                   ? "0.0"
                                                   : selectedItems.value
                                                       .map((e) => e.amount)

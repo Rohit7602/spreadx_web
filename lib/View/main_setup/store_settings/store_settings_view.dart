@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
+import 'package:spreadx_web/Components/Dropdown/primary_drop_down.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/View/main_setup/security/security_view.dart';
@@ -20,6 +21,18 @@ class StoreSettingsView extends StatelessWidget {
 
   final RxString currency = "AED".obs;
   final RxString timeZone = "GMT".obs;
+
+  final RxString storeName = "".obs;
+  final RxString invoiceTitle = "".obs;
+  final RxString invoiceTitleOther = "".obs;
+
+  final RxString returnTitle = "".obs;
+  final RxString returnTitleOther = "".obs;
+
+  final RxString trnValue = "".obs;
+  final RxString defaultVat = "0.0".obs;
+
+  final RxString vatType = "VAT Include".obs;
 
   @override
   Widget build(BuildContext context) {
@@ -49,15 +62,32 @@ class StoreSettingsView extends StatelessWidget {
                   children: [
                     Text("Business name",
                         style: styleSheet.TEXT_THEME.fs16Bold),
-                    Text("Store name", style: styleSheet.TEXT_THEME.fs14Bold),
+                    Obx(
+                      () => Text(storeName.value,
+                          style: styleSheet.TEXT_THEME.fs14Bold),
+                    ),
                     Obx(() {
                       return isVATEnabled.value
-                          ? Text("TRN:", style: styleSheet.TEXT_THEME.fs14Bold)
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("TRN: ",
+                                    style: styleSheet.TEXT_THEME.fs14Bold),
+                                Text(trnValue.value,
+                                    style: styleSheet.TEXT_THEME.fs14Bold)
+                              ],
+                            )
                           : const SizedBox();
                     }),
                     styleSheet.appConfig.addHeight(30),
-                    Text("Tax Invoice", style: styleSheet.TEXT_THEME.fs14Bold),
-                    Text("세금계산서", style: styleSheet.TEXT_THEME.fs14Bold),
+                    Obx(
+                      () => Text(invoiceTitle.value,
+                          style: styleSheet.TEXT_THEME.fs14Bold),
+                    ),
+                    Obx(
+                      () => Text(invoiceTitleOther.value,
+                          style: styleSheet.TEXT_THEME.fs14Bold),
+                    ),
                     styleSheet.appConfig.addHeight(20),
                     Obx(() {
                       return isVATEnabled.value
@@ -121,61 +151,88 @@ class StoreSettingsView extends StatelessWidget {
                       title: "Store Name",
                       onTap: () {
                         showDialog(
-                            context: context,
-                            builder: (context) => _EnterTextDialog());
+                                context: context,
+                                builder: (context) => _EnterTextDialog())
+                            .then((val) {
+                          if (val != null) {
+                            storeName(val);
+                          }
+                        });
                       },
-                      trailing: Text("",
-                          style: styleSheet.TEXT_THEME.fs16Bold
-                              .copyWith(color: styleSheet.COLOR.primaryColor))),
+                      trailing: Obx(
+                        () => Text(storeName.value,
+                            style: styleSheet.TEXT_THEME.fs16Bold.copyWith(
+                                color: styleSheet.COLOR.primaryColor)),
+                      )),
                   SecurityListTile(
                       title: "Invoice Title",
                       onTap: () {
                         showDialog(
-                            context: context,
-                            builder: (context) => _EnterTextDialog());
+                                context: context,
+                                builder: (context) => _EnterTextDialog())
+                            .then((val) {
+                          if (val != null) {
+                            invoiceTitle(val);
+                          }
+                        });
                       },
                       subtitle: "Preferred title for tax invoices.",
                       divider: false,
-                      trailing: Text("Tax Invoice",
-                          style: styleSheet.TEXT_THEME.fs16Bold
-                              .copyWith(color: styleSheet.COLOR.primaryColor))),
+                      trailing: Obx(() => Text(invoiceTitle.value,
+                          style: styleSheet.TEXT_THEME.fs16Bold.copyWith(
+                              color: styleSheet.COLOR.primaryColor)))),
                   SecurityListTile(
                       title: "Invoice Title (Other)",
                       onTap: () {
                         showDialog(
-                            context: context,
-                            builder: (context) => _EnterTextDialog());
+                                context: context,
+                                builder: (context) => _EnterTextDialog())
+                            .then((val) {
+                          if (val != null) {
+                            invoiceTitleOther(val);
+                          }
+                        });
                       },
                       subtitle:
                           "Preferred title in the other language for tax invoices.",
                       divider: false,
-                      trailing: Text("세금계산서",
-                          style: styleSheet.TEXT_THEME.fs16Bold
-                              .copyWith(color: styleSheet.COLOR.primaryColor))),
+                      trailing: Obx(() => Text(invoiceTitleOther.value,
+                          style: styleSheet.TEXT_THEME.fs16Bold.copyWith(
+                              color: styleSheet.COLOR.primaryColor)))),
                   SecurityListTile(
-                      title: "Return Title",
-                      subtitle: "Preferred title for tax credit notes.",
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => _EnterTextDialog());
-                      },
-                      divider: false,
-                      trailing: Text("Tax Credit Note",
-                          style: styleSheet.TEXT_THEME.fs16Bold
-                              .copyWith(color: styleSheet.COLOR.primaryColor))),
+                    title: "Return Title",
+                    subtitle: "Preferred title for tax credit notes.",
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => _EnterTextDialog()).then((val) {
+                        if (val != null) {
+                          return returnTitle(val);
+                        }
+                      });
+                    },
+                    divider: false,
+                    trailing: Obx(() => Text(returnTitle.value,
+                        style: styleSheet.TEXT_THEME.fs16Bold
+                            .copyWith(color: styleSheet.COLOR.primaryColor))),
+                  ),
                   SecurityListTile(
-                      title: "Return Title (Other)",
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => _EnterTextDialog());
-                      },
-                      subtitle:
-                          "Preferred title in other language for tax credit notes.",
-                      trailing: Text("Tax Credit Note",
-                          style: styleSheet.TEXT_THEME.fs16Bold
-                              .copyWith(color: styleSheet.COLOR.primaryColor))),
+                    title: "Return Title (Other)",
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => _EnterTextDialog()).then((val) {
+                        if (val != null) {
+                          returnTitleOther(val);
+                        }
+                      });
+                    },
+                    subtitle:
+                        "Preferred title in other language for tax credit notes.",
+                    trailing: Obx(() => Text(returnTitleOther.value,
+                        style: styleSheet.TEXT_THEME.fs16Bold
+                            .copyWith(color: styleSheet.COLOR.primaryColor))),
+                  ),
                   SecurityListTile(
                     title: "VAT",
                     subtitle:
@@ -198,39 +255,60 @@ class StoreSettingsView extends StatelessWidget {
                         ? Column(
                             children: [
                               SecurityListTile(
-                                divider: false,
-                                title: "TRN",
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => _EnterTextDialog(
-                                            title: "TRN",
-                                            hintText: "Enter TRN",
-                                          ));
-                                },
-                                subtitle:
-                                    "The Tax Registration Number assigned to the store",
-                                trailing: const SizedBox(),
-                              ),
+                                  divider: false,
+                                  title: "TRN",
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => _EnterTextDialog(
+                                              title: "TRN",
+                                              hintText: "Enter TRN",
+                                            )).then((val) {
+                                      if (val != null) {
+                                        trnValue(val);
+                                      }
+                                    });
+                                  },
+                                  subtitle:
+                                      "The Tax Registration Number assigned to the store",
+                                  trailing: Obx(() => Text(trnValue.value,
+                                      style: styleSheet.TEXT_THEME.fs16Bold
+                                          .copyWith(
+                                              color: styleSheet
+                                                  .COLOR.primaryColor)))),
+                              styleSheet.appConfig.addHeight(10),
+                              Obx(() => PrimaryDropDown(
+                                  hint: "VAT Included ",
+                                  isExpanded: true,
+                                  dropdownValue: vatType.value,
+                                  border: true,
+                                  items: const ["VAT Include", "VAT Exclude"],
+                                  value: (v) =>
+                                      vatType(v))).paddingSymmetric(
+                                  horizontal: 20),
+                              styleSheet.appConfig.addHeight(12),
                               SecurityListTile(
-                                divider: false,
-                                title: "Default VAT",
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => _EnterTextDialog(
-                                            title: "Enter VAT",
-                                            hintText: "0.0",
-                                          ));
-                                },
-                                subtitle: "Default VAT value to show and use.",
-                                trailing: Text(
-                                  "0.0",
-                                  style: styleSheet.TEXT_THEME.fs14Medium
-                                      .copyWith(
-                                          color: styleSheet.COLOR.primaryColor),
-                                ),
-                              ),
+                                  divider: false,
+                                  title: "Default VAT",
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => _EnterTextDialog(
+                                              title: "Enter VAT",
+                                              hintText: "0.0",
+                                            )).then((val) {
+                                      if (val != null) {
+                                        defaultVat(val);
+                                      }
+                                    });
+                                  },
+                                  subtitle:
+                                      "Default VAT value to show and use.",
+                                  trailing: Obx(() => Text(defaultVat.value,
+                                      style: styleSheet.TEXT_THEME.fs16Bold
+                                          .copyWith(
+                                              color: styleSheet
+                                                  .COLOR.primaryColor))))
                             ],
                           )
                         : const SizedBox();
@@ -325,6 +403,8 @@ class _EnterTextDialog extends StatelessWidget {
 
   _EnterTextDialog({this.title = "", this.hintText = "", super.key});
 
+  final valueController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return CustomHeaderDialog(
@@ -336,6 +416,7 @@ class _EnterTextDialog extends StatelessWidget {
                 style: styleSheet.TEXT_THEME.fs16Bold),
             styleSheet.appConfig.addHeight(20),
             SecondaryTextFormField(
+                controller: valueController,
                 onTap: () => openVirtualKeyboard(),
                 hinttext: hintText.isNotEmpty ? hintText : "Your Value",
                 fieldColor: false),
@@ -343,7 +424,7 @@ class _EnterTextDialog extends StatelessWidget {
             PrimaryBtnView(
                 btnName: "Submit",
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(valueController.text);
                 },
                 isExpanded: true)
           ],

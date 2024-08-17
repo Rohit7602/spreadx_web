@@ -10,7 +10,9 @@ import 'package:spreadx_web/main.dart';
 
 class CustomerTransactionView extends StatefulWidget {
   void Function() onPressedBack;
-  CustomerTransactionView({required this.onPressedBack, super.key});
+  bool isShowIssueRefund;
+  CustomerTransactionView(
+      {required this.onPressedBack, this.isShowIssueRefund = true, super.key});
 
   @override
   State<CustomerTransactionView> createState() =>
@@ -227,7 +229,10 @@ class _CustomerTransactionViewState extends State<CustomerTransactionView> {
 
     return Obx(() {
       if (selected.value == "details") {
-        return TransactionDetailsView(onPressedBack: setDefaultView);
+        return TransactionDetailsView(
+          onPressedBack: setDefaultView,
+          isComingFromTr: widget.isShowIssueRefund,
+        );
       } else if (selected.value == "paymentView") {
         return InventoryPaymentView(onPressedBack: (val) {
           setDefaultView();

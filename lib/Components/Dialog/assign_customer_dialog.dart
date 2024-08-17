@@ -312,7 +312,8 @@ class _AssignCustomerDialogState extends State<AssignCustomerDialog> {
                                     number: phoneController.text,
                                     email: "",
                                     accountType: "",
-                                    address: ""));
+                                    address: "",
+                                    accountCategory: ""));
                               }),
                         ),
                       ],
@@ -358,7 +359,8 @@ class _AssignCustomerDialogState extends State<AssignCustomerDialog> {
                                       number: listOfsearch[i].number,
                                       email: "",
                                       accountType: "",
-                                      address: ""));
+                                      address: "",
+                                      accountCategory: ""));
                                 },
                                 child: Container(
                                   padding: styleSheet.DECORATION.PADDING_10,

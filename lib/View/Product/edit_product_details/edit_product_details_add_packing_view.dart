@@ -91,13 +91,14 @@ class _EditProductAddPackingViewState extends State<EditProductAddPackingView> {
                                   crossAxisCount: 2,
                                   crossAxisSpacing: 20,
                                   childAspectRatio: width < 1096
-                                      ? 2.7
+                                      ? 1
                                       : width < 1437
-                                          ? 3
-                                          : 4,
+                                          ? 2
+                                          : 3,
                                   mainAxisSpacing: 20),
                           itemBuilder: (context, i) {
                             final data = packingList[i];
+
                             return Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -159,82 +160,155 @@ class _EditProductAddPackingViewState extends State<EditProductAddPackingView> {
                                                 )
                                               ],
                                             ),
-                                            Obx(() =>
-                                                selectedList.contains(data.id)
-                                                    ? Column(
-                                                        children: [
-                                                          styleSheet.appConfig
-                                                              .addHeight(10),
-                                                          Row(
+                                            Obx(
+                                                () =>
+                                                    selectedList
+                                                            .contains(data.id)
+                                                        ? Column(
                                                             children: [
-                                                              Expanded(
-                                                                child:
-                                                                    SecondaryTextFormField(
-                                                                  hinttext:
-                                                                      "Factor",
-                                                                  label: true,
-                                                                  onTap: () =>
-                                                                      openVirtualKeyboard(),
-                                                                ),
+                                                              styleSheet
+                                                                  .appConfig
+                                                                  .addHeight(
+                                                                      10),
+                                                              Row(
+                                                                children: [
+                                                                  Expanded(
+                                                                    child:
+                                                                        SecondaryTextFormField(
+                                                                      hinttext:
+                                                                          "Factor",
+                                                                      label:
+                                                                          true,
+                                                                      onTap: () =>
+                                                                          openVirtualKeyboard(),
+                                                                    ),
+                                                                  ),
+                                                                  styleSheet
+                                                                      .appConfig
+                                                                      .addWidth(
+                                                                          10),
+                                                                  Expanded(
+                                                                    flex: 2,
+                                                                    child:
+                                                                        SecondaryTextFormField(
+                                                                      hinttext:
+                                                                          "Barcode",
+                                                                      label:
+                                                                          true,
+                                                                      onTap: () =>
+                                                                          openVirtualKeyboard(),
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               ),
                                                               styleSheet
                                                                   .appConfig
-                                                                  .addWidth(10),
-                                                              Expanded(
-                                                                flex: 2,
-                                                                child:
-                                                                    SecondaryTextFormField(
-                                                                  hinttext:
-                                                                      "Barcode",
-                                                                  label: true,
-                                                                  onTap: () =>
-                                                                      openVirtualKeyboard(),
-                                                                ),
+                                                                  .addHeight(
+                                                                      20),
+                                                              Row(
+                                                                children: [
+                                                                  Expanded(
+                                                                    flex: 3,
+                                                                    child:
+                                                                        SecondaryTextFormField(
+                                                                      hinttext:
+                                                                          "Factor",
+                                                                      label:
+                                                                          true,
+                                                                      onTap: () =>
+                                                                          openVirtualKeyboard(),
+                                                                    ),
+                                                                  ),
+                                                                  styleSheet
+                                                                      .appConfig
+                                                                      .addWidth(
+                                                                          10),
+                                                                  Expanded(
+                                                                    flex: 2,
+                                                                    child:
+                                                                        Container(
+                                                                      decoration: BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(
+                                                                              5),
+                                                                          border:
+                                                                              Border.all()),
+                                                                      child:
+                                                                          DropdownButtonHideUnderline(
+                                                                        child:
+                                                                            DropdownButton(
+                                                                          padding: const EdgeInsets
+                                                                              .symmetric(
+                                                                              vertical: 8,
+                                                                              horizontal: 5),
+                                                                          isDense:
+                                                                              true,
+                                                                          value:
+                                                                              perPiece.value[data.id],
+                                                                          items:
+                                                                              [
+                                                                            "Per Item",
+                                                                            "Per Weight",
+                                                                            "Mixed"
+                                                                          ].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+                                                                          onChanged:
+                                                                              (v) {
+                                                                            if (perPiece.value.containsKey(data.id)) {
+                                                                              perPiece.update((val) => val![data.id] = v);
+                                                                            } else {
+                                                                              perPiece.update(
+                                                                                (val) => val!.addAll(
+                                                                                  {
+                                                                                    data.id: v
+                                                                                  },
+                                                                                ),
+                                                                              );
+                                                                            }
+                                                                          },
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               ),
+                                                              perPiece.value[data
+                                                                              .id]
+                                                                          .toString()
+                                                                          .toLowerCase() !=
+                                                                      "per item"
+                                                                  ? Row(
+                                                                      children: [
+                                                                        Expanded(
+                                                                          child:
+                                                                              SecondaryTextFormField(
+                                                                            hinttext:
+                                                                                "Net Weight",
+                                                                            label:
+                                                                                true,
+                                                                            onTap: () =>
+                                                                                openVirtualKeyboard(),
+                                                                          ),
+                                                                        ),
+                                                                        styleSheet
+                                                                            .appConfig
+                                                                            .addWidth(10),
+                                                                        Expanded(
+                                                                          child:
+                                                                              SecondaryTextFormField(
+                                                                            hinttext:
+                                                                                "Gross Weight",
+                                                                            label:
+                                                                                true,
+                                                                            onTap: () =>
+                                                                                openVirtualKeyboard(),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ).paddingOnly(
+                                                                      top: 10)
+                                                                  : const SizedBox(),
                                                             ],
-                                                          ),
-                                                          styleSheet.appConfig
-                                                              .addHeight(20),
-                                                          Row(
-                                                            children: [
-                                                              Expanded(
-                                                                flex: 3,
-                                                                child:
-                                                                    SecondaryTextFormField(
-                                                                  hinttext:
-                                                                      "Factor",
-                                                                  label: true,
-                                                                  onTap: () =>
-                                                                      openVirtualKeyboard(),
-                                                                ),
-                                                              ),
-                                                              styleSheet
-                                                                  .appConfig
-                                                                  .addWidth(10),
-                                                              Expanded(
-                                                                  flex: 2,
-                                                                  child: Container(
-                                                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), border: Border.all()),
-                                                                      child: DropdownButtonHideUnderline(
-                                                                          child: DropdownButton(
-                                                                              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-                                                                              isDense: true,
-                                                                              value: perPiece.value[data.id],
-                                                                              items: ["Per Item", "Per Weight", "Mixed"].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
-                                                                              onChanged: (v) {
-                                                                                if (perPiece.value.containsKey(data.id)) {
-                                                                                  perPiece.update((val) => val![data.id] = v);
-                                                                                } else {
-                                                                                  perPiece.update((val) => val!.addAll({
-                                                                                        data.id: v
-                                                                                      }));
-                                                                                }
-                                                                              })))),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      )
-                                                    : const SizedBox())
+                                                          )
+                                                        : const SizedBox())
                                           ],
                                         )),
                                   ),

@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
 import 'package:spreadx_web/main.dart';
@@ -109,6 +110,7 @@ class SecondaryTextFormField extends StatelessWidget {
   final bool fieldColor;
   final Function? onTap;
   final bool readOnly;
+  final bool allowNumbers;
   const SecondaryTextFormField({
     super.key,
     this.hinttext,
@@ -126,6 +128,7 @@ class SecondaryTextFormField extends StatelessWidget {
     this.fieldColor = false,
     this.onTap,
     this.readOnly = false,
+    this.allowNumbers = false,
   });
 
   @override
@@ -135,6 +138,17 @@ class SecondaryTextFormField extends StatelessWidget {
       margin: const EdgeInsets.only(top: 5),
       color: fillColor ? styleSheet.COLOR.fieldGreyColor : null,
       child: TextFormField(
+        inputFormatters: allowNumbers
+            ? [
+                FilteringTextInputFormatter.allow(
+                    RegExp(r'[0-9]+[,.]{0,1}[0-9]*')),
+                TextInputFormatter.withFunction(
+                  (oldValue, newValue) => newValue.copyWith(
+                    text: newValue.text.replaceAll(',', '.'),
+                  ),
+                ),
+              ]
+            : [],
         readOnly: readOnly,
         onTap: () {
           onTap != null ? onTap!() : null;
@@ -186,6 +200,7 @@ class PlainTextField extends StatelessWidget {
   final String? hinttext;
   final Widget? suffixicon;
   final Widget? prefixIcon;
+  final bool allowNumbers;
 
   final TextEditingController? controller;
 
@@ -197,11 +212,26 @@ class PlainTextField extends StatelessWidget {
     this.suffixicon,
     this.prefixIcon,
     this.onTap,
+    this.allowNumbers = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      inputFormatters: allowNumbers
+          ? [
+              FilteringTextInputFormatter.allow(
+                  RegExp(r'[0-9]+[,.]{0,1}[0-9]*')),
+              TextInputFormatter.withFunction(
+                (oldValue, newValue) => newValue.copyWith(
+                  text: newValue.text.replaceAll(',', '.'),
+                ),
+              ),
+            ]
+          : [],
+      onTap: () {
+        onTap != null ? onTap!() : null;
+      },
       style: styleSheet.TEXT_THEME.fs14Medium,
       controller: controller,
       textAlignVertical: TextAlignVertical.center,

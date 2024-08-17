@@ -22,6 +22,8 @@ class _QuickAddView extends StatelessWidget {
   final sellingPriceController = TextEditingController();
   final productShortNameController = TextEditingController();
 
+  RxString selectVat = RxString("VAT Include");
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -93,6 +95,31 @@ class _QuickAddView extends StatelessWidget {
                 styleSheet.appConfig.addWidth(20),
               ],
             ))
+          ],
+        ),
+        styleSheet.appConfig.addHeight(20),
+        Row(
+          children: [
+            // Flexible(
+            //   flex: 1,
+            //   child: Obx(() => PrimaryDropDown(
+            //       hint: "VAT Included ",
+            //       dropdownValue: selectVat.value,
+            //       border: true,
+            //       isExpanded: true,
+            //       items: const ["VAT Include", "VAT Exclude"],
+            //       value: (v) => selectVat(v))),
+            // ),
+            // styleSheet.appConfig.addWidth(20),
+            Flexible(
+              flex: 1,
+              child: SecondaryTextFormField(
+                allowNumbers: true,
+                label: true,
+                hinttext: "VAT %",
+                onTap: () => openVirtualKeyboard(),
+              ),
+            ),
           ],
         ),
         styleSheet.appConfig.addHeight(20),

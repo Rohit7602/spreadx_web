@@ -72,6 +72,7 @@ class AppIcons {
   String user = "assets/Icons/user.png";
 
   String arrowIcon = "assets/Icons/arrow_icon.png";
+  String exportIcon = "assets/Icons/export_icon.png";
 
   //
 }

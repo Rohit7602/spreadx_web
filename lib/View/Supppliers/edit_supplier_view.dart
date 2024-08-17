@@ -129,6 +129,7 @@ class _EditSupplierViewState extends State<EditSupplierView> {
           return EditSupplierPurchaseHistoryView(onPressedBack: onPressedBack);
         case EditSupplierViewState.Purchase_Products:
           return PurchaseProductsView(
+            isSupplier: false,
             onPressedBack: () {
               selected(EditSupplierViewState.Default);
             },

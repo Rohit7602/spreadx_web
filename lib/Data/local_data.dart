@@ -352,7 +352,7 @@ class CustomerModel {
       number,
       email,
       address,
-      accountType;
+      accountType, accountCategory;
 
   CustomerModel(
       {required this.barcode,
@@ -362,7 +362,9 @@ class CustomerModel {
       required this.number,
       required this.email,
       required this.accountType,
-      required this.address});
+      required this.address,
+      required this.accountCategory
+      });
 }
 // class for drawer
 

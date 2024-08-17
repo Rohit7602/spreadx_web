@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
+import 'package:spreadx_web/Components/primary_textfield.dart';
+import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 import '../Button/primary_btn.dart';
@@ -46,11 +48,15 @@ class _SplitPayDialogState extends State<SplitPayDialog> {
 
   isModeActive(String mode) => _paymentMode == mode;
 
+  final amountController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((t) {
       _splits.add({'type': 'CARD', 'amount': widget.amount});
+
+      amountController.text = widget.amount;
       setState(() {});
     });
   }
@@ -93,6 +99,7 @@ class _SplitPayDialogState extends State<SplitPayDialog> {
                                     borderRadius: BorderRadius.circular(4),
                                     color: styleSheet.COLOR.keyboardBtnColor),
                                 child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Expanded(
                                         flex: 2,
@@ -105,10 +112,21 @@ class _SplitPayDialogState extends State<SplitPayDialog> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
-                                            _splits[i]['amount'].toString(),
-                                            style:
-                                                styleSheet.TEXT_THEME.fs14Bold,
+                                          // Text(
+                                          //   _splits[i]['amount'].toString(),
+                                          //   style:
+                                          //       styleSheet.TEXT_THEME.fs14Bold,
+                                          // ),
+
+                                          SizedBox(
+                                            width: 100,
+                                            child: PlainTextField(
+                                              allowNumbers: true,
+                                              onTap: () =>
+                                                  openVirtualKeyboard(),
+                                              controller: amountController,
+                                              hinttext: "0",
+                                            ),
                                           ),
                                           IconButton(
                                               onPressed: () => removeSplit(

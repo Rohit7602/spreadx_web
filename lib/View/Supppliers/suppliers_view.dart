@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Controller/supplier_controller.dart';
+import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/View/Supppliers/add_new_supplier.dart';
 import 'package:spreadx_web/View/Supppliers/suppliers_detail_view.dart';
 import 'package:spreadx_web/main.dart';
@@ -16,6 +17,9 @@ class SuppliersView extends StatefulWidget {
 class _SuppliersViewState extends State<SuppliersView> {
   RxString selected = RxString("default");
   var controller = Get.find<SupplierController>();
+
+  SuppliersModel? supplierModel;
+
   @override
   Widget build(BuildContext context) {
     final defaultView = Stack(
@@ -43,6 +47,7 @@ class _SuppliersViewState extends State<SuppliersView> {
                         ...List.generate(controller.suppliers.length, (i) {
                           return GestureDetector(
                             onTap: () {
+                              supplierModel = controller.suppliers[i];
                               setState(() {
                                 selected("details");
                               });
@@ -201,7 +206,10 @@ class _SuppliersViewState extends State<SuppliersView> {
           },
         );
       } else {
-        return SupplierDetailsView(onPressedBack: () => selected("default"));
+        return SupplierDetailsView(
+          onPressedBack: () => selected("default"),
+          supplierModel: supplierModel!,
+        );
       }
     });
   }

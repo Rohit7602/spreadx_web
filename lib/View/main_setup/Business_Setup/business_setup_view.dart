@@ -15,6 +15,7 @@ class BusinessSetupView extends StatefulWidget {
 class _BusinessSetupViewState extends State<BusinessSetupView> {
   bool showProfile = false;
   bool showBusiness = false;
+
   @override
   Widget build(BuildContext context) {
     final defaultView = Scaffold(
