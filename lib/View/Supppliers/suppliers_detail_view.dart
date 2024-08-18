@@ -420,7 +420,9 @@ class _SupplierDetailsViewState extends State<SupplierDetailsView> {
           onPressedBack: setDefaultView,
         );
       } else {
-        return EditSupplierView(onPressedBack: () {
+        return EditSupplierView(
+          supplierName: widget.supplierModel.name,
+          onPressedBack: () {
           selected("default");
         });
       }

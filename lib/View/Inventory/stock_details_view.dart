@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
 import 'package:spreadx_web/main.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class StockDetailsView extends StatelessWidget {
   void Function() onPressedBack;
@@ -41,19 +43,32 @@ class StockDetailsView extends StatelessWidget {
             styleSheet.appConfig.addWidth(10),
             Obx(() => ElevatedButton(
                 style: ButtonStyle(
-                    fixedSize: WidgetStateProperty.all(const Size(130, 37)),
+                    minimumSize: WidgetStateProperty.all(const Size(130, 37)),
                     backgroundColor:
                         WidgetStateProperty.all(styleSheet.COLOR.primaryColor),
                     shape: WidgetStateProperty.all(RoundedRectangleBorder(
                         borderRadius: styleSheet.DECORATION.RADIUS_50))),
                 onPressed: () async {
-                  await showDatePicker(
-                          context: context,
-                          firstDate: DateTime(1950),
-                          lastDate: DateTime(2050))
-                      .then((val) {
+                  await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return CustomHeaderDialog(
+                          title: "Select Date",
+                          child: SfDateRangePicker(
+                            onCancel: () => Navigator.of(context).pop(),
+                            onSubmit: (val) {
+                              Navigator.of(context).pop(
+                                  "${(val as PickerDateRange).startDate.toString().split(" ").first} - ${(val).endDate.toString().split(" ").first}");
+                            },
+                            showActionButtons: true,
+                            cancelText: "Cancel",
+                            confirmText: "Apply",
+                            selectionMode: DateRangePickerSelectionMode.range,
+                          ),
+                        );
+                      }).then((val) {
                     if (val != null) {
-                      dateTime(val.toString().split(" ").first);
+                      dateTime(val);
                     }
                   });
                 },

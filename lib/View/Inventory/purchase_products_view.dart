@@ -17,8 +17,12 @@ import 'package:spreadx_web/main.dart';
 class PurchaseProductsView extends StatefulWidget {
   void Function() onPressedBack;
   bool? isSupplier;
+  String supplierName;
   PurchaseProductsView(
-      {required this.onPressedBack, this.isSupplier, super.key});
+      {required this.onPressedBack,
+      this.isSupplier,
+    required   this.supplierName ,
+      super.key});
 
   @override
   State<PurchaseProductsView> createState() => _PurchaseProductsViewState();
@@ -544,6 +548,7 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
     return Obx(() {
       if (selectedView.value == "checkout") {
         return CheckoutView(
+          supplierName: widget.supplierName,
           showISSupplier: widget.isSupplier != null ? widget.isSupplier! : true,
           onPressedBack: setDefaultView,
         );

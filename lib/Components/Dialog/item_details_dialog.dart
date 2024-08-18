@@ -348,6 +348,12 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                               priceController.text.isNotEmpty
                                   ? priceController.text
                                   : widget.productModel.price,
+                              barCode: barcodeController.text.isNotEmpty
+                                  ? barcodeController.text
+                                  : widget.productModel.barCode,
+                              vat: vatController.text.isNotEmpty
+                                  ? vatController.text
+                                  : widget.productModel.vat,
                             ),
                             widget.i);
                         Navigator.of(context).pop();

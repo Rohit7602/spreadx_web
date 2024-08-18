@@ -6,8 +6,9 @@ import 'package:spreadx_web/main.dart';
 
 class InvoiceView extends StatelessWidget {
   void Function() onPressedBack;
+  bool isReturn;
 
-  InvoiceView({required this.onPressedBack, super.key});
+  InvoiceView({required this.onPressedBack, this.isReturn = false, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class InvoiceView extends StatelessWidget {
         const Text("bot#werwrmwer"),
         styleSheet.appConfig.addHeight(10),
         Text(
-          "PURCHASE INVOICE",
+          isReturn ? "PURCHASE RETURN INVOICE" : "PURCHASE INVOICE",
           style: styleSheet.TEXT_THEME.fs14Bold,
         ),
         styleSheet.appConfig.addHeight(30),

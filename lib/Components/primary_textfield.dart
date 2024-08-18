@@ -111,6 +111,7 @@ class SecondaryTextFormField extends StatelessWidget {
   final Function? onTap;
   final bool readOnly;
   final bool allowNumbers;
+  final void Function(String)? onChange;
   const SecondaryTextFormField({
     super.key,
     this.hinttext,
@@ -129,6 +130,7 @@ class SecondaryTextFormField extends StatelessWidget {
     this.onTap,
     this.readOnly = false,
     this.allowNumbers = false,
+    this.onChange,
   });
 
   @override
@@ -138,6 +140,11 @@ class SecondaryTextFormField extends StatelessWidget {
       margin: const EdgeInsets.only(top: 5),
       color: fillColor ? styleSheet.COLOR.fieldGreyColor : null,
       child: TextFormField(
+        onChanged: onChange != null
+            ? (val) {
+                onChange!(val);
+              }
+            : null,
         inputFormatters: allowNumbers
             ? [
                 FilteringTextInputFormatter.allow(

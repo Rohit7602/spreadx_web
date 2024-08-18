@@ -11,8 +11,12 @@ import 'package:spreadx_web/main.dart';
 class TransactionView extends StatefulWidget {
   void Function() onPressedBack;
   bool isComingFromtr;
+  bool showPurchase;
   TransactionView(
-      {required this.onPressedBack, this.isComingFromtr = true, super.key});
+      {required this.onPressedBack,
+      this.isComingFromtr = true,
+      this.showPurchase = false,
+      super.key});
 
   @override
   State<TransactionView> createState() => _TransactionViewState();
@@ -82,7 +86,7 @@ class _TransactionViewState extends State<TransactionView> {
                       tileColor: styleSheet.COLOR.fieldGreyColor,
                       leading: const Icon(Icons.contact_page_sharp),
                       title: Text(
-                        "IN34243",
+                        widget.showPurchase ? "PIN34243" : "IN34243",
                         style: styleSheet.TEXT_THEME.fs14Bold,
                       ),
                       subtitle: Text("31 Jul12:04 PM",
@@ -119,7 +123,7 @@ class _TransactionViewState extends State<TransactionView> {
         return defaultView;
       } else {
         return TransactionDetailsView(
-            isComingFromCustomer: true,
+            isComingFromCustomer: false,
             isComingFromTr: widget.isComingFromtr,
             onPressedBack: () {
               navController.setShowSearch(true);

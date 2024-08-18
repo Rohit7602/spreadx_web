@@ -15,7 +15,9 @@ import 'package:spreadx_web/main.dart';
 
 class EditSupplierView extends StatefulWidget {
   final void Function()? onPressedBack;
-  const EditSupplierView({super.key, required this.onPressedBack});
+  String supplierName;
+  EditSupplierView(
+      {super.key, required this.onPressedBack, required this.supplierName});
 
   @override
   State<EditSupplierView> createState() => _EditSupplierViewState();
@@ -133,6 +135,7 @@ class _EditSupplierViewState extends State<EditSupplierView> {
           return EditSupplierPurchaseHistoryView(onPressedBack: onPressedBack);
         case EditSupplierViewState.Purchase_Products:
           return PurchaseProductsView(
+            supplierName: widget.supplierName,
             isSupplier: false,
             onPressedBack: () {
               selected(EditSupplierViewState.Default);

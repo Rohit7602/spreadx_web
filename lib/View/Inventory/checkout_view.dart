@@ -15,8 +15,12 @@ import 'package:spreadx_web/main.dart';
 class CheckoutView extends StatefulWidget {
   final void Function()? onPressedBack;
   bool showISSupplier;
+  String supplierName;
   CheckoutView(
-      {required this.onPressedBack, this.showISSupplier = false, super.key});
+      {required this.onPressedBack,
+      this.showISSupplier = false,
+      required this.supplierName,
+      super.key});
 
   @override
   State<CheckoutView> createState() => _CheckoutViewState();
@@ -31,6 +35,15 @@ class _CheckoutViewState extends State<CheckoutView> {
 
   Rx<InventoryInvoiceState> selectedView =
       Rx<InventoryInvoiceState>(InventoryInvoiceState.Default);
+
+  @override
+  void initState() {
+    setState(() {
+      addSupplier = widget.supplierName;
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -32,7 +32,9 @@ class StoreSettingsView extends StatelessWidget {
   final RxString trnValue = "".obs;
   final RxString defaultVat = "0.0".obs;
 
-  final RxString vatType = "VAT Include".obs;
+  final RxString vatType = "".obs;
+
+  final RxBool showDrop = RxBool(false);
 
   @override
   Widget build(BuildContext context) {
@@ -277,15 +279,67 @@ class StoreSettingsView extends StatelessWidget {
                                               color: styleSheet
                                                   .COLOR.primaryColor)))),
                               styleSheet.appConfig.addHeight(10),
-                              Obx(() => PrimaryDropDown(
-                                  hint: "VAT Included ",
-                                  isExpanded: true,
-                                  dropdownValue: vatType.value,
-                                  border: true,
-                                  items: const ["VAT Include", "VAT Exclude"],
-                                  value: (v) =>
-                                      vatType(v))).paddingSymmetric(
-                                  horizontal: 20),
+                              Obx(
+                                () => Stack(
+                                  children: [
+                                    SecurityListTile(
+                                        divider: false,
+                                        title: "Select VAT",
+                                        onTap: () {
+                                          showDrop(true);
+                                        },
+                                        subtitle: "Select your VAT",
+                                        trailing: Text(vatType.value,
+                                            style: styleSheet
+                                                .TEXT_THEME.fs16Bold
+                                                .copyWith(
+                                                    color: styleSheet
+                                                        .COLOR.primaryColor))),
+                                    showDrop.value
+                                        ? Container(
+                                            margin:
+                                                const EdgeInsets.only(top: 60),
+                                            decoration: BoxDecoration(
+                                                boxShadow: styleSheet
+                                                    .DECORATION.primaryShadow,
+                                                color:
+                                                    styleSheet.COLOR.whiteColor,
+                                                borderRadius: styleSheet
+                                                    .DECORATION.RADIUS_10),
+                                            child: Column(
+                                              children: [
+                                                ListTile(
+                                                  onTap: () {
+                                                    vatType("VAT Include");
+                                                    showDrop(false);
+                                                  },
+                                                  title:
+                                                      const Text("VAT Include"),
+                                                ),
+                                                ListTile(
+                                                  onTap: () {
+                                                    vatType("VAT Exclude");
+                                                    showDrop(false);
+                                                  },
+                                                  title:
+                                                      const Text("VAT Exclude"),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : const SizedBox(),
+                                  ],
+                                ),
+                              ),
+                              // Obx(() => PrimaryDropDown(
+                              //     hint: "VAT Included ",
+                              //     isExpanded: true,
+                              //     dropdownValue: vatType.value,
+                              //     border: true,
+                              //     items: const ["VAT Include", "VAT Exclude"],
+                              //     value: (v) =>
+                              //         vatType(v))).paddingSymmetric(
+                              //     horizontal: 20),
                               styleSheet.appConfig.addHeight(12),
                               SecurityListTile(
                                   divider: false,

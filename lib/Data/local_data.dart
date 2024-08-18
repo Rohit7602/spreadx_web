@@ -175,21 +175,21 @@ class LocalData {
 
   /// *********************** Issue Refund Data List *****************
   static List<IssueRefundModel> issueRefundData = [
-    const IssueRefundModel(
+    IssueRefundModel(
         quantity: 1.00,
         amount: 2.00,
-        item: IssueRefundItemModel(
+        item: const IssueRefundItemModel(
             title: "default - PCS", description: "default")),
-    const IssueRefundModel(
-        quantity: 2.00,
-        amount: 4.00,
-        item: IssueRefundItemModel(
-            title: "default - PCS - 2", description: "default-2")),
-    const IssueRefundModel(
-        quantity: 1.00,
-        amount: 1.00,
-        item: IssueRefundItemModel(
-            title: "default - PCS - 3", description: "default-3")),
+    // const IssueRefundModel(
+    //     quantity: 2.00,
+    //     amount: 4.00,
+    //     item: IssueRefundItemModel(
+    //         title: "default - PCS - 2", description: "default-2")),
+    // const IssueRefundModel(
+    //     quantity: 1.00,
+    //     amount: 1.00,
+    //     item: IssueRefundItemModel(
+    //         title: "default - PCS - 3", description: "default-3")),
   ];
 
   /// *********************** List of Transaction Data *****************
@@ -352,7 +352,8 @@ class CustomerModel {
       number,
       email,
       address,
-      accountType, accountCategory;
+      accountType,
+      accountCategory;
 
   CustomerModel(
       {required this.barcode,
@@ -363,8 +364,7 @@ class CustomerModel {
       required this.email,
       required this.accountType,
       required this.address,
-      required this.accountCategory
-      });
+      required this.accountCategory});
 }
 // class for drawer
 
@@ -403,11 +403,11 @@ class PackingDataModel {
 
 /// Class for Transactions > Transaction Details > Issue Refund
 class IssueRefundModel {
-  final double quantity;
-  final double amount;
-  final IssueRefundItemModel item;
+  double quantity;
+  double amount;
+  IssueRefundItemModel item;
 
-  const IssueRefundModel({
+  IssueRefundModel({
     required this.quantity,
     required this.amount,
     required this.item,
