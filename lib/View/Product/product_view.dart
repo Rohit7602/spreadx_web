@@ -2,9 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:spreadx_web/Components/Button/text_btn.dart';
+import 'package:spreadx_web/Components/Controller/navigation_controller.dart';
 import 'package:spreadx_web/Components/Controller/product_controller.dart';
-import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
 import 'package:spreadx_web/Components/Dialog/filter_product_dialog.dart';
 import 'package:spreadx_web/Components/Models/product_model.dart';
 import 'package:spreadx_web/View/Product/add_product/add_product_view.dart';
@@ -24,6 +23,8 @@ class _ProductViewState extends State<ProductView> {
   RxString selectedView = RxString("default");
 
   Rx<ProductModel?> product = Rx<ProductModel?>(null);
+
+  var navController = Get.find<NavigationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +75,7 @@ class _ProductViewState extends State<ProductView> {
                 ...List.generate(productList.productList.length, (i) {
                   return GestureDetector(
                     onTap: () {
+                      navController.setShowSearch(false);
                       product(productList.productList[i]);
                       selectedView("details");
                     },
@@ -162,6 +164,7 @@ class _ProductViewState extends State<ProductView> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15)),
                 onPressed: () {
+                  navController.setShowSearch(false);
                   selectedView("add");
                 },
                 backgroundColor: styleSheet.COLOR.primaryColor,
@@ -174,6 +177,7 @@ class _ProductViewState extends State<ProductView> {
         return defaultView;
       } else if (selectedView.value == "add") {
         return AddProductView(onPressedBack: () {
+          navController.setShowSearch(true);
           selectedView("default");
           setState(() {});
         });
@@ -181,6 +185,7 @@ class _ProductViewState extends State<ProductView> {
         return ProductDetailsView(
             product: product.value!,
             onPressedBack: () {
+              navController.setShowSearch(true);
               selectedView("default");
               setState(() {});
             });

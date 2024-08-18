@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/Controller/navigation_controller.dart';
 import 'package:spreadx_web/Components/Dropdown/primary_drop_down.dart';
 import 'package:spreadx_web/Components/phone_text_field.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
@@ -22,6 +23,8 @@ class EditSupplierView extends StatefulWidget {
 
 class _EditSupplierViewState extends State<EditSupplierView> {
   final TextEditingController _phoneController = TextEditingController();
+
+  final navController = Get.find<NavigationController>();
 
   final RxString selectedSupplierType = RxString("Cash");
 
@@ -112,6 +115,7 @@ class _EditSupplierViewState extends State<EditSupplierView> {
                   PrimaryBtnView(
                       btnName: "Purchase History",
                       onPressed: () {
+                        navController.setExportBtn(true);
                         selected(EditSupplierViewState.Purchase_History);
                       },
                       isExpanded: true),
@@ -153,6 +157,7 @@ class _EditSupplierViewState extends State<EditSupplierView> {
   }
 
   void onPressedBack() {
+    navController.setExportBtn(false);
     selected(EditSupplierViewState.Default);
   }
 }

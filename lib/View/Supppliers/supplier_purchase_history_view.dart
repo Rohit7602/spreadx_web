@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/Controller/navigation_controller.dart';
 import 'package:spreadx_web/Data/local_data.dart';
+import 'package:spreadx_web/View/Transactions/Transaction_details/transaction_details_view.dart';
 import 'package:spreadx_web/main.dart';
 
 class EditSupplierPurchaseHistoryView extends StatefulWidget {
@@ -17,6 +19,8 @@ class EditSupplierPurchaseHistoryView extends StatefulWidget {
 class _EditSupplierPurchaseHistoryViewState
     extends State<EditSupplierPurchaseHistoryView> {
   var trList = LocalData.transactionList;
+
+  final navController = Get.find<NavigationController>();
 
   List<String> btnList = ["All", "Today", "Week", "Month"];
 
@@ -123,6 +127,7 @@ class _EditSupplierPurchaseHistoryViewState
                         itemBuilder: (context, i) {
                           return ListTile(
                             onTap: () {
+                              navController.setExportBtn(false);
                               selected("details");
                             },
                             minLeadingWidth: 20,
@@ -198,8 +203,11 @@ class _EditSupplierPurchaseHistoryViewState
     );
 
     return Obx(() {
-      if (selected.value == "default") {
-        return defaultView;
+      if (selected.value == "details") {
+        return TransactionDetailsView(onPressedBack: () {
+          navController.setExportBtn(true);
+          selected("default");
+        });
       }
       return defaultView;
     });

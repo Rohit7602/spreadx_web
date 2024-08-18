@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Components/Controller/add_customer_controller.dart';
+import 'package:spreadx_web/Components/Controller/navigation_controller.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/View/Customer/add_new_customer.dart';
 import 'package:spreadx_web/View/Customer/cust_details_view.dart';
@@ -18,6 +19,7 @@ class CustomerListView extends StatefulWidget {
 
 class _CustomerListViewState extends State<CustomerListView> {
   var controller = Get.find<CustomerController>();
+  var navController = Get.find<NavigationController>();
   RxString selectedView = RxString("default");
   bool isCustomerEdit = false;
 
@@ -48,6 +50,7 @@ class _CustomerListViewState extends State<CustomerListView> {
                         ...List.generate(controller.customer.length, (i) {
                           return GestureDetector(
                             onTap: () {
+                              navController.setShowSearch(false);
                               customer(controller.customer[i]);
                               selectedView("details");
                               isCustomerEdit = true;
@@ -156,6 +159,7 @@ class _CustomerListViewState extends State<CustomerListView> {
         InkWell(
           borderRadius: BorderRadius.circular(20),
           onTap: () {
+            navController.setShowSearch(false);
             isCustomerEdit = false;
             selectedView("addCustomer");
           },
@@ -182,6 +186,7 @@ class _CustomerListViewState extends State<CustomerListView> {
         return AddNewCustomerView(
           isEdit: isCustomerEdit,
           onPressedBack: () {
+            navController.setShowSearch(true);
             selectedView("default");
 
             setState(() {});
@@ -194,6 +199,7 @@ class _CustomerListViewState extends State<CustomerListView> {
             },
             customer: customer.value!,
             onPressedBack: () {
+              navController.setShowSearch(true);
               selectedView("default");
               setState(() {});
             });

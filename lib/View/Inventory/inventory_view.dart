@@ -70,6 +70,7 @@ class _InventoryViewState extends State<InventoryView> {
                   btnName: "Purchase History",
                   onPressed: () {
                     navController.setShowSearch(true);
+                    navController.showExportBtn(true);
                     selectedView(InventoryState.Purchase_History);
 
                     setState(() {});
@@ -87,28 +88,25 @@ class _InventoryViewState extends State<InventoryView> {
     switch (state) {
       case InventoryState.Stock:
         return ViewStockView(
-          onPressedBack: () {
-            selectedView(InventoryState.Default);
-            navController.setShowSearch(false);
-          },
+          onPressedBack: setDefaultView,
         );
       case InventoryState.Purchase_Product:
         return PurchaseProductsView(
-          onPressedBack: () {
-            selectedView(InventoryState.Default);
-            navController.setShowSearch(false);
-          },
+          onPressedBack: setDefaultView,
         );
       case InventoryState.Purchase_History:
         return TransactionView(
           isComingFromtr: false,
-          onPressedBack: () {
-            selectedView(InventoryState.Default);
-            navController.setShowSearch(false);
-          },
+          onPressedBack: setDefaultView,
         );
       default:
         return defaultView;
     }
+  }
+
+  setDefaultView() {
+    navController.setShowSearch(false);
+    navController.showExportBtn(false);
+    selectedView(InventoryState.Default);
   }
 }

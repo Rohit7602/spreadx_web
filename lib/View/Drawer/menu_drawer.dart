@@ -157,7 +157,10 @@ class _MainMenuDrawerViewState extends State<MainMenuDrawerView> {
   }
 
   getSearchBar() {
-    if (drawerState == DrawerState.Products ||
+    if (drawerState == DrawerState.Transactions) {
+      navController.showExportBtn(true);
+      navController.setShowSearch(true);
+    } else if (drawerState == DrawerState.Products ||
         drawerState == DrawerState.Customers ||
         drawerState == DrawerState.Transactions ||
         drawerState == DrawerState.Suppliers) {

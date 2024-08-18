@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/Controller/navigation_controller.dart';
 import 'package:spreadx_web/Components/Controller/supplier_controller.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/View/Supppliers/add_new_supplier.dart';
@@ -18,6 +19,7 @@ class _SuppliersViewState extends State<SuppliersView> {
   RxString selected = RxString("default");
   var controller = Get.find<SupplierController>();
 
+  var navController = Get.find<NavigationController>();
   SuppliersModel? supplierModel;
 
   @override
@@ -47,6 +49,7 @@ class _SuppliersViewState extends State<SuppliersView> {
                         ...List.generate(controller.suppliers.length, (i) {
                           return GestureDetector(
                             onTap: () {
+                              navController.setShowSearch(false);
                               supplierModel = controller.suppliers[i];
                               setState(() {
                                 selected("details");
@@ -190,6 +193,7 @@ class _SuppliersViewState extends State<SuppliersView> {
         DrawerButtonView(
             btnName: "Add New Supplier",
             onPressed: () {
+              navController.setShowSearch(false);
               selected("add");
             }).paddingAll(15)
       ],
@@ -201,13 +205,17 @@ class _SuppliersViewState extends State<SuppliersView> {
       } else if (selected.value == "add") {
         return AddNewSupplierView(
           onPressedBack: () {
+            navController.setShowSearch(true);
             selected("default");
             setState(() {});
           },
         );
       } else {
         return SupplierDetailsView(
-          onPressedBack: () => selected("default"),
+          onPressedBack: () {
+            navController.setShowSearch(true);
+            selected("default");
+          },
           supplierModel: supplierModel!,
         );
       }

@@ -36,14 +36,14 @@ class ProductController extends GetxController {
     update();
   }
 
-  updateProductPrice(ProductModel product, String price) {
+  updateProductPrice(ProductModel product, int i) {
     if (_productList.any((val) => val.id == product.id)) {
-      final i = _productList.indexOf(product);
+      // final i = _productList.indexOf(product);
+      // print("I Cheker;; $i}");
 
-      _productList[i].price = "";
-
-      _productList[i].price = price;
-      _productList[i].totalPrice = price;
+      _productList[i] = product;
+      // _productList[i].price = price;
+      // _productList[i].totalPrice = price;
     }
 
     update();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Controller/add_customer_controller.dart';
+import 'package:spreadx_web/Components/Controller/navigation_controller.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/View/Customer/cust_transaction.dart';
 import 'package:spreadx_web/main.dart';
@@ -28,6 +29,8 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
   final RxBool expandEditButton = RxBool(false);
 
   final RxString selected = "default".obs;
+
+  final navController = Get.find<NavigationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +248,8 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
                                                       styleSheet.COLOR.orange,
                                                   onPressed: () {
                                                     expandEditButton(false);
-
+                                                    navController
+                                                        .setExportBtn(true);
                                                     selected("transactions");
                                                   },
                                                   padding:
@@ -429,6 +433,7 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
     return Obx(() {
       if (selected.value == "transactions") {
         return CustomerTransactionView(
+          isComingFromCustomer: true,
           onPressedBack: setDefaultView,
         );
       } else {
@@ -437,5 +442,8 @@ class _CustomerDetailsViewState extends State<CustomerDetailsView> {
     });
   }
 
-  setDefaultView() => selected("default");
+  setDefaultView() {
+    navController.setExportBtn(false);
+    selected("default");
+  }
 }

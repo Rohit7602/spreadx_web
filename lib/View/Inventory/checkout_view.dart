@@ -99,6 +99,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                               builder: (context) {
                                 return ItemDetailsDialog(
                                   productModel: product.productList[i],
+                                  i: i,
                                 );
                               }).then((val) {
                             setState(() {});

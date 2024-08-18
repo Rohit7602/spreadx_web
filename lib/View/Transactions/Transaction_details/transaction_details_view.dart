@@ -9,8 +9,12 @@ import 'package:spreadx_web/main.dart';
 class TransactionDetailsView extends StatefulWidget {
   final void Function()? onPressedBack;
   bool isComingFromTr;
+  bool isComingFromCustomer;
   TransactionDetailsView(
-      {super.key, required this.onPressedBack, this.isComingFromTr = true});
+      {super.key,
+      required this.onPressedBack,
+      this.isComingFromTr = true,
+      this.isComingFromCustomer = false});
 
   @override
   State<TransactionDetailsView> createState() => _TransactionDetailsViewState();
@@ -77,9 +81,11 @@ class _TransactionDetailsViewState extends State<TransactionDetailsView> {
                                       color: styleSheet.COLOR.whiteColor),
                                   child: Column(
                                     children: [
-                                      const _TransactionHeaderTile(
+                                      _TransactionHeaderTile(
                                           title: "Invoice Number",
-                                          value: "IN4290003"),
+                                          value: widget.isComingFromCustomer
+                                              ? "IN34243"
+                                              : "PIN34243"),
                                       styleSheet.appConfig.addHeight(5),
                                       _TransactionHeaderTile(
                                           title: "Date",

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:spreadx_web/Components/Controller/navigation_controller.dart';
 import 'package:spreadx_web/Components/transaction_tile.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/View/Customer/cust_transaction.dart';
@@ -26,6 +27,8 @@ class _SupplierDetailsViewState extends State<SupplierDetailsView> {
   final RxBool expandEditButton = RxBool(false);
 
   final RxString selected = "default".obs;
+
+  var navController = Get.find<NavigationController>();
 
   final List<String> transactionType = [
     "Purchase",
@@ -362,6 +365,8 @@ class _SupplierDetailsViewState extends State<SupplierDetailsView> {
                                           child: IconButton.filled(
                                               color: styleSheet.COLOR.orange,
                                               onPressed: () {
+                                                navController
+                                                    .setExportBtn(true);
                                                 expandEditButton(false);
                                                 selected("transactions");
                                               },
@@ -412,7 +417,6 @@ class _SupplierDetailsViewState extends State<SupplierDetailsView> {
         return defaultValue;
       } else if (selected.value == "transactions") {
         return CustomerTransactionView(
-          isShowIssueRefund: false,
           onPressedBack: setDefaultView,
         );
       } else {
@@ -423,5 +427,8 @@ class _SupplierDetailsViewState extends State<SupplierDetailsView> {
     });
   }
 
-  setDefaultView() => selected("default");
+  setDefaultView() {
+    selected("default");
+    navController.setExportBtn(false);
+  }
 }

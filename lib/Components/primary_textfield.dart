@@ -168,9 +168,9 @@ class SecondaryTextFormField extends StatelessWidget {
           fillColor: fieldColor
               ? styleSheet.COLOR.whiteColor
               : styleSheet.COLOR.fieldGreyColor,
-          constraints:
-              BoxConstraints(minHeight: 30, maxHeight: view.textFieldheight),
+          constraints: const BoxConstraints(minHeight: 30),
           labelText: label ? hinttext : null,
+
           labelStyle:
               view.textFontMedium.copyWith(color: styleSheet.COLOR.greyColor),
           hintText: hinttext,

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/Controller/navigation_controller.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/View/Transactions/Transaction_details/transaction_details_view.dart';
 import 'package:spreadx_web/main.dart';
@@ -27,6 +28,8 @@ class _TransactionViewState extends State<TransactionView> {
   var trList = LocalData.transactionList;
 
   List<TransactionModel> lisOfTr = [];
+
+  var navController = Get.find<NavigationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +72,9 @@ class _TransactionViewState extends State<TransactionView> {
                   itemBuilder: (context, i) {
                     return ListTile(
                       onTap: () {
+                        navController.setShowSearch(false);
+                        navController.showExportBtn(false);
+
                         selected("details");
                       },
                       minLeadingWidth: 20,
@@ -76,7 +82,7 @@ class _TransactionViewState extends State<TransactionView> {
                       tileColor: styleSheet.COLOR.fieldGreyColor,
                       leading: const Icon(Icons.contact_page_sharp),
                       title: Text(
-                        trList[i].trNumber,
+                        "IN34243",
                         style: styleSheet.TEXT_THEME.fs14Bold,
                       ),
                       subtitle: Text("31 Jul12:04 PM",
@@ -113,8 +119,12 @@ class _TransactionViewState extends State<TransactionView> {
         return defaultView;
       } else {
         return TransactionDetailsView(
+            isComingFromCustomer: true,
             isComingFromTr: widget.isComingFromtr,
             onPressedBack: () {
+              navController.setShowSearch(true);
+              navController.showExportBtn(true);
+
               selected("default");
             });
       }

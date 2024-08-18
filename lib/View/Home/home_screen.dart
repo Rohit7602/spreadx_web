@@ -62,13 +62,11 @@ class _HomeScreenViewState extends State<HomeScreenView>
 
   double _keyboardHeight = 0.0;
 
-  void showDetails(ProductModel product) {
+  void showDetails(ProductModel product, int i) {
     showDialog(
         context: context,
         builder: (context) {
-          return ItemDetailsDialog(
-            productModel: product,
-          );
+          return ItemDetailsDialog(productModel: product, i: i);
         });
   }
 
@@ -284,29 +282,34 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                           cells: [
                                             DataCell(
                                                 onTap: () => showDetails(
-                                                    data.productList[index]),
+                                                    data.productList[index],
+                                                    index),
                                                 Text("${(index + 1)}."
                                                     .toString())),
                                             DataCell(
                                                 onTap: () => showDetails(
-                                                    data.productList[index]),
+                                                    data.productList[index],
+                                                    index),
                                                 Text(data.productList[index]
                                                     .description)),
                                             DataCell(
                                                 onTap: () => showDetails(
-                                                    data.productList[index]),
+                                                    data.productList[index],
+                                                    index),
                                                 Text(
                                                     "${data.productList[index].price}.0")),
                                             DataCell(
                                                 onTap: () => showDetails(
-                                                    data.productList[index]),
+                                                    data.productList[index],
+                                                    index),
                                                 Text(
                                                     "${data.productList[index].qty}.0")),
                                             DataCell(
                                                 onTap: () => showDetails(
-                                                    data.productList[index]),
+                                                    data.productList[index],
+                                                    index),
                                                 Text(
-                                                    "${double.parse(data.productList[index].price.toString()) * double.parse(data.productList[index].qty.toString())}")),
+                                                    "${data.productList[index].price.isNotEmpty ? double.parse(data.productList[index].price.toString()) * double.parse(data.productList[index].qty.toString()) : 0}")),
                                             DataCell(
                                               InkWell(
                                                 onTap: () {
@@ -457,8 +460,10 @@ class _HomeScreenViewState extends State<HomeScreenView>
                       double price = 0;
 
                       for (var element in data.productList) {
-                        price += double.parse(element.price.toString()) *
-                            double.parse(element.qty);
+                        if (element.price.isNotEmpty) {
+                          price += double.parse(element.price.toString()) *
+                              double.parse(element.qty);
+                        }
                       }
                       var newPrice = amountController.text.isNotEmpty
                           ? (double.parse(amountController.text) - price)

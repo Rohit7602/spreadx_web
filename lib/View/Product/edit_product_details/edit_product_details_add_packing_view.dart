@@ -39,7 +39,7 @@ class _EditProductAddPackingViewState extends State<EditProductAddPackingView> {
         mainAxisSize: MainAxisSize.min,
         children: [
           FloatingActionButton(
-              onPressed: () {},
+              onPressed: widget.onPressedBack,
               backgroundColor: styleSheet.COLOR.primaryColor,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),
@@ -212,7 +212,7 @@ class _EditProductAddPackingViewState extends State<EditProductAddPackingView> {
                                                                     child:
                                                                         SecondaryTextFormField(
                                                                       hinttext:
-                                                                          "Factor",
+                                                                          "Selling Price",
                                                                       label:
                                                                           true,
                                                                       onTap: () =>

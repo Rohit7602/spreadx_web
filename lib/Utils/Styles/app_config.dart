@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppConfig {
   AppConfig._private();
@@ -43,5 +44,11 @@ class AppConfig {
 
   shareNow() {
     Share.share("Share Invoice");
+  }
+
+  // Web View
+
+  openWebView(String url) async {
+    await launchUrl(Uri.parse(url), mode: LaunchMode.inAppWebView);
   }
 }

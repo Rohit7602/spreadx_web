@@ -3,16 +3,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/Controller/navigation_controller.dart';
 import 'package:spreadx_web/Data/local_data.dart';
-import 'package:spreadx_web/View/Inventory/invent_payment_view.dart';
+import 'package:spreadx_web/View/Supppliers/supplier_payment_view.dart';
 import 'package:spreadx_web/View/Transactions/Transaction_details/transaction_details_view.dart';
 import 'package:spreadx_web/main.dart';
 
 class CustomerTransactionView extends StatefulWidget {
   void Function() onPressedBack;
   bool isShowIssueRefund;
+  bool isComingFromCustomer;
   CustomerTransactionView(
-      {required this.onPressedBack, this.isShowIssueRefund = true, super.key});
+      {required this.onPressedBack,
+      this.isShowIssueRefund = true,
+      this.isComingFromCustomer = false,
+      super.key});
 
   @override
   State<CustomerTransactionView> createState() =>
@@ -21,6 +26,8 @@ class CustomerTransactionView extends StatefulWidget {
 
 class _CustomerTransactionViewState extends State<CustomerTransactionView> {
   List<String> btnList = ["All", "Today", "Week", "Month"];
+
+  final navController = Get.find<NavigationController>();
 
   int btnIndex = 0;
 
@@ -155,6 +162,7 @@ class _CustomerTransactionViewState extends State<CustomerTransactionView> {
                       itemBuilder: (context, i) {
                         return ListTile(
                           onTap: () {
+                            navController.setExportBtn(false);
                             selected("details");
                           },
                           minLeadingWidth: 20,
@@ -162,7 +170,9 @@ class _CustomerTransactionViewState extends State<CustomerTransactionView> {
                           tileColor: styleSheet.COLOR.fieldGreyColor,
                           leading: const Icon(Icons.contact_page_sharp),
                           title: Text(
-                            trList[i].trNumber,
+                            widget.isComingFromCustomer
+                                ? "IN34243"
+                                : trList[i].trNumber,
                             style: styleSheet.TEXT_THEME.fs14Bold,
                           ),
                           subtitle: Text("31 Jul12:04 PM",
@@ -213,6 +223,7 @@ class _CustomerTransactionViewState extends State<CustomerTransactionView> {
                           isExpanded: true,
                           btnName: "Pay Invoices",
                           onPressed: () {
+                            navController.setExportBtn(false);
                             selected("paymentView");
                           })
                   ],
@@ -230,18 +241,24 @@ class _CustomerTransactionViewState extends State<CustomerTransactionView> {
     return Obx(() {
       if (selected.value == "details") {
         return TransactionDetailsView(
+          isComingFromCustomer: widget.isComingFromCustomer,
           onPressedBack: setDefaultView,
           isComingFromTr: widget.isShowIssueRefund,
         );
       } else if (selected.value == "paymentView") {
-        return InventoryPaymentView(onPressedBack: (val) {
-          setDefaultView();
-        });
+        return SupplierPaymentView(
+            isComingFromCustomer: widget.isComingFromCustomer,
+            onPressedBack: () {
+              setDefaultView();
+            });
       } else {
         return defaultView;
       }
     });
   }
 
-  setDefaultView() => selected("default");
+  setDefaultView() {
+    navController.setExportBtn(true);
+    selected("default");
+  }
 }

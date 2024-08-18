@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/text_btn.dart';
+import 'package:spreadx_web/Components/Controller/navigation_controller.dart';
 import 'package:spreadx_web/Components/Controller/product_controller.dart';
 import 'package:spreadx_web/Components/Dialog/custom_item_dialog.dart';
 import 'package:spreadx_web/Components/custom_grid.dart';
@@ -40,6 +41,8 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
     super.initState();
   }
 
+  var navController = Get.find<NavigationController>();
+
   @override
   Widget build(BuildContext context) {
     var defaultView = Stack(
@@ -52,6 +55,7 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
             InkWell(
               borderRadius: styleSheet.DECORATION.RADIUS_20,
               onTap: () {
+                navController.setShowSearch(false);
                 selectedView("checkout");
               },
               child: Container(
@@ -541,21 +545,22 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
       if (selectedView.value == "checkout") {
         return CheckoutView(
           showISSupplier: widget.isSupplier != null ? widget.isSupplier! : true,
-          onPressedBack: () {
-            selectedView("default");
-            setState(() {});
-          },
+          onPressedBack: setDefaultView,
         );
       } else if (selectedView.value == "invoice") {
         return InvoiceView(
-          onPressedBack: () {
-            selectedView("default");
-          },
+          onPressedBack: setDefaultView,
         );
       } else {
         return defaultView;
       }
     });
+  }
+
+  setDefaultView() {
+    navController.setShowSearch(true);
+    selectedView("default");
+    setState(() {});
   }
 
   Future<bool> rebuild() async {

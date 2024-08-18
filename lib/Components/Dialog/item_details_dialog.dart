@@ -13,8 +13,9 @@ import '../Button/primary_btn.dart';
 
 class ItemDetailsDialog extends StatefulWidget {
   ProductModel productModel;
+  int i;
 
-  ItemDetailsDialog({required this.productModel, super.key});
+  ItemDetailsDialog({required this.productModel, required this.i, super.key});
 
   @override
   State<ItemDetailsDialog> createState() => _ItemDetailsDialogState();
@@ -25,23 +26,43 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
   bool _value = false;
 
   final priceController = TextEditingController();
+  final prNameController = TextEditingController();
+  final qtyController = TextEditingController();
+  final barcodeController = TextEditingController();
+  final vatController = TextEditingController();
 
   var product = Get.find<ProductController>();
 
   incrementCounter() {
-    if (int.parse(widget.productModel!.qty) != 1) {
-      widget.productModel!.qty =
-          (int.parse(widget.productModel!.qty) - 1).toString();
+    if (int.parse(widget.productModel.qty) != 1) {
+      widget.productModel.qty =
+          (int.parse(widget.productModel.qty) - 1).toString();
       setState(() {});
     }
   }
 
   decrementCounter() {
-    if (int.parse(widget.productModel!.qty) > 0) {
-      widget.productModel!.qty =
-          (int.parse(widget.productModel!.qty) + 1).toString();
+    if (int.parse(widget.productModel.qty) > 0) {
+      widget.productModel.qty =
+          (int.parse(widget.productModel.qty) + 1).toString();
       setState(() {});
     }
+  }
+
+  @override
+  void initState() {
+    getInitialState();
+    super.initState();
+  }
+
+  getInitialState() {
+    prNameController.text = widget.productModel.productName;
+    priceController.text = widget.productModel.price;
+    qtyController.text = widget.productModel.qty;
+    barcodeController.text = widget.productModel.barCode;
+    vatController.text = widget.productModel.vat;
+
+    setState(() {});
   }
 
   @override
@@ -62,6 +83,7 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                         color: styleSheet.COLOR.blackColor.withOpacity(0.7)),
                   ),
                   SecondaryTextFormField(
+                    controller: barcodeController,
                     onTap: () => openVirtualKeyboard(),
                     fillColor: true,
                     hinttext: "Enter Barcode",
@@ -73,6 +95,7 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                         color: styleSheet.COLOR.blackColor.withOpacity(0.7)),
                   ),
                   SecondaryTextFormField(
+                    controller: prNameController,
                     onTap: () => openVirtualKeyboard(),
                     fillColor: true,
                     hinttext: "Enter Product",
@@ -124,6 +147,7 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                                         .withOpacity(0.7)),
                               ),
                               SecondaryTextFormField(
+                                controller: vatController,
                                 onTap: () => openVirtualKeyboard(),
                                 fillColor: true,
                                 hinttext: "0.0",
@@ -159,7 +183,7 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                           onPressed: () => incrementCounter(),
                           icon: const Icon(Icons.remove),
                         ),
-                        Text(widget.productModel!.qty),
+                        Text(widget.productModel.qty),
                         IconButton(
                           onPressed: () => decrementCounter(),
                           icon: const Icon(Icons.add),
@@ -307,10 +331,25 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                   SecondaryButtonView(
                       btnName: "UPDATE",
                       onPressed: () {
-                        if (widget.productModel != null) {
-                          product.updateProductPrice(
-                              widget.productModel!, priceController.text);
-                        }
+                        product.updateProductPrice(
+                            ProductModel(
+                              widget.productModel.id,
+                              prNameController.text.isNotEmpty
+                                  ? prNameController.text
+                                  : widget.productModel.productName,
+                              prNameController.text.isNotEmpty
+                                  ? prNameController.text
+                                  : widget.productModel.productName,
+                              priceController.text.isNotEmpty
+                                  ? priceController.text
+                                  : widget.productModel.price,
+                              widget.productModel.qty,
+                              widget.productModel.stock,
+                              priceController.text.isNotEmpty
+                                  ? priceController.text
+                                  : widget.productModel.price,
+                            ),
+                            widget.i);
                         Navigator.of(context).pop();
                       }),
                 ],

@@ -3,14 +3,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/main.dart';
+import 'package:spreadx_web/web_config.dart';
 
 class SupportAndLegalView extends StatelessWidget {
   SupportAndLegalView({super.key});
 
   List<ContactSupport> btnList = [
-    ContactSupport(Icons.support_agent, "Contact Support"),
-    ContactSupport(Icons.contact_page, "Terms And Conditions"),
-    ContactSupport(Icons.privacy_tip, "Privacy Policy"),
+    ContactSupport(() {}, Icons.support_agent, "Contact Support"),
+    ContactSupport(() async {
+      await styleSheet.appConfig.openWebView(WebConfig.termURL);
+    }, Icons.contact_page, "Terms And Conditions"),
+    ContactSupport(() async {
+      await styleSheet.appConfig.openWebView(WebConfig.privacyURL);
+    }, Icons.privacy_tip, "Privacy Policy"),
   ];
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,9 @@ class SupportAndLegalView extends StatelessWidget {
       children: [
         ...List.generate(btnList.length, (index) {
           return InkWell(
-            onTap: () {},
+            onTap: () {
+              btnList[index].onTap();
+            },
             child: Container(
               padding: const EdgeInsets.only(left: 15),
               width: styleSheet.appConfig.getScreenWidth(context),
@@ -52,8 +59,9 @@ class SupportAndLegalView extends StatelessWidget {
 }
 
 class ContactSupport {
+  Function onTap;
   String name;
   IconData icon;
 
-  ContactSupport(this.icon, this.name);
+  ContactSupport(this.onTap, this.icon, this.name);
 }

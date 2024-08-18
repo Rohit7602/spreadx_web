@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:spreadx_web/Components/Controller/navigation_controller.dart';
 import 'package:spreadx_web/View/Inventory/stock_details_view.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -10,6 +11,8 @@ class ViewStockView extends StatelessWidget {
   ViewStockView({required this.onPressedBack, super.key});
 
   RxString selectedView = RxString("default");
+
+  var navController = Get.find<NavigationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +27,7 @@ class ViewStockView extends StatelessWidget {
           itemBuilder: (context, i) {
             return InkWell(
               onTap: () {
+                navController.setShowSearch(false);
                 selectedView("stockDetails");
               },
               child: Card(
@@ -85,6 +89,7 @@ class ViewStockView extends StatelessWidget {
       if (selectedView.value == "stockDetails") {
         return StockDetailsView(
           onPressedBack: () {
+            navController.setShowSearch(true);
             selectedView("default");
           },
         );
