@@ -90,6 +90,33 @@ class _HomeScreenViewState extends State<HomeScreenView>
     });
   }
 
+  getSubTotal(List<ProductModel> data) {
+    double amount = 0;
+    for (var item in data) {
+      amount +=
+          (double.tryParse(item.price) ?? 0) * (double.parse(item.qty) ?? 0);
+    }
+    return amount;
+  }
+
+  getTotalDiscount(List<ProductModel> data) {
+    double discount = 0;
+    for (var item in data) {
+      discount += double.tryParse(item.discount) ?? 0;
+    }
+    return discount;
+  }
+
+  getTotalTax(List<ProductModel> data) {
+    double tax = 0;
+    for (var item in data) {
+      final subtotal =
+          (double.tryParse(item.price) ?? 0) * (double.parse(item.qty) ?? 0);
+      tax += subtotal * ((double.tryParse(item.vat) ?? 0) / 100);
+    }
+    return tax;
+  }
+
   @override
   Widget build(BuildContext context) {
     final view = ResponsiveHandler().getResponsiveness(context);
@@ -436,35 +463,46 @@ class _HomeScreenViewState extends State<HomeScreenView>
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomRow(title: "Sub Total", trailing: "0.00"),
-                  styleSheet.appConfig.addHeight(6),
-                  CustomRow(title: "Discount", trailing: "0.00"),
-                  styleSheet.appConfig.addHeight(6),
-                  CustomRow(title: "Total Tax", trailing: "0.00"),
+                  GetBuilder<ProductController>(builder: (data) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CustomRow(
+                            title: "Sub Total",
+                            trailing: getSubTotal(data.productList).toString()),
+                        styleSheet.appConfig.addHeight(6),
+                        CustomRow(
+                            title: "Discount",
+                            trailing:
+                                getTotalDiscount(data.productList).toString()),
+                        styleSheet.appConfig.addHeight(6),
+                        CustomRow(
+                            title: "Total Tax",
+                            trailing: getTotalTax(data.productList).toString()),
+                        styleSheet.appConfig.addHeight(6),
+                        GetBuilder<ProductController>(
+                          builder: (data) {
+                            int qty = 0;
+                            for (var element in data.productList) {
+                              qty += int.parse(element.qty.toString());
+                            }
+                            return CustomRow(
+                                txtColor: styleSheet.COLOR.primaryColor,
+                                title: "Grand Total",
+                                trailing:
+                                    "AED ${getSubTotal(data.productList) - getTotalDiscount(data.productList) + getTotalTax(data.productList)}");
+                          },
+                        ),
+                      ],
+                    );
+                  }),
                   styleSheet.appConfig.addHeight(6),
                   GetBuilder<ProductController>(
                     builder: (data) {
-                      int qty = 0;
-                      for (var element in data.productList) {
-                        qty += int.parse(element.qty.toString());
-                      }
-                      return CustomRow(
-                          txtColor: styleSheet.COLOR.primaryColor,
-                          title: "Grand Total",
-                          trailing: "AED $qty.00");
-                    },
-                  ),
-                  styleSheet.appConfig.addHeight(6),
-                  GetBuilder<ProductController>(
-                    builder: (data) {
-                      double price = 0;
+                      double price = getSubTotal(data.productList) -
+                          getTotalDiscount(data.productList) +
+                          getTotalTax(data.productList);
 
-                      for (var element in data.productList) {
-                        if (element.price.isNotEmpty) {
-                          price += double.parse(element.price.toString()) *
-                              double.parse(element.qty);
-                        }
-                      }
                       var newPrice = amountController.text.isNotEmpty
                           ? (double.parse(amountController.text) - price)
                           : price == 0
@@ -505,45 +543,51 @@ class _HomeScreenViewState extends State<HomeScreenView>
                   styleSheet.appConfig.addHeight(8),
 
                   // Widget to show payment Methods Toggle
-                  Row(
-                    children: [
-                      OutlinedButton(
-                          style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all(
-                                  isPaymentCash != null && isPaymentCash
-                                      ? styleSheet.COLOR.primaryColor
-                                      : null)),
-                          onPressed: () {
-                            isPaymentCash = true;
-                            setState(() {});
-                          },
-                          child: Text(
-                            "Cash",
-                            style: styleSheet.TEXT_THEME.fs12Normal.copyWith(
-                                color: isPaymentCash != null && isPaymentCash
-                                    ? styleSheet.COLOR.whiteColor
-                                    : styleSheet.COLOR.primaryColor),
-                          )),
-                      styleSheet.appConfig.addWidth(10),
-                      OutlinedButton(
-                          style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all(
-                                  isPaymentCash != null && !isPaymentCash
-                                      ? styleSheet.COLOR.primaryColor
-                                      : null)),
-                          onPressed: () {
-                            isPaymentCash = false;
-                            setState(() {});
-                          },
-                          child: Text(
-                            "Card",
-                            style: styleSheet.TEXT_THEME.fs12Normal.copyWith(
-                                color: isPaymentCash != null && !isPaymentCash
-                                    ? styleSheet.COLOR.whiteColor
-                                    : styleSheet.COLOR.primaryColor),
-                          )),
-                    ],
-                  ),
+                  GetBuilder<ProductController>(builder: (data) {
+                    return Row(
+                      children: [
+                        OutlinedButton(
+                            style: ButtonStyle(
+                                backgroundColor: WidgetStateProperty.all(
+                                    isPaymentCash != null && isPaymentCash
+                                        ? styleSheet.COLOR.primaryColor
+                                        : null)),
+                            onPressed: () {
+                              isPaymentCash = true;
+                              amountController.text =
+                                  "${getSubTotal(data.productList) - getTotalDiscount(data.productList) + getTotalTax(data.productList)}";
+                              setState(() {});
+                            },
+                            child: Text(
+                              "Cash",
+                              style: styleSheet.TEXT_THEME.fs12Normal.copyWith(
+                                  color: isPaymentCash != null && isPaymentCash
+                                      ? styleSheet.COLOR.whiteColor
+                                      : styleSheet.COLOR.primaryColor),
+                            )),
+                        styleSheet.appConfig.addWidth(10),
+                        OutlinedButton(
+                            style: ButtonStyle(
+                                backgroundColor: WidgetStateProperty.all(
+                                    isPaymentCash != null && !isPaymentCash
+                                        ? styleSheet.COLOR.primaryColor
+                                        : null)),
+                            onPressed: () {
+                              isPaymentCash = false;
+                              amountController.text =
+                                  "${getSubTotal(data.productList) - getTotalDiscount(data.productList) + getTotalTax(data.productList)}";
+                              setState(() {});
+                            },
+                            child: Text(
+                              "Card",
+                              style: styleSheet.TEXT_THEME.fs12Normal.copyWith(
+                                  color: isPaymentCash != null && !isPaymentCash
+                                      ? styleSheet.COLOR.whiteColor
+                                      : styleSheet.COLOR.primaryColor),
+                            )),
+                      ],
+                    );
+                  }),
                   styleSheet.appConfig.addHeight(8),
                   Row(
                     children: [

@@ -137,8 +137,12 @@ class _EditSupplierViewState extends State<EditSupplierView> {
           return PurchaseProductsView(
             supplierName: widget.supplierName,
             isSupplier: false,
-            onPressedBack: () {
-              selected(EditSupplierViewState.Default);
+            onPressedBack: (val) {
+              if (val) {
+                widget.onPressedBack!();
+              } else {
+                selected(EditSupplierViewState.Default);
+              }
             },
           );
         case EditSupplierViewState.Assign_Products:

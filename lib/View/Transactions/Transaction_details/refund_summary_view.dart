@@ -5,8 +5,10 @@ import 'package:spreadx_web/View/Inventory/invoice_view.dart';
 import 'package:spreadx_web/main.dart';
 
 class RefundSummaryView extends StatefulWidget {
-  final void Function()? onPressedBack;
-  const RefundSummaryView({super.key, required this.onPressedBack});
+  final void Function(bool)? onPressedBack;
+  bool isCustomerSide;
+  RefundSummaryView(
+      {super.key, required this.onPressedBack, required this.isCustomerSide});
 
   @override
   State<RefundSummaryView> createState() => _RefundSummaryViewState();
@@ -24,7 +26,9 @@ class _RefundSummaryViewState extends State<RefundSummaryView> {
             Align(
               alignment: Alignment.centerLeft,
               child: IconButton(
-                  onPressed: widget.onPressedBack,
+                  onPressed: () {
+                    widget.onPressedBack!(false);
+                  },
                   icon: const Icon(Icons.arrow_back_outlined)),
             ),
             Expanded(
@@ -104,9 +108,9 @@ class _RefundSummaryViewState extends State<RefundSummaryView> {
     return Obx(() {
       if (selectedView.value == "invoice") {
         return InvoiceView(
-          isReturn: true,
+          isCustomerSide: widget.isCustomerSide,
           onPressedBack: () {
-            selectedView("default");
+            widget.onPressedBack!(true);
           },
         );
       } else {

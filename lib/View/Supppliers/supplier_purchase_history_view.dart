@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Controller/navigation_controller.dart';
 import 'package:spreadx_web/Data/local_data.dart';
+import 'package:spreadx_web/View/Supppliers/supplier_payment_view.dart';
 import 'package:spreadx_web/View/Transactions/Transaction_details/transaction_details_view.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -204,12 +205,19 @@ class _EditSupplierPurchaseHistoryViewState
 
     return Obx(() {
       if (selected.value == "details") {
-        return TransactionDetailsView(onPressedBack: () {
+        return TransactionDetailsView(onPressedBack: (val) {
           navController.setExportBtn(true);
           selected("default");
         });
+      } else if (selected.value == "paymentView") {
+        return SupplierPaymentView(
+            tr: lisOfTr,
+            onPressedBack: () {
+              selected("default");
+            });
+      } else {
+        return defaultView;
       }
-      return defaultView;
     });
   }
 }

@@ -6,9 +6,14 @@ import 'package:spreadx_web/main.dart';
 
 class InvoiceView extends StatelessWidget {
   void Function() onPressedBack;
-  bool isReturn;
+  bool isCustomerSide;
+  bool isPurchasedIN;
 
-  InvoiceView({required this.onPressedBack, this.isReturn = false, super.key});
+  InvoiceView(
+      {required this.onPressedBack,
+      this.isCustomerSide = false,
+      this.isPurchasedIN = false,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,18 +22,26 @@ class InvoiceView extends StatelessWidget {
         Align(
           alignment: Alignment.centerLeft,
           child: IconButton(
-              onPressed: onPressedBack, icon: const Icon(Icons.arrow_back)),
+              onPressed: () {
+                onPressedBack();
+              },
+              icon: const Icon(Icons.arrow_back)),
         ),
         styleSheet.appConfig.addHeight(30),
         const Text("bot#werwrmwer"),
         styleSheet.appConfig.addHeight(10),
         Text(
-          isReturn ? "PURCHASE RETURN INVOICE" : "PURCHASE INVOICE",
+          isPurchasedIN
+              ? "PURCHASE INVOICE"
+              : isCustomerSide
+                  ? "RETURN INVOICE"
+                  : "PURCHASE RETURN INVOICE",
           style: styleSheet.TEXT_THEME.fs14Bold,
         ),
         styleSheet.appConfig.addHeight(30),
         CustomRow(
-            title: DateTime.now().toIso8601String(), trailing: "PIN93849"),
+            title: DateTime.now().toIso8601String(),
+            trailing: isCustomerSide ? "IN93849" : "PIN93849"),
         styleSheet.appConfig.addHeight(5),
         const Divider(),
         styleSheet.appConfig.addHeight(5),
@@ -118,7 +131,9 @@ class InvoiceView extends StatelessWidget {
             PrimaryBtnWithIcon(
                 isExpanded: true,
                 btnName: "New Sale",
-                onPressed: () {},
+                onPressed: () {
+                  onPressedBack();
+                },
                 icon: Icons.home),
             styleSheet.appConfig.addWidth(15),
             PrimaryBtnWithIcon(

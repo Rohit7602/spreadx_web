@@ -242,12 +242,19 @@ class _CustomerTransactionViewState extends State<CustomerTransactionView> {
       if (selected.value == "details") {
         return TransactionDetailsView(
           isComingFromCustomer: widget.isComingFromCustomer,
-          onPressedBack: setDefaultView,
+          onPressedBack: (val) {
+            if (val) {
+              widget.onPressedBack();
+            } else {
+              setDefaultView();
+            }
+          },
           isComingFromTr: widget.isShowIssueRefund,
         );
       } else if (selected.value == "paymentView") {
         return SupplierPaymentView(
             isComingFromCustomer: widget.isComingFromCustomer,
+            tr: lisOfTr,
             onPressedBack: () {
               setDefaultView();
             });

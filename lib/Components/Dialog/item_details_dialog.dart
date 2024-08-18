@@ -30,7 +30,8 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
   final qtyController = TextEditingController();
   final barcodeController = TextEditingController();
   final vatController = TextEditingController();
-
+  final discount = TextEditingController();
+  final discountPercentage = TextEditingController();
   var product = Get.find<ProductController>();
 
   incrementCounter() {
@@ -56,17 +57,33 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
   }
 
   getInitialState() {
+    final subtotal = ((double.tryParse(widget.productModel.price) ?? 0) *
+        (int.tryParse(widget.productModel.qty) ?? 0));
     prNameController.text = widget.productModel.productName;
     priceController.text = widget.productModel.price;
     qtyController.text = widget.productModel.qty;
     barcodeController.text = widget.productModel.barCode;
     vatController.text = widget.productModel.vat;
+    discount.text = widget.productModel.discount;
+    discountPercentage.text =
+        (((double.tryParse(widget.productModel.discount) ?? 0) /
+                    (subtotal +
+                        (subtotal *
+                            (double.tryParse(widget.productModel.vat) ?? 0) /
+                            100))) *
+                100)
+            .toStringAsFixed(2);
 
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    final subtotal = ((double.tryParse(priceController.text) ?? 0) *
+        (int.tryParse(widget.productModel.qty) ?? 0));
+    final total = subtotal +
+        (subtotal * (double.tryParse(vatController.text) ?? 0) / 100);
+
     return CustomHeaderDialog(
         title: "Item Details",
         child: Padding(
@@ -119,6 +136,8 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                                 onTap: () => openVirtualKeyboard(),
                                 fillColor: true,
                                 hinttext: "Enter Price",
+                                onChange: (value) => setState(
+                                    () => priceController.text = value),
                               ),
                               // styleSheet.appConfig.addHeight(6),
                               // const Text("Price included VAT 36.75")
@@ -151,6 +170,8 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                                 onTap: () => openVirtualKeyboard(),
                                 fillColor: true,
                                 hinttext: "0.0",
+                                onChange: (value) =>
+                                    setState(() => vatController.text = value),
                               ),
                             ]),
                       ),
@@ -223,6 +244,7 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                                 children: [
                                   Expanded(
                                     child: SecondaryTextFormField(
+                                      controller: discountPercentage,
                                       onTap: () => openVirtualKeyboard(),
                                       fillColor: true,
                                       hinttext: "0.0",
@@ -254,9 +276,20 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                                       style: styleSheet.TEXT_THEME.fs18Bold),
                                   Expanded(
                                     child: SecondaryTextFormField(
+                                      controller: discount,
                                       onTap: () => openVirtualKeyboard(),
                                       fillColor: true,
                                       hinttext: "0.0",
+                                      onChange: (value) => setState(() {
+                                        discount.text = value;
+                                        discountPercentage.text = value
+                                                .isNotEmpty
+                                            ? (((double.tryParse(value) ?? 0) /
+                                                        total) *
+                                                    100)
+                                                .toStringAsFixed(2)
+                                            : '0';
+                                      }),
                                     ),
                                   ),
                                 ],
@@ -299,8 +332,27 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text("Total", style: styleSheet.TEXT_THEME.fs12Bold),
-                          Text("AED 0.00",
-                              style: styleSheet.TEXT_THEME.fs20Bold),
+                          discount.text.isEmpty || discount.text == "0.00"
+                              ? Text("AED $total",
+                                  style: styleSheet.TEXT_THEME.fs20Bold)
+                              : Text.rich(TextSpan(
+                                  text: "AED $total",
+                                  style: styleSheet.TEXT_THEME.fs20Bold
+                                      .copyWith(
+                                          color: styleSheet.COLOR.greyColor,
+                                          decoration:
+                                              TextDecoration.lineThrough),
+                                  children: [
+                                      TextSpan(
+                                          text:
+                                              "   AED ${(total - (double.tryParse(discount.text) ?? 0)).toStringAsFixed(2)}",
+                                          style: styleSheet.TEXT_THEME.fs20Bold
+                                              .copyWith(
+                                                  color:
+                                                      styleSheet.COLOR.redColor,
+                                                  decoration:
+                                                      TextDecoration.none))
+                                    ])),
                         ],
                       ),
                     ),
@@ -333,28 +385,30 @@ class _ItemDetailsDialogState extends State<ItemDetailsDialog> {
                       onPressed: () {
                         product.updateProductPrice(
                             ProductModel(
-                              widget.productModel.id,
-                              prNameController.text.isNotEmpty
-                                  ? prNameController.text
-                                  : widget.productModel.productName,
-                              prNameController.text.isNotEmpty
-                                  ? prNameController.text
-                                  : widget.productModel.productName,
-                              priceController.text.isNotEmpty
-                                  ? priceController.text
-                                  : widget.productModel.price,
-                              widget.productModel.qty,
-                              widget.productModel.stock,
-                              priceController.text.isNotEmpty
-                                  ? priceController.text
-                                  : widget.productModel.price,
-                              barCode: barcodeController.text.isNotEmpty
-                                  ? barcodeController.text
-                                  : widget.productModel.barCode,
-                              vat: vatController.text.isNotEmpty
-                                  ? vatController.text
-                                  : widget.productModel.vat,
-                            ),
+                                widget.productModel.id,
+                                prNameController.text.isNotEmpty
+                                    ? prNameController.text
+                                    : widget.productModel.productName,
+                                prNameController.text.isNotEmpty
+                                    ? prNameController.text
+                                    : widget.productModel.productName,
+                                priceController.text.isNotEmpty
+                                    ? priceController.text
+                                    : widget.productModel.price,
+                                widget.productModel.qty,
+                                widget.productModel.stock,
+                                priceController.text.isNotEmpty
+                                    ? priceController.text
+                                    : widget.productModel.price,
+                                barCode: barcodeController.text.isNotEmpty
+                                    ? barcodeController.text
+                                    : widget.productModel.barCode,
+                                vat: vatController.text.isNotEmpty
+                                    ? vatController.text
+                                    : widget.productModel.vat,
+                                discount: discount.text.isNotEmpty
+                                    ? discount.text
+                                    : widget.productModel.discount),
                             widget.i);
                         Navigator.of(context).pop();
                       }),

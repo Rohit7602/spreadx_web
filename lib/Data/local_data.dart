@@ -110,9 +110,9 @@ class LocalData {
 // *************** Product List ********************
 
   static List<ProductModel> productList = [
-    ProductModel("1", "default - PCS", "default - PCS", "0", "0", "0", ""),
+    ProductModel("1", "default - PCS", "default - PCS", "2", "0", "0", ""),
     ProductModel("1", "default - PCS", "default - PCS", "0", "0", "4", ""),
-    ProductModel("2", "default - PCS", "default - PCS", "0", "0", "2", ""),
+    ProductModel("2", "default - PCS", "default - PCS", "10", "0", "2", ""),
   ];
 
 // *************** Existing Customer List ********************

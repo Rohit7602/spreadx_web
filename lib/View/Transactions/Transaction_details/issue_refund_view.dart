@@ -12,8 +12,10 @@ import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 class IssueRefundView extends StatefulWidget {
-  final void Function()? onPressedBack;
-  const IssueRefundView({super.key, required this.onPressedBack});
+  final void Function(bool)? onPressedBack;
+  bool isCustomerSide;
+  IssueRefundView(
+      {super.key, required this.onPressedBack, required this.isCustomerSide});
 
   @override
   State<IssueRefundView> createState() => _IssueRefundViewState();
@@ -54,7 +56,9 @@ class _IssueRefundViewState extends State<IssueRefundView> {
             Align(
               alignment: Alignment.centerLeft,
               child: IconButton(
-                  onPressed: widget.onPressedBack,
+                  onPressed: () {
+                    widget.onPressedBack!(false);
+                  },
                   icon: const Icon(Icons.arrow_back_outlined)),
             ),
             Expanded(
@@ -260,9 +264,15 @@ class _IssueRefundViewState extends State<IssueRefundView> {
       if (selected.value == "default") {
         return defaultView;
       } else {
-        return RefundSummaryView(onPressedBack: () {
-          selected("default");
-        });
+        return RefundSummaryView(
+            isCustomerSide: widget.isCustomerSide,
+            onPressedBack: (val) {
+              if (val) {
+                widget.onPressedBack!(true);
+              } else {
+                selected("default");
+              }
+            });
       }
     });
   }

@@ -13,7 +13,7 @@ import 'package:spreadx_web/View/Inventory/invt_discount.dart';
 import 'package:spreadx_web/main.dart';
 
 class CheckoutView extends StatefulWidget {
-  final void Function()? onPressedBack;
+  final void Function(bool)? onPressedBack;
   bool showISSupplier;
   String supplierName;
   CheckoutView(
@@ -57,7 +57,7 @@ class _CheckoutViewState extends State<CheckoutView> {
               alignment: Alignment.centerLeft,
               child: IconButton(
                   onPressed: () {
-                    widget.onPressedBack!();
+                    widget.onPressedBack!(false);
                   },
                   icon: const Icon(Icons.arrow_back)),
             ),
@@ -338,9 +338,9 @@ class _CheckoutViewState extends State<CheckoutView> {
         return InventoryDiscountView(
           onPressedBack: (val) {
             if (val) {
-              selectedView(InventoryInvoiceState.Default);
+              widget.onPressedBack!(true);
             } else {
-              widget.onPressedBack!();
+              selectedView(InventoryInvoiceState.Default);
             }
           },
         );
@@ -350,7 +350,7 @@ class _CheckoutViewState extends State<CheckoutView> {
             if (val) {
               selectedView(InventoryInvoiceState.Default);
             } else {
-              widget.onPressedBack!();
+              widget.onPressedBack!(true);
             }
           },
         );

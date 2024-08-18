@@ -46,7 +46,7 @@ class _PaymentMethodForSupplierState extends State<PaymentMethodForSupplier> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((t) {
-      _splits.add({'type': 'CARD', 'amount': 0});
+      // _splits.add({'type': 'CARD', 'amount': 0});
 
       amountController.text = "0";
       setState(() {});

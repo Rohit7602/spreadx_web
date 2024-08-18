@@ -93,7 +93,9 @@ class _InventoryViewState extends State<InventoryView> {
       case InventoryState.Purchase_Product:
         return PurchaseProductsView(
           supplierName: "",
-          onPressedBack: setDefaultView,
+          onPressedBack: (val) {
+            setDefaultView();
+          },
         );
       case InventoryState.Purchase_History:
         return TransactionView(

@@ -16,7 +16,7 @@ class InventoryDiscountView extends StatelessWidget {
       children: [
         IconButton(
             onPressed: () {
-              onPressedBack(true);
+              onPressedBack(false);
             },
             icon: const Icon(Icons.arrow_back)),
         Container(
@@ -56,8 +56,9 @@ class InventoryDiscountView extends StatelessWidget {
     return Obx(() {
       if (selectedView.value == "invoice") {
         return InvoiceView(
+          isPurchasedIN: true,
           onPressedBack: () {
-            selectedView("default");
+            onPressedBack(true);
           },
         );
       } else {

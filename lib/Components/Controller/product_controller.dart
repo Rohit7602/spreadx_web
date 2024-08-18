@@ -16,7 +16,7 @@ class ProductController extends GetxController {
     if (_productList.any((value) => value.id == product.id)) {
       final i = _productList.indexOf(product);
 
-      if (i > 0) {
+      if (i >= 0) {
         _productList[i].qty = (int.parse(_productList[i].qty) + 1).toString();
       }
     } else {

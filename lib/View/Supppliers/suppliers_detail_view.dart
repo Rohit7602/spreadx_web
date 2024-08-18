@@ -421,10 +421,10 @@ class _SupplierDetailsViewState extends State<SupplierDetailsView> {
         );
       } else {
         return EditSupplierView(
-          supplierName: widget.supplierModel.name,
-          onPressedBack: () {
-          selected("default");
-        });
+            supplierName: widget.supplierModel.name,
+            onPressedBack: () {
+              selected("default");
+            });
       }
     });
   }

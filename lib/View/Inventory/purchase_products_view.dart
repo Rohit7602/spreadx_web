@@ -15,13 +15,13 @@ import 'package:spreadx_web/View/Inventory/invoice_view.dart';
 import 'package:spreadx_web/main.dart';
 
 class PurchaseProductsView extends StatefulWidget {
-  void Function() onPressedBack;
+  void Function(bool) onPressedBack;
   bool? isSupplier;
   String supplierName;
   PurchaseProductsView(
       {required this.onPressedBack,
       this.isSupplier,
-    required   this.supplierName ,
+      required this.supplierName,
       super.key});
 
   @override
@@ -523,7 +523,7 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
           children: [
             IconButton(
                     onPressed: () {
-                      widget.onPressedBack();
+                      widget.onPressedBack(false);
                     },
                     icon: const Icon(Icons.arrow_back))
                 .paddingSymmetric(horizontal: 10),
@@ -550,7 +550,13 @@ class _PurchaseProductsViewState extends State<PurchaseProductsView> {
         return CheckoutView(
           supplierName: widget.supplierName,
           showISSupplier: widget.isSupplier != null ? widget.isSupplier! : true,
-          onPressedBack: setDefaultView,
+          onPressedBack: (val) {
+            if (val) {
+              widget.onPressedBack(true);
+            } else {
+              setDefaultView();
+            }
+          },
         );
       } else if (selectedView.value == "invoice") {
         return InvoiceView(

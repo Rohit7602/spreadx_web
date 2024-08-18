@@ -7,9 +7,10 @@ import 'package:spreadx_web/View/Transactions/Transaction_details/issue_refund_v
 import 'package:spreadx_web/main.dart';
 
 class TransactionDetailsView extends StatefulWidget {
-  final void Function()? onPressedBack;
+  final void Function(bool)? onPressedBack;
   bool isComingFromTr;
   bool isComingFromCustomer;
+
   TransactionDetailsView(
       {super.key,
       required this.onPressedBack,
@@ -53,7 +54,9 @@ class _TransactionDetailsViewState extends State<TransactionDetailsView> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: IconButton(
-                      onPressed: widget.onPressedBack,
+                      onPressed: () {
+                        widget.onPressedBack!(false);
+                      },
                       icon: const Icon(Icons.arrow_back_outlined)),
                 ),
                 Expanded(
@@ -93,9 +96,13 @@ class _TransactionDetailsViewState extends State<TransactionDetailsView> {
                                               DateFormat("dd MMM yyyy hh:mm a")
                                                   .format(DateTime.now())),
                                       styleSheet.appConfig.addHeight(5),
-                                      const _TransactionHeaderTile(
-                                          title: "customer",
-                                          value: "VISITOR VISITOR"),
+                                      _TransactionHeaderTile(
+                                          title: widget.isComingFromCustomer
+                                              ? "customer"
+                                              : "Supplier",
+                                          value: widget.isComingFromCustomer
+                                              ? "#_Customer_Name"
+                                              : "#_Supplier_Name"),
                                     ],
                                   ),
                                 )
@@ -281,9 +288,15 @@ class _TransactionDetailsViewState extends State<TransactionDetailsView> {
       if (selected.value == "default") {
         return defaultView;
       } else {
-        return IssueRefundView(onPressedBack: () {
-          selected("default");
-        });
+        return IssueRefundView(
+            isCustomerSide: widget.isComingFromCustomer,
+            onPressedBack: (val) {
+              if (val) {
+                widget.onPressedBack!(true);
+              } else {
+                selected("default");
+              }
+            });
       }
     });
   }
