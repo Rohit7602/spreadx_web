@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:country_list_pick/country_list_pick.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
@@ -118,21 +119,26 @@ class _LoginComponentViewState extends State<SignUpComponentView> {
           isPhoneSelected
               ? SecondaryTextFormField(
                   onTap: () => openVirtualKeyboard(),
-                  prefixIcon: SizedBox(
-                    height: 10,
-                    width: 140,
-                    child: CountryPickerDropdown(
-                      isExpanded: true,
-                      initialValue: 'AE',
-                      itemBuilder: _buildDropdownItem,
-                      onValuePicked: (Country country) {},
-                    ),
+                  prefixIcon: CountryListPick(
+                    initialSelection: "AE",
+                    onChanged: (val) {},
                   ),
+
+                  //   SizedBox(
+                  //     height: 10,
+                  //     width: 140,
+                  //     child: CountryPickerDropdown(
+                  //       isExpanded: true,
+                  //       initialValue: 'AE',
+                  //       itemBuilder: _buildDropdownItem,
+                  //       onValuePicked: (Country country) {},
+                  //     ),
+                  //   ),
                   keyboardtype: TextInputType.phone,
                   controller: phoneController,
                   hinttext: "(50 | 52 | 54 | 55 | 56 | 58 | xxxxx)",
                 )
-              : PrimaryTextFormField(
+              : SecondaryTextFormField(
                   controller: emailController,
                   suffixicon: const Icon(Icons.mail),
                   hinttext: "Email",

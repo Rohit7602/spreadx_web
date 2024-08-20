@@ -1,12 +1,11 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:spreadx_web/Components/Button/back_btn.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/password_text_field.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
-import 'package:spreadx_web/Utils/Routes/routes.dart';
 import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
 
@@ -22,6 +21,7 @@ class CreatePDComponentView extends StatefulWidget {
 
 class _CreatePDComponentViewState extends State<CreatePDComponentView> {
   final passwordController = TextEditingController();
+  final confirmPDController = TextEditingController();
   bool isVisibility = false;
   @override
   Widget build(BuildContext context) {
@@ -42,30 +42,11 @@ class _CreatePDComponentViewState extends State<CreatePDComponentView> {
           ],
         ),
         styleSheet.appConfig.addHeight(40),
-        PrimaryTextFormField(
-          onTap: () => openVirtualKeyboard(),
-          controller: passwordController,
-          suffixicon: GestureDetector(
-              onTap: () {
-                isVisibility = !isVisibility;
-                setState(() {});
-              },
-              child: const Icon(Icons.visibility_outlined)),
-          hinttext: "Password",
-          obscureText: isVisibility,
-        ),
+        PasswordTextField(controller: passwordController),
         styleSheet.appConfig.addHeight(20),
-        PrimaryTextFormField(
-          onTap: () => openVirtualKeyboard(),
-          controller: passwordController,
-          suffixicon: GestureDetector(
-              onTap: () {
-                isVisibility = !isVisibility;
-                setState(() {});
-              },
-              child: const Icon(Icons.visibility_outlined)),
-          hinttext: "Password",
-          obscureText: isVisibility,
+        PasswordTextField(
+          controller: confirmPDController,
+          hint: "Confirm Password",
         ),
         styleSheet.appConfig.addHeight(20),
         PrimaryBtnView(

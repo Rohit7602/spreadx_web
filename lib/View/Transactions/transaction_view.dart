@@ -123,7 +123,7 @@ class _TransactionViewState extends State<TransactionView> {
         return defaultView;
       } else {
         return TransactionDetailsView(
-            isComingFromCustomer: false,
+            isComingFromCustomer: true,
             isComingFromTr: widget.isComingFromtr,
             onPressedBack: (val) {
               navController.setShowSearch(true);

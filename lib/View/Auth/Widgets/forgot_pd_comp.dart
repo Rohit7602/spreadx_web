@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable, avoid_unnecessary_containers
 
+import 'package:country_list_pick/country_list_pick.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:flutter/material.dart';
@@ -116,14 +117,9 @@ class _LoginComponentViewState extends State<ForgotPDCompoView> {
           isPhoneSelected
               ? SecondaryTextFormField(
                   onTap: () => openVirtualKeyboard(),
-                  prefixIcon: SizedBox(
-                    width: 140,
-                    child: CountryPickerDropdown(
-                      isExpanded: true,
-                      initialValue: 'AE',
-                      itemBuilder: _buildDropdownItem,
-                      onValuePicked: (Country country) {},
-                    ),
+                  prefixIcon: CountryListPick(
+                    initialSelection: "AE",
+                    onChanged: (val) {},
                   ),
                   keyboardtype: TextInputType.phone,
                   controller: phoneController,

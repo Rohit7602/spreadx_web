@@ -1,3 +1,4 @@
+import 'package:country_list_pick/country_list_pick.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_picker_dropdown.dart';
 import 'package:country_pickers/utils/utils.dart';
@@ -14,18 +15,22 @@ class PhoneTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return SecondaryTextFormField(
       onTap: () => openVirtualKeyboard(),
-      prefixIcon: SizedBox(
-        height: 10,
-        width: 140,
-        child: CountryPickerDropdown(
-          isExpanded: true,
-          initialValue: 'AE',
-          itemBuilder: _buildDropdownItem,
-          onValuePicked: (Country country) {
-            onValuePick!(country);
-          },
-        ),
+      prefixIcon: CountryListPick(
+        initialSelection: "AE",
+        onChanged: (val) {},
       ),
+      // SizedBox(
+      //   height: 10,
+      //   width: 140,
+      //   child: CountryPickerDropdown(
+      //     isExpanded: true,
+      //     initialValue: 'AE',
+      //     itemBuilder: _buildDropdownItem,
+      //     onValuePicked: (Country country) {
+      //       onValuePick!(country);
+      //     },
+      //   ),
+      // ),
       keyboardtype: TextInputType.phone,
       controller: controller,
       hinttext: "(50 | 52 | 54 | 55 | 56 | 58 | xxxxx)",

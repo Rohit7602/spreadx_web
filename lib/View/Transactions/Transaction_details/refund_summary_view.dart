@@ -140,7 +140,7 @@ class RefundReasonTile extends StatelessWidget {
         children: [
           const Icon(Icons.circle, size: 10),
           styleSheet.appConfig.addWidth(20),
-          Expanded(child: Text(title, style: styleSheet.TEXT_THEME.fs18Bold)),
+          Expanded(child: Text(title, style: styleSheet.TEXT_THEME.fs16Bold)),
           styleSheet.appConfig.addWidth(20),
           selected == title
               ? Icon(Icons.check_circle,

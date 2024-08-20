@@ -55,6 +55,12 @@ class OTPComponentView extends StatelessWidget {
           onPressed: () {},
         ),
         styleSheet.appConfig.addHeight(5),
+        Center(
+          child: Text("you can re-send new code after :",
+              style: styleSheet.TEXT_THEME.fs14Normal
+                  .copyWith(color: styleSheet.COLOR.blueColor)),
+        ),
+        styleSheet.appConfig.addHeight(8),
         Text(
           "00:29 sec",
           textAlign: TextAlign.center,

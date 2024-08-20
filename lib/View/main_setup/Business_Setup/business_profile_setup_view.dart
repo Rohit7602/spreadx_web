@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:country_list_pick/country_list_pick.dart';
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_picker_dropdown.dart';
 import 'package:country_pickers/utils/utils.dart';
@@ -180,27 +181,9 @@ class _BusinessProfileSetupViewState extends State<BusinessProfileSetupView> {
                         styleSheet.appConfig.addHeight(20),
                         SecondaryTextFormField(
                           onTap: () => openVirtualKeyboard(),
-                          prefixIcon: SizedBox(
-                            width: 140,
-                            child: CountryPickerDropdown(
-                              isExpanded: true,
-                              selectedItemBuilder: (Country country) {
-                                return Row(
-                                  children: <Widget>[
-                                    CountryPickerUtils.getDefaultFlagImage(
-                                        country),
-                                    const SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    Flexible(
-                                        child: Text("+${country.phoneCode}")),
-                                  ],
-                                );
-                              },
-                              initialValue: 'AE',
-                              itemBuilder: _buildDropdownItem,
-                              onValuePicked: (Country country) {},
-                            ),
+                          prefixIcon: CountryListPick(
+                            initialSelection: "AE",
+                            onChanged: (val) {},
                           ),
                           keyboardtype: TextInputType.phone,
                           controller: phoneController,

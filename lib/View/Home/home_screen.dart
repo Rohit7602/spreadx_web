@@ -483,6 +483,8 @@ class _HomeScreenViewState extends State<HomeScreenView>
                             title: "Total Tax",
                             trailing: getTotalTax(data.productList).toString()),
                         styleSheet.appConfig.addHeight(6),
+                        CustomRow(title: "VAT", trailing: "0.0"),
+                        styleSheet.appConfig.addHeight(6),
                         GetBuilder<ProductController>(
                           builder: (data) {
                             int qty = 0;
