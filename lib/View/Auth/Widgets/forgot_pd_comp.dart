@@ -120,7 +120,7 @@ class _LoginComponentViewState extends State<ForgotPDCompoView> {
                     width: 140,
                     child: CountryPickerDropdown(
                       isExpanded: true,
-                      initialValue: 'in',
+                      initialValue: 'AE',
                       itemBuilder: _buildDropdownItem,
                       onValuePicked: (Country country) {},
                     ),

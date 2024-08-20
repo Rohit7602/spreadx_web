@@ -340,9 +340,12 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                             DataCell(
                                               InkWell(
                                                 onTap: () {
+                                                  product.updateProductQTY(
+                                                      data.productList[index]);
                                                   product.removeProduct(data
                                                       .productList[index].id);
                                                   product.setQueueRibon(false);
+                                                  setState(() {});
                                                 },
                                                 child: Container(
                                                   padding:

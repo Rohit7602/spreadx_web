@@ -161,15 +161,19 @@ class _EnterManuallySingleProductViewState
 
                   // ******************************** Tabs View ********************************
                   // ***************************************************************************
-                  LayoutBuilder(builder: (context, constr) {
-                    if (isQuickAdd.value) {
-                      return _QuickAddView();
-                    } else {
-                      return _DetailedView(
-                        onPressedBack: setScreenState,
-                      );
-                    }
-                  })
+                  Expanded(
+                    child: SizedBox(
+                      child: LayoutBuilder(builder: (context, constr) {
+                        if (isQuickAdd.value) {
+                          return _QuickAddView();
+                        } else {
+                          return _DetailedView(
+                            onPressedBack: setScreenState,
+                          );
+                        }
+                      }),
+                    ),
+                  )
                 ],
               ))
             ],

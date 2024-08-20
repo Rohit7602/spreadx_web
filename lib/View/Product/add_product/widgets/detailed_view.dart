@@ -23,7 +23,8 @@ class _DetailedViewState extends State<_DetailedView> {
       children: [
         /// ************************************ Section 1 ************************************
         /// ***********************************************************************************
-        Expanded(
+        Flexible(
+          flex: 1,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -82,47 +83,50 @@ class _DetailedViewState extends State<_DetailedView> {
 
         /// ************************************ Section 2 ************************************
         /// ***********************************************************************************
-        Expanded(
-          child: Column(
-            children: [
-              SecondaryTextFormField(
-                label: true,
-                hinttext: "Product Code",
-                onTap: () => openVirtualKeyboard(),
-              ),
-              styleSheet.appConfig.addHeight(20),
-              SecondaryTextFormField(
-                label: true,
-                hinttext: "Product Name",
-                onTap: () => openVirtualKeyboard(),
-              ),
-              styleSheet.appConfig.addHeight(20),
-              SecondaryTextFormField(
-                label: true,
-                hinttext: "Product Name (Arabic)",
-                onTap: () => openVirtualKeyboard(),
-              ),
-              styleSheet.appConfig.addHeight(20),
-              SecondaryTextFormField(
-                label: true,
-                hinttext: "Product Short Name",
-                onTap: () => openVirtualKeyboard(),
-              ),
-              styleSheet.appConfig.addHeight(20),
-              SecondaryTextFormField(
-                label: true,
-                hinttext: "Product Short Name (Arabic)",
-                onTap: () => openVirtualKeyboard(),
-              ),
-              styleSheet.appConfig.addHeight(20),
-              SecondaryTextFormField(
-                label: true,
-                hinttext: "Product Description",
-                onTap: () => openVirtualKeyboard(),
-              ),
-              styleSheet.appConfig.addHeight(20),
-              CheckStockAvailabilityTile()
-            ],
+        Flexible(
+          flex: 1,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SecondaryTextFormField(
+                  label: true,
+                  hinttext: "Product Code",
+                  onTap: () => openVirtualKeyboard(),
+                ),
+                styleSheet.appConfig.addHeight(20),
+                SecondaryTextFormField(
+                  label: true,
+                  hinttext: "Product Name",
+                  onTap: () => openVirtualKeyboard(),
+                ),
+                styleSheet.appConfig.addHeight(20),
+                SecondaryTextFormField(
+                  label: true,
+                  hinttext: "Product Name (Arabic)",
+                  onTap: () => openVirtualKeyboard(),
+                ),
+                styleSheet.appConfig.addHeight(20),
+                SecondaryTextFormField(
+                  label: true,
+                  hinttext: "Product Short Name",
+                  onTap: () => openVirtualKeyboard(),
+                ),
+                styleSheet.appConfig.addHeight(20),
+                SecondaryTextFormField(
+                  label: true,
+                  hinttext: "Product Short Name (Arabic)",
+                  onTap: () => openVirtualKeyboard(),
+                ),
+                styleSheet.appConfig.addHeight(20),
+                SecondaryTextFormField(
+                  label: true,
+                  hinttext: "Product Description",
+                  onTap: () => openVirtualKeyboard(),
+                ),
+                styleSheet.appConfig.addHeight(20),
+                CheckStockAvailabilityTile()
+              ],
+            ),
           ),
         ),
         styleSheet.appConfig.addWidth(10),

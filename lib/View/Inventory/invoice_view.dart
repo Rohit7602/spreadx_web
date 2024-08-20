@@ -34,7 +34,7 @@ class InvoiceView extends StatelessWidget {
           isPurchasedIN
               ? "PURCHASE INVOICE"
               : isCustomerSide
-                  ? "RETURN INVOICE"
+                  ? "SALES RETURN INVOICE"
                   : "PURCHASE RETURN INVOICE",
           style: styleSheet.TEXT_THEME.fs14Bold,
         ),

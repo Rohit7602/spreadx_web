@@ -119,10 +119,11 @@ class _LoginComponentViewState extends State<SignUpComponentView> {
               ? SecondaryTextFormField(
                   onTap: () => openVirtualKeyboard(),
                   prefixIcon: SizedBox(
+                    height: 10,
                     width: 140,
                     child: CountryPickerDropdown(
                       isExpanded: true,
-                      initialValue: 'in',
+                      initialValue: 'AE',
                       itemBuilder: _buildDropdownItem,
                       onValuePicked: (Country country) {},
                     ),

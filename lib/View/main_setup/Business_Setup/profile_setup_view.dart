@@ -141,7 +141,7 @@ class _ProfileSetupViewState extends State<ProfileSetupView> {
                                         ],
                                       );
                                     },
-                                    initialValue: 'in',
+                                    initialValue: 'AE',
                                     itemBuilder: _buildDropdownItem,
                                     onValuePicked: (Country country) {},
                                   ),

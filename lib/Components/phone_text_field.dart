@@ -6,23 +6,23 @@ import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/keyboard_handler.dart';
 
 class PhoneTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final Function(Country) onValuePick;
-  const PhoneTextField(
-      {super.key, required this.controller, required this.onValuePick});
+  final TextEditingController? controller;
+  final Function(Country)? onValuePick;
+  const PhoneTextField({super.key, this.controller, this.onValuePick});
 
   @override
   Widget build(BuildContext context) {
     return SecondaryTextFormField(
       onTap: () => openVirtualKeyboard(),
       prefixIcon: SizedBox(
+        height: 10,
         width: 140,
         child: CountryPickerDropdown(
           isExpanded: true,
-          initialValue: 'in',
+          initialValue: 'AE',
           itemBuilder: _buildDropdownItem,
           onValuePicked: (Country country) {
-            onValuePick(country);
+            onValuePick!(country);
           },
         ),
       ),

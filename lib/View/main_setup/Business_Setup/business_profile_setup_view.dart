@@ -197,7 +197,7 @@ class _BusinessProfileSetupViewState extends State<BusinessProfileSetupView> {
                                   ],
                                 );
                               },
-                              initialValue: 'in',
+                              initialValue: 'AE',
                               itemBuilder: _buildDropdownItem,
                               onValuePicked: (Country country) {},
                             ),

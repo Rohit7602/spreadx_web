@@ -3,6 +3,7 @@ import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Data/local_data.dart';
+import 'package:spreadx_web/keyboard_handler.dart';
 import 'package:spreadx_web/main.dart';
 
 class IssueRefundDialog extends StatefulWidget {
@@ -51,6 +52,7 @@ class _IssueRefundDialogState extends State<IssueRefundDialog> {
               style: styleSheet.TEXT_THEME.fs12Bold,
             ),
             SecondaryTextFormField(
+              onTap: () => openVirtualKeyboard(),
               onChange: (val) {
                 setState(() {});
               },
@@ -64,6 +66,7 @@ class _IssueRefundDialogState extends State<IssueRefundDialog> {
               style: styleSheet.TEXT_THEME.fs12Bold,
             ),
             SecondaryTextFormField(
+              onTap: () => openVirtualKeyboard(),
               onChange: (val) {
                 setState(() {});
               },

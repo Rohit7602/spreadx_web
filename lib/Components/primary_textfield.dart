@@ -186,7 +186,7 @@ class SecondaryTextFormField extends StatelessWidget {
           suffixIconColor: styleSheet.COLOR.greyColor,
           suffixIcon: suffixicon?.paddingOnly(right: 20),
           prefixIconColor: styleSheet.COLOR.greyColor,
-          prefixIcon: prefixIcon?.paddingOnly(left: 5),
+          prefixIcon: prefixIcon?.paddingOnly(left: 5, right: 10),
 
           // enabledBorder: OutlineInputBorder(
           //     borderRadius: BorderRadius.circular(4),

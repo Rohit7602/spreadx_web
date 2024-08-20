@@ -58,7 +58,7 @@ class UpdatePhoneDialog extends StatelessWidget {
                         ],
                       );
                     },
-                    initialValue: 'in',
+                    initialValue: 'AE',
                     itemBuilder: _buildDropdownItem,
                     onValuePicked: (Country country) {},
                   ),

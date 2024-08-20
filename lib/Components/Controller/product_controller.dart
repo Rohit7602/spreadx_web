@@ -31,6 +31,12 @@ class ProductController extends GetxController {
     update();
   }
 
+  updateProductQTY(ProductModel pr) {
+    var i = _productList.indexOf(pr);
+    _productList[i].qty = "0";
+    update();
+  }
+
   clearProducts() {
     _productList.clear();
     update();

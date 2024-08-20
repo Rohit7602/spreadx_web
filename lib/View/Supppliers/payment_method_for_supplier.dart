@@ -7,7 +7,9 @@ import 'package:spreadx_web/main.dart';
 
 class PaymentMethodForSupplier extends StatefulWidget {
   void Function(bool) onPressedBack;
-  PaymentMethodForSupplier({required this.onPressedBack, super.key});
+  String amount;
+  PaymentMethodForSupplier(
+      {required this.onPressedBack, required this.amount, super.key});
 
   @override
   State<PaymentMethodForSupplier> createState() =>
@@ -72,7 +74,7 @@ class _PaymentMethodForSupplierState extends State<PaymentMethodForSupplier> {
         styleSheet.appConfig.addHeight(20),
         Text("Total", style: styleSheet.TEXT_THEME.fs14Bold),
         styleSheet.appConfig.addHeight(10),
-        Text("AED ${0}",
+        Text("AED ${widget.amount}",
             style: styleSheet.TEXT_THEME.fs20Bold
                 .copyWith(fontWeight: FontWeight.w900)),
         styleSheet.appConfig.addHeight(10),

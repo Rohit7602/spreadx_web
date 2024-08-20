@@ -189,7 +189,7 @@ class _AssigSupplierDialogState extends State<AssignSupplierDialog> {
                         width: 140,
                         child: CountryPickerDropdown(
                           isExpanded: true,
-                          initialValue: 'in',
+                          initialValue: 'AE',
                           itemBuilder: _buildDropdownItem,
                           onValuePicked: (Country country) {},
                         ),

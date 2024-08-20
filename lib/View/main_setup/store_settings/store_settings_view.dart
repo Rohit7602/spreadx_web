@@ -256,39 +256,16 @@ class StoreSettingsView extends StatelessWidget {
                     return isVATEnabled.value
                         ? Column(
                             children: [
-                              SecurityListTile(
-                                  divider: false,
-                                  title: "TRN",
-                                  onTap: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) => _EnterTextDialog(
-                                              title: "TRN",
-                                              hintText: "Enter TRN",
-                                            )).then((val) {
-                                      if (val != null) {
-                                        trnValue(val);
-                                      }
-                                    });
-                                  },
-                                  subtitle:
-                                      "The Tax Registration Number assigned to the store",
-                                  trailing: Obx(() => Text(trnValue.value,
-                                      style: styleSheet.TEXT_THEME.fs16Bold
-                                          .copyWith(
-                                              color: styleSheet
-                                                  .COLOR.primaryColor)))),
-                              styleSheet.appConfig.addHeight(10),
                               Obx(
                                 () => Stack(
                                   children: [
                                     SecurityListTile(
                                         divider: false,
-                                        title: "Select VAT",
+                                        title: "VAT Type",
                                         onTap: () {
                                           showDrop(true);
                                         },
-                                        subtitle: "Select your VAT",
+                                        subtitle: "Select VAT Type (Inc./Exc.)",
                                         trailing: Text(vatType.value,
                                             style: styleSheet
                                                 .TEXT_THEME.fs16Bold
@@ -331,6 +308,30 @@ class StoreSettingsView extends StatelessWidget {
                                   ],
                                 ),
                               ),
+                              styleSheet.appConfig.addHeight(10),
+                              SecurityListTile(
+                                  divider: false,
+                                  title: "TRN",
+                                  onTap: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => _EnterTextDialog(
+                                              title: "TRN",
+                                              hintText: "Enter TRN",
+                                            )).then((val) {
+                                      if (val != null) {
+                                        trnValue(val);
+                                      }
+                                    });
+                                  },
+                                  subtitle:
+                                      "The Tax Registration Number assigned to the store",
+                                  trailing: Obx(() => Text(trnValue.value,
+                                      style: styleSheet.TEXT_THEME.fs16Bold
+                                          .copyWith(
+                                              color: styleSheet
+                                                  .COLOR.primaryColor)))),
+
                               // Obx(() => PrimaryDropDown(
                               //     hint: "VAT Included ",
                               //     isExpanded: true,

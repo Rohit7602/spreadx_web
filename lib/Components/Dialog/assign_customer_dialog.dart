@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
 import 'package:spreadx_web/Components/Dropdown/primary_drop_down.dart';
+import 'package:spreadx_web/Components/phone_text_field.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
 import 'package:spreadx_web/Data/local_data.dart';
 import 'package:spreadx_web/Responsive/responsive_handler.dart';
@@ -220,21 +221,7 @@ class _AssignCustomerDialogState extends State<AssignCustomerDialog> {
                       onTap: () => openVirtualKeyboard(),
                     ),
                     styleSheet.appConfig.addHeight(10),
-                    SecondaryTextFormField(
-                      onTap: () => openVirtualKeyboard(),
-                      prefixIcon: SizedBox(
-                        width: 140,
-                        child: CountryPickerDropdown(
-                          isExpanded: true,
-                          initialValue: 'in',
-                          itemBuilder: _buildDropdownItem,
-                          onValuePicked: (Country country) {},
-                        ),
-                      ),
-                      keyboardtype: TextInputType.phone,
-                      controller: phoneController,
-                      hinttext: "(50 | 52 | 54 | 55 | 56 | 58 | xxxxx)",
-                    ),
+                    const PhoneTextField(),
                     styleSheet.appConfig.addHeight(10),
                     savenew
                         ? Row(

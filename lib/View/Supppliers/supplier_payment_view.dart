@@ -27,6 +27,8 @@ class _SupplierPaymentViewState extends State<SupplierPaymentView> {
 
   final List<TextEditingController> amounts = [];
 
+  double totalAmount = 0;
+
   @override
   void initState() {
     super.initState();
@@ -106,6 +108,11 @@ class _SupplierPaymentViewState extends State<SupplierPaymentView> {
             isExpanded: true,
             btnName: "Submit",
             onPressed: () {
+              totalAmount = 0;
+              for (var element in amounts) {
+                totalAmount += double.parse(element.text);
+              }
+
               selectedView("payment");
             })
       ],
@@ -113,6 +120,7 @@ class _SupplierPaymentViewState extends State<SupplierPaymentView> {
     return Obx(() {
       if (selectedView.value == "payment") {
         return PaymentMethodForSupplier(
+          amount: totalAmount.toString(),
           onPressedBack: (val) {
             if (val) {
               widget.onPressedBack();
