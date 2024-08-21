@@ -84,4 +84,8 @@ class UsersController extends GetxController {
 
     update();
   }
+
+  // Set Vat Enable or Not
+
+  RxBool setVatValue = false.obs;
 }

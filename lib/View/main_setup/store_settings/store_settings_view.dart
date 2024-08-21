@@ -4,6 +4,7 @@ import 'package:country_currency_pickers/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:spreadx_web/Components/Button/primary_btn.dart';
+import 'package:spreadx_web/Components/Controller/users_controller.dart';
 import 'package:spreadx_web/Components/Dialog/Widget/header_dialog.dart';
 import 'package:spreadx_web/Components/Dropdown/primary_drop_down.dart';
 import 'package:spreadx_web/Components/primary_textfield.dart';
@@ -17,7 +18,7 @@ class StoreSettingsView extends StatelessWidget {
   final void Function()? onPressedBack;
   StoreSettingsView({super.key, this.onPressedBack});
 
-  final RxBool isVATEnabled = RxBool(false);
+  final userController = Get.find<UsersController>();
 
   final RxString currency = "AED".obs;
   final RxString timeZone = "GMT".obs;
@@ -69,7 +70,7 @@ class StoreSettingsView extends StatelessWidget {
                           style: styleSheet.TEXT_THEME.fs14Bold),
                     ),
                     Obx(() {
-                      return isVATEnabled.value
+                      return userController.setVatValue.value
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -92,7 +93,7 @@ class StoreSettingsView extends StatelessWidget {
                     ),
                     styleSheet.appConfig.addHeight(20),
                     Obx(() {
-                      return isVATEnabled.value
+                      return userController.setVatValue.value
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -241,19 +242,20 @@ class StoreSettingsView extends StatelessWidget {
                         "Enable or disable VAT management in invoices and summaries.",
                     divider: false,
                     onTap: () {
-                      isVATEnabled(!(isVATEnabled.value));
+                      userController
+                          .setVatValue(!(userController.setVatValue.value));
                     },
                     trailing: Obx(
                       () => Switch.adaptive(
-                        value: isVATEnabled.value,
+                        value: userController.setVatValue.value,
                         onChanged: (v) {
-                          isVATEnabled(v);
+                          userController.setVatValue(v);
                         },
                       ),
                     ),
                   ),
                   Obx(() {
-                    return isVATEnabled.value
+                    return userController.setVatValue.value
                         ? Column(
                             children: [
                               Obx(

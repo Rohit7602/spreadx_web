@@ -107,7 +107,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
     return discount;
   }
 
-  getTotalTax(List<ProductModel> data) {
+  getTotalVAT(List<ProductModel> data) {
     double tax = 0;
     for (var item in data) {
       final subtotal =
@@ -470,20 +470,38 @@ class _HomeScreenViewState extends State<HomeScreenView>
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        CustomRow(
-                            title: "Sub Total",
-                            trailing: getSubTotal(data.productList).toString()),
+                        Obx(() {
+                          return CustomRow(
+                              title: userController.setVatValue.value
+                                  ? "Subtotal Exc. VAT"
+                                  : "Sub Total",
+                              trailing:
+                                  getSubTotal(data.productList).toString());
+                        }),
                         styleSheet.appConfig.addHeight(6),
                         CustomRow(
                             title: "Discount",
                             trailing:
                                 getTotalDiscount(data.productList).toString()),
                         styleSheet.appConfig.addHeight(6),
-                        CustomRow(
-                            title: "Total Tax",
-                            trailing: getTotalTax(data.productList).toString()),
+                        Obx(() {
+                          return CustomRow(
+                              title: userController.setVatValue.value
+                                  ? "Total Taxable"
+                                  : "Net Total",
+                              trailing: (getSubTotal(data.productList) -
+                                      getTotalDiscount(data.productList))
+                                  .toString());
+                        }),
                         styleSheet.appConfig.addHeight(6),
-                        CustomRow(title: "VAT", trailing: "0.0"),
+                        Obx(() {
+                          return userController.setVatValue.value
+                              ? CustomRow(
+                                  title: "VAT",
+                                  trailing:
+                                      getTotalVAT(data.productList).toString())
+                              : const SizedBox();
+                        }),
                         styleSheet.appConfig.addHeight(6),
                         GetBuilder<ProductController>(
                           builder: (data) {
@@ -495,7 +513,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                                 txtColor: styleSheet.COLOR.primaryColor,
                                 title: "Grand Total",
                                 trailing:
-                                    "AED ${getSubTotal(data.productList) - getTotalDiscount(data.productList) + getTotalTax(data.productList)}");
+                                    "AED ${getSubTotal(data.productList) - getTotalDiscount(data.productList) + (userController.setVatValue.value ? getTotalVAT(data.productList) : 0)}");
                           },
                         ),
                       ],
@@ -506,7 +524,9 @@ class _HomeScreenViewState extends State<HomeScreenView>
                     builder: (data) {
                       double price = getSubTotal(data.productList) -
                           getTotalDiscount(data.productList) +
-                          getTotalTax(data.productList);
+                          (userController.setVatValue.value
+                              ? getTotalVAT(data.productList)
+                              : 0);
 
                       var newPrice = amountController.text.isNotEmpty
                           ? (double.parse(amountController.text) - price)
@@ -560,7 +580,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                             onPressed: () {
                               isPaymentCash = true;
                               amountController.text =
-                                  "${getSubTotal(data.productList) - getTotalDiscount(data.productList) + getTotalTax(data.productList)}";
+                                  "${getSubTotal(data.productList) - getTotalDiscount(data.productList) + getTotalVAT(data.productList)}";
                               setState(() {});
                             },
                             child: Text(
@@ -580,7 +600,7 @@ class _HomeScreenViewState extends State<HomeScreenView>
                             onPressed: () {
                               isPaymentCash = false;
                               amountController.text =
-                                  "${getSubTotal(data.productList) - getTotalDiscount(data.productList) + getTotalTax(data.productList)}";
+                                  "${getSubTotal(data.productList) - getTotalDiscount(data.productList) + getTotalVAT(data.productList)}";
                               setState(() {});
                             },
                             child: Text(
